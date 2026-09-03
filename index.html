@@ -201,6 +201,11 @@ footer .src{font-size:11px;color:var(--dim2);margin-top:8px;line-height:1.7}
 
 #list .card{content-visibility:auto;contain-intrinsic-size:auto 760px}
 @media print{#list .card{content-visibility:visible}}
+
+#nav{top:var(--xwh,46px)}
+#menu{top:var(--xwh,46px)}
+#promopanel,#main{scroll-margin-top:var(--xwh,46px)}
+#list .card{scroll-margin-top:calc(var(--xwh,46px) + 12px)}
 #menu{display:none}
 @media (max-width:900px){
  #nav{transform:translateX(-100%);transition:transform .22s;width:86vw;max-width:330px}
@@ -215,6 +220,8 @@ footer .src{font-size:11px;color:var(--dim2);margin-top:8px;line-height:1.7}
  .fabrow{flex-direction:column;gap:4px}.fabrow .t{flex:none}
 }
 @media print{#nav,#menu{display:none}#main{margin:0;padding:0}.card{break-inside:avoid}}
+
+@media (max-width:900px){ #menu{top:var(--xwh,46px)!important} }
 </style>
 </head>
 <body>
@@ -1097,8 +1104,6 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
    var P2=window.P||[];
    var bn=(function(){var t=c.querySelector('.spec'); return '';})();
    bar.innerHTML='<button class="tbtn" data-act="brand" type="button">◈ 只看同品牌</button>'
-    +'<button class="tbtn" data-act="spec" type="button">⧉ 複製規格</button>'
-    +'<button class="tbtn" data-act="all" type="button">⧉ 複製整張卡</button>'
     +(ean?'<button class="tbtn" data-act="ean" type="button">⧉ 複製條碼</button>':'')
     +'<button class="tbtn" data-act="top" type="button">↑ 回頂端</button>';
    body.insertBefore(bar,body.firstChild);
@@ -1261,7 +1266,8 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   var r=m.getBoundingClientRect();
   var de=document.scrollingElement||document.documentElement;
   var cur=window.pageYOffset||de.scrollTop||0;
-  var head=(window.innerWidth<=900?64:0);
+  var xw=document.getElementById('xwbar');
+  var head=(window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0);
   return cur+r.top-Math.max(90,(window.innerHeight-head)*0.34)-head;
  }
  function navSync(m){
@@ -1349,5 +1355,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 })();
 </script>
 
+
+<script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>
 </body>
 </html>

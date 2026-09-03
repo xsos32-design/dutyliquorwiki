@@ -198,6 +198,9 @@ footer .src{font-size:11px;color:var(--dim2);margin-top:8px;line-height:1.7}
 .talkbox.t-card .fabrow .t{color:#F2A6C8!important}
 .talkbox.t-card .talk{border-left-color:#D96FA6!important}
 .tagcard{font-size:9px;letter-spacing:1px;color:#F2A6C8;border:1px solid rgba(206,120,160,.55);padding:1px 4px;white-space:nowrap}
+
+#list .card{content-visibility:auto;contain-intrinsic-size:auto 760px}
+@media print{#list .card{content-visibility:visible}}
 #menu{display:none}
 @media (max-width:900px){
  #nav{transform:translateX(-100%);transition:transform .22s;width:86vw;max-width:330px}
@@ -399,7 +402,8 @@ function card(p){
 function gv(id){var e=document.getElementById(id);return e?e.value:'';}
 var EX={cat:{},group:{},brand:{}};
 function gk(p,d){return d==='cat'?(p.cat||''):d==='group'?((p.group||'').trim()||'其他・未標示集團'):(p.brand||'');}
-function apply(){
+var CARDEL={}, VIS={}, BUILT=false, LASTSORT='', BUILDI=0;
+function rowsNow(){
  var k=document.getElementById('q').value.trim().toLowerCase();
  var fp=gv('fprice'),fs=gv('fsort');
  var rows=P.filter(function(p){
@@ -424,8 +428,67 @@ function apply(){
  if(fs==='asc') rows=rows.slice().sort(function(a,b){return (a.pv||9e9)-(b.pv||9e9);});
  else if(fs==='desc') rows=rows.slice().sort(function(a,b){return (b.pv||0)-(a.pv||0);});
  else if(fs==='name') rows=rows.slice().sort(function(a,b){return a.nameZh.localeCompare(b.nameZh,'zh-Hant');});
- document.getElementById('list').innerHTML=rows.length?rows.map(card).join('')
-  :'<div style="padding:80px 0;text-align:center;color:var(--dim2)">找不到符合的品項</div>';
+ return rows;
+}
+function chunkInto(list,from,n){
+ var end=Math.min(P.length,from+n), html='';
+ for(var j=from;j<end;j++) html+=card(P[j]);
+ var tmp=document.createElement('div'); tmp.innerHTML=html;
+ var frag=document.createDocumentFragment();
+ while(tmp.firstChild) frag.appendChild(tmp.firstChild);
+ list.appendChild(frag);
+ for(var j2=from;j2<end;j2++){
+  var el=document.getElementById(P[j2].id);
+  CARDEL[P[j2].id]=el;
+  if(el) el.style.display = VIS[P[j2].id]?'':'none';
+ }
+ if(window.__enh) window.__enh();
+ return end;
+}
+function buildRest(){
+ var list=document.getElementById('list');
+ var ric=window.requestIdleCallback||function(f){return setTimeout(function(){f({timeRemaining:function(){return 8;}});},1);};
+ function step(){
+  if(BUILDI>=P.length){BUILT=true; if(window.__afterBuild)window.__afterBuild(); return;}
+  BUILDI=chunkInto(list,BUILDI,60);
+  ric(step);
+ }
+ ric(step);
+}
+function applyVis(rows){
+ var v={}; for(var i=0;i<rows.length;i++) v[rows[i].id]=1;
+ VIS=v;
+ for(var id in CARDEL){var el=CARDEL[id]; if(el) el.style.display = v[id]?'':'none';}
+ var em=document.getElementById('emptymsg');
+ if(em) em.style.display = rows.length?'none':'';
+}
+function reorder(rows,fs){
+ if(fs===LASTSORT) return;
+ LASTSORT=fs;
+ var list=document.getElementById('list');
+ var order = fs? rows.slice() : P;
+ var frag=document.createDocumentFragment();
+ for(var i=0;i<order.length;i++){var el=CARDEL[order[i].id]; if(el) frag.appendChild(el);}
+ list.appendChild(frag);
+}
+function apply(){
+ var rows=rowsNow();
+ if(!BUILT&&BUILDI===0){
+  var list=document.getElementById('list');
+  if(!document.getElementById('emptymsg')){
+   var em=document.createElement('div'); em.id='emptymsg';
+   em.style.cssText='padding:80px 0;text-align:center;color:var(--dim2);display:none';
+   em.textContent='找不到符合的品項'; list.appendChild(em);
+  }
+  var v0={}; for(var i0=0;i0<rows.length;i0++) v0[rows[i0].id]=1; VIS=v0;
+  BUILDI=chunkInto(list,0,26);
+  nav(rows);
+  setTimeout(buildRest,0);
+  applyVis(rows);
+  return;
+ }
+ if(BUILT) reorder(rows,gv('fsort'));
+ applyVis(rows);
  nav(rows);
 }
 
@@ -500,7 +563,9 @@ document.addEventListener('click',function(e){
  [].forEach.call(box.querySelectorAll('.tbpane'),function(x){x.classList.toggle('on',x.getAttribute('data-i')===i);});
  box.className='talkbox '+({'商品資訊卡':'t-card','原廠商訓':'t-oem','公司考題':'t-exam','營業部教材':'t-man'}[t.textContent.trim()]||'t-oem');
 });
-document.getElementById('q').addEventListener('input',apply);
+var _qt=null;
+document.getElementById('q').addEventListener('input',function(){
+ clearTimeout(_qt); _qt=setTimeout(apply,200);});
 document.addEventListener('click',function(e){
  var b=e.target.closest?e.target.closest('.fbtn'):null;
  if(b){var f=b.getAttribute('data-f');filters[f]=!filters[f];b.classList.toggle('on');apply();return;}
@@ -672,7 +737,7 @@ apply();
   if($('pprice').value!==rp.value)$('pprice').value=rp.value;
   if($('psort').value!==rs.value)$('psort').value=rs.value;
   if($('pq').value!==rq.value)$('pq').value=rq.value;
-  var dc=$('dcnt'); if(dc)dc.textContent=document.querySelectorAll('#list .card').length+' 支';
+  var dc=$('dcnt'); if(dc)dc.textContent=[].slice.call(document.querySelectorAll('#list .card')).filter(function(c){return c.style.display!=='none';}).length+' 支';
  };
  $('ddrow').addEventListener('click',function(e){
   var t=e.target.closest('.dchip');if(!t)return;
@@ -1039,8 +1104,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
    body.insertBefore(bar,body.firstChild);
   });
  }
- var mo=new MutationObserver(function(){enhance();scan();});
- mo.observe($('list'),{childList:true});
+ window.__enh=enhance;
  enhance();
 
  document.addEventListener('click',function(e){
@@ -1069,7 +1133,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
     EX.cat={};EX.group={};
     buildExcl();apply();
     window.scrollTo({top:0,behavior:'smooth'});
-    toast('只看 '+bd+'（'+document.querySelectorAll('#list .card').length+' 支）');
+    toast('只看 '+bd+'（'+[].slice.call(document.querySelectorAll('#list .card')).filter(function(x){return x.style.display!=='none';}).length+' 支）');
    }
   } else if(act==='top'){
    window.scrollTo({top:0,behavior:'smooth'});
@@ -1077,7 +1141,8 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  });
 
  /* ---------- 上一支／下一支 + 目錄同步 ---------- */
- function cards(){return [].slice.call(document.querySelectorAll('#list .card'));}
+ function cards(){return [].slice.call(document.querySelectorAll('#list .card')).filter(function(c){
+   return c.style.display!=='none';});}
  function curIdx(){
   var cs=cards(),best=0,bd=1e9;
   for(var i=0;i<cs.length;i++){var d=Math.abs(cs[i].getBoundingClientRect().top-80);
@@ -1108,16 +1173,16 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  var MK=[], MI=-1, LIMIT=1500, CAPPED=false;
  var fbcnt=$('fbcnt'), fbbar=$('findbar'), fbPrev=$('fbPrev'), fbNext=$('fbNext'), badge=$('pnbadge');
 
+ function cardsVisible(){return [].slice.call(document.querySelectorAll('#list .card')).filter(function(c){
+   return c.style.display!=='none';});}
  function clearMarks(){
-  ['#list','#navlist'].forEach(function(sel){
-   var root=document.querySelector(sel); if(!root)return;
-   var ms=root.querySelectorAll('mark.hl');
-   for(var i=0;i<ms.length;i++){
-    var m=ms[i], p=m.parentNode; if(!p)continue;
-    p.replaceChild(document.createTextNode(m.textContent),m);
-    p.normalize();
-   }
-  });
+  var ms=document.querySelectorAll('#list mark.hl, #navlist mark.hl');
+  var ps=[];
+  for(var i=0;i<ms.length;i++){
+   var m=ms[i], p=m.parentNode; if(!p)continue;
+   try{ p.replaceChild(document.createTextNode(m.textContent),m); ps.push(p); }catch(e){}
+  }
+  for(var j=0;j<ps.length;j++){ try{ps[j].normalize();}catch(e){} }
   MK=[];MI=-1;
  }
  function esc4(t){return t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
@@ -1155,7 +1220,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   var terms=k.split(/\s+/).filter(function(x){return x.length;}).map(esc4);
   if(!terms.length){updCnt();return;}
   var re=new RegExp('('+terms.join('|')+')','gi');
-  var cards=document.querySelectorAll('#list .card');
+  var cards=cardsVisible();
   var used=0;
   for(var j=0;j<cards.length&&used<LIMIT;j++) used+=walkMark(cards[j],re,LIMIT-used);
   CAPPED=(used>=LIMIT);
@@ -1167,7 +1232,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  }
  function updCnt(){
   var n=MK.length;
-  var cds=[].slice.call(document.querySelectorAll('#list .card'));
+  var cds=cardsVisible();
   var cn='';
   if(n&&MI>=0&&MK[MI]&&MK[MI].closest){var cc=MK[MI].closest('.card');
    var ix=cds.indexOf(cc); if(ix>=0)cn=' · 第 '+(ix+1)+'/'+cds.length+' 支';}
@@ -1257,10 +1322,20 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  q.addEventListener('keydown',function(e){
   if(e.key==='Enter'){e.preventDefault();goMatch(e.shiftKey?-1:1);}
  });
- var ht=null;
- q.addEventListener('input',function(){clearTimeout(ht);ht=setTimeout(markAll,240);});
- var mo2=new MutationObserver(function(){clearTimeout(ht);ht=setTimeout(markAll,80);});
- mo2.observe($('list'),{childList:true});
+ window.__markAll=markAll;
+ window.__afterBuild=function(){ try{apply();}catch(e){} if((q.value||'').trim()) markAll(); scan(); };
+ (function(){
+  var _ap=window.apply, _mt=null;
+  window.apply=function(){
+   _ap.apply(this,arguments);
+   clearTimeout(_mt);
+   _mt=setTimeout(function(){
+    if((q.value||'').trim()) markAll();
+    else { clearMarks(); fbbar.classList.remove('show'); badge.classList.remove('show'); updCnt(); }
+    scan();
+   },50);
+  };
+ })();
  window.__goMatch=goMatch;
  window.__hasQ=function(){return !!(q.value||'').trim()&&MK.length>0;};
 

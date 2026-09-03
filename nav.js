@@ -7,7 +7,7 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
 
  var SITES=[
-  {k:'wiki',  t:'酒類商品完整檔案', s:'562 支・話術／規格／圖片', ico:'🥃',
+  {k:'wiki',  t:'酒類商品完整檔案', s:'564 支・話術／規格／圖片', ico:'🥃',
    u:'https://xsos32-design.github.io/dutyliquorwiki/'},
   {k:'promo', t:'活動比較卡',       s:'檔期異動・上下月比較',     ico:'🔁',
    u:'https://xsos32-design.github.io/promotion/'},

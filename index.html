@@ -1352,6 +1352,41 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 </script>
 
 
+<script>
+/* ── 由「活動比較卡」點商品連結跳進來：#商品id ── */
+(function(){
+ if(window.xwJumpHash) return; window.xwJumpHash=1;
+ var st=document.createElement('style');
+ st.textContent='@keyframes xwpop{0%{box-shadow:0 0 0 0 rgba(232,161,60,0)}'
+  +'18%{box-shadow:0 0 0 5px rgba(232,161,60,.85),0 0 46px rgba(232,161,60,.5)}'
+  +'100%{box-shadow:0 0 0 0 rgba(232,161,60,0)}}'
+  +'#list .card.xwjumped{animation:xwpop 1.8s ease-out 1;border-color:rgba(232,161,60,.8)!important}';
+ document.head.appendChild(st);
+ function headH(){var xw=document.getElementById('xwbar');
+  return (window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0)+12;}
+ function go(el){
+  try{ if(el.style.display==='none') el.style.display=''; }catch(e){}
+  function to(){ var y=window.pageYOffset+el.getBoundingClientRect().top-headH();
+   y=Math.max(0,Math.round(y));
+   try{ window.scrollTo({top:y,behavior:'auto'}); }catch(e){ window.scrollTo(0,y); } }
+  to(); setTimeout(to,420); setTimeout(to,1100);
+  el.classList.remove('xwjumped'); void el.offsetWidth; el.classList.add('xwjumped');
+ }
+ function jump(id,n){
+  if(!id) return;
+  var el=document.getElementById(id);
+  if(el && el.classList && el.classList.contains('card')) return go(el);
+  if((n||0)<80) setTimeout(function(){jump(id,(n||0)+1);},250);
+ }
+ function fromHash(){
+  var h=(location.hash||'').replace(/^#/,''); if(!h) return;
+  try{ h=decodeURIComponent(h); }catch(e){}
+  jump(h,0);
+ }
+ if(location.hash) setTimeout(fromHash,250);
+ window.addEventListener('hashchange',fromHash);
+})();
+</script>
 <script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>
 </body>
 </html>

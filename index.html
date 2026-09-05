@@ -1360,30 +1360,46 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  st.textContent='@keyframes xwpop{0%{box-shadow:0 0 0 0 rgba(232,161,60,0)}'
   +'18%{box-shadow:0 0 0 5px rgba(232,161,60,.85),0 0 46px rgba(232,161,60,.5)}'
   +'100%{box-shadow:0 0 0 0 rgba(232,161,60,0)}}'
-  +'#list .card.xwjumped{animation:xwpop 1.8s ease-out 1;border-color:rgba(232,161,60,.8)!important}';
+  +'#list .card.xwjumped{animation:xwpop 2.2s ease-out 1;border-color:rgba(232,161,60,.8)!important}';
  document.head.appendChild(st);
+ var abort=false, timer=null;
+ function stop(){abort=true; clearInterval(timer);}
+ ['wheel','touchstart','keydown','mousedown'].forEach(function(ev){
+  window.addEventListener(ev,function(){ if(lock) stop(); },{passive:true});
+ });
+ var lock=false;
  function headH(){var xw=document.getElementById('xwbar');
   return (window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0)+12;}
+ function place(el){
+  var y=window.pageYOffset+el.getBoundingClientRect().top-headH();
+  y=Math.max(0,Math.round(y));
+  try{ window.scrollTo({top:y,behavior:'auto'}); }catch(e){ window.scrollTo(0,y); }
+ }
  function go(el){
   try{ if(el.style.display==='none') el.style.display=''; }catch(e){}
-  function to(){ var y=window.pageYOffset+el.getBoundingClientRect().top-headH();
-   y=Math.max(0,Math.round(y));
-   try{ window.scrollTo({top:y,behavior:'auto'}); }catch(e){ window.scrollTo(0,y); } }
-  to(); setTimeout(to,420); setTimeout(to,1100);
+  abort=false; lock=true; clearInterval(timer);
+  place(el);
   el.classList.remove('xwjumped'); void el.offsetWidth; el.classList.add('xwjumped');
+  var t0=Date.now(), stable=0;
+  timer=setInterval(function(){
+   if(abort||Date.now()-t0>16000){ clearInterval(timer); lock=false; return; }
+   var d=Math.abs(el.getBoundingClientRect().top-headH());
+   if(d>4){ stable=0; place(el); }
+   else if(++stable>=6){ clearInterval(timer); lock=false; }
+  },350);
  }
  function jump(id,n){
   if(!id) return;
   var el=document.getElementById(id);
   if(el && el.classList && el.classList.contains('card')) return go(el);
-  if((n||0)<80) setTimeout(function(){jump(id,(n||0)+1);},250);
+  if((n||0)<100) setTimeout(function(){jump(id,(n||0)+1);},200);
  }
  function fromHash(){
   var h=(location.hash||'').replace(/^#/,''); if(!h) return;
   try{ h=decodeURIComponent(h); }catch(e){}
   jump(h,0);
  }
- if(location.hash) setTimeout(fromHash,250);
+ if(location.hash) setTimeout(fromHash,200);
  window.addEventListener('hashchange',fromHash);
 })();
 </script>

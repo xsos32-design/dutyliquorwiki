@@ -1,6 +1,6 @@
 /* ===========================================================
    小韋 · 免稅賣場工具組 共用連結列
-   五站共用：改這一支，所有網頁同時更新
+   六站共用：改這一支，所有網頁同時更新
    https://xsos32-design.github.io/dutyliquorwiki/nav.js
    =========================================================== */
 (function(){
@@ -16,21 +16,26 @@
     u:'https://xsos32-design.github.io/promotion/card.html'}
   ]},
   {g:'巧克力', items:[
-   {k:'choc',  t:'巧克力速讀檔案',   s:'172 項・折扣專區＋小卡',   ico:'🍫',
-    u:'https://xsos32-design.github.io/chocolatewiki/'}
+   {k:'choc',   t:'巧克力商品完整檔案', s:'172 項・9 大類・話術／商訓', ico:'🍫',
+    u:'https://xsos32-design.github.io/chocolatewiki/'},
+   {k:'cpromo', t:'活動比較卡',         s:'檔期異動・上下月比較',       ico:'🔁',
+    u:'https://xsos32-design.github.io/chocolatepromo/'},
+   {k:'ccard',  t:'折扣小卡',           s:'現場快查・折扣一覽',         ico:'🏷',
+    u:'https://xsos32-design.github.io/chocolatepromo/card.html'}
   ]}
  ];
  var OWNER='小韋';
 
  function here(){
   var p=location.pathname.toLowerCase();
+  if(/chocolatepromo/.test(p)) return /card\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
   if(/dutyliquorwiki/.test(p)) return 'wiki';
   if(/card\.html$/.test(p))    return 'card';
   if(/promotion/.test(p))      return 'promo';
   return '';
  }
- var CUR=here(), CHOC=(CUR==='choc');
+ var CUR=here(), CHOC=(CUR==='choc'||CUR==='cpromo'||CUR==='ccard');
 
  /* 兩條產品線各自的底色，讓連結列與所在網頁同色系 */
  var T = CHOC

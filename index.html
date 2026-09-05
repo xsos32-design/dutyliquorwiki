@@ -1353,21 +1353,44 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 
 
 <script>
-/* ── 由「活動比較卡」點商品連結跳進來：#商品id ── */
+/* ── 由「活動比較卡」點商品連結跳進來：#商品id → 只顯示該支 ── */
 (function(){
  if(window.xwJumpHash) return; window.xwJumpHash=1;
  var st=document.createElement('style');
- st.textContent='@keyframes xwpop{0%{box-shadow:0 0 0 0 rgba(232,161,60,0)}'
-  +'18%{box-shadow:0 0 0 5px rgba(232,161,60,.85),0 0 46px rgba(232,161,60,.5)}'
-  +'100%{box-shadow:0 0 0 0 rgba(232,161,60,0)}}'
-  +'#list .card.xwjumped{animation:xwpop 2.2s ease-out 1;border-color:rgba(232,161,60,.8)!important}';
+ st.textContent=
+  '#list.xwsolo > .card{display:none!important}'
+ +'#list.xwsolo > .card.xwtarget{display:block!important}'
+ +'#list .card.xwtarget{border-color:rgba(232,161,60,.85)!important;box-shadow:0 0 0 1px rgba(232,161,60,.35),0 18px 50px -28px rgba(232,161,60,.7)}'
+ +'#xwsolobar{position:fixed;left:50%;transform:translateX(-50%);z-index:90;display:none;'
+ +'align-items:center;gap:11px;padding:9px 10px 9px 15px;border-radius:999px;'
+ +'background:rgba(11,20,32,.97);border:1px solid rgba(232,161,60,.55);color:#F0E3C8;'
+ +'font:13px/1.2 "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;'
+ +'box-shadow:0 14px 40px -16px rgba(0,0,0,.85);max-width:94vw;'
+ +'bottom:calc(96px + env(safe-area-inset-bottom))}'
+ +'#xwsolobar.show{display:flex}#xwsolobar b{color:#E8CD8A}'
+ +'#xwsolobar button{background:rgba(232,161,60,.18);border:1px solid rgba(232,161,60,.55);'
+ +'color:#FFDFA6;border-radius:999px;padding:7px 13px;font:inherit;cursor:pointer;white-space:nowrap}'
+ +'#xwsolobar button:hover{background:rgba(232,161,60,.32)}'
+ +'@media print{#xwsolobar{display:none!important}#list.xwsolo > .card{display:none!important}}';
  document.head.appendChild(st);
- var abort=false, timer=null;
- function stop(){abort=true; clearInterval(timer);}
- ['wheel','touchstart','keydown','mousedown'].forEach(function(ev){
-  window.addEventListener(ev,function(){ if(lock) stop(); },{passive:true});
- });
- var lock=false;
+
+ var bar=document.createElement('div');
+ bar.id='xwsolobar';
+ bar.innerHTML='<span>由<b>活動比較卡</b>開啟　·　目前只顯示這 1 支</span>'
+   +'<button type="button" id="xwsoloall">顯示全部</button>';
+ function ready(fn){ if(document.body) fn(); else document.addEventListener('DOMContentLoaded',fn); }
+ ready(function(){ document.body.appendChild(bar); });
+
+ function list(){ return document.getElementById('list'); }
+ function exitSolo(){
+  var L=list(); if(!L) return;
+  if(!L.classList.contains('xwsolo')) return;
+  L.classList.remove('xwsolo');
+  bar.classList.remove('show');
+  try{ if(window.apply) window.apply(); }catch(e){}
+ }
+ window.xwExitSolo=exitSolo;
+
  function headH(){var xw=document.getElementById('xwbar');
   return (window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0)+12;}
  function place(el){
@@ -1375,30 +1398,37 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   y=Math.max(0,Math.round(y));
   try{ window.scrollTo({top:y,behavior:'auto'}); }catch(e){ window.scrollTo(0,y); }
  }
- function go(el){
-  try{ if(el.style.display==='none') el.style.display=''; }catch(e){}
-  abort=false; lock=true; clearInterval(timer);
+ function solo(el){
+  var L=list(); if(!L) return;
+  var old=L.querySelectorAll('.card.xwtarget');
+  for(var i=0;i<old.length;i++) old[i].classList.remove('xwtarget');
+  el.classList.add('xwtarget');
+  L.classList.add('xwsolo');
+  bar.classList.add('show');
+  document.body.classList.remove('open');
   place(el);
-  el.classList.remove('xwjumped'); void el.offsetWidth; el.classList.add('xwjumped');
-  var t0=Date.now(), stable=0;
-  timer=setInterval(function(){
-   if(abort||Date.now()-t0>16000){ clearInterval(timer); lock=false; return; }
-   var d=Math.abs(el.getBoundingClientRect().top-headH());
-   if(d>4){ stable=0; place(el); }
-   else if(++stable>=6){ clearInterval(timer); lock=false; }
-  },350);
+  setTimeout(function(){place(el);},260);
+  setTimeout(function(){place(el);},900);
  }
  function jump(id,n){
   if(!id) return;
   var el=document.getElementById(id);
-  if(el && el.classList && el.classList.contains('card')) return go(el);
-  if((n||0)<100) setTimeout(function(){jump(id,(n||0)+1);},200);
+  if(el && el.classList && el.classList.contains('card')) return solo(el);
+  if((n||0)<120) setTimeout(function(){jump(id,(n||0)+1);},200);
  }
  function fromHash(){
-  var h=(location.hash||'').replace(/^#/,''); if(!h) return;
+  var h=(location.hash||'').replace(/^#/,''); if(!h) return exitSolo();
   try{ h=decodeURIComponent(h); }catch(e){}
   jump(h,0);
  }
+ document.addEventListener('click',function(e){
+  var t=e.target;
+  if(t && (t.id==='xwsoloall' || (t.closest && t.closest('#xwsoloall')))){ e.preventDefault(); exitSolo(); return; }
+  if(t && t.closest && (t.closest('.fbtn')||t.closest('#fdock')||t.closest('#fpanel')||t.closest('#menu'))) exitSolo();
+ },true);
+ document.addEventListener('keydown',function(e){ if(e.key==='Escape') exitSolo(); });
+ document.addEventListener('input',function(e){ if(e.target && (e.target.id==='q'||e.target.id==='pq')) exitSolo(); },true);
+
  if(location.hash) setTimeout(fromHash,200);
  window.addEventListener('hashchange',fromHash);
 })();

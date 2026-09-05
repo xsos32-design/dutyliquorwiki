@@ -1410,11 +1410,24 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   setTimeout(function(){place(el);},260);
   setTimeout(function(){place(el);},900);
  }
+ var forcing=false;
+ function forceBuild(id){
+  if(forcing) return; forcing=true;
+  var L=document.getElementById('list');
+  if(!L || typeof window.chunkInto!=='function' || typeof window.P==='undefined'){forcing=false;return;}
+  var guard=0;
+  var t=setInterval(function(){
+   if(document.getElementById(id)||window.BUILDI>=window.P.length||guard++>200){clearInterval(t);forcing=false;return;}
+   try{ window.BUILDI=window.chunkInto(L,window.BUILDI,80); }catch(e){ clearInterval(t); forcing=false; }
+  },30);
+ }
  function jump(id,n){
   if(!id) return;
   var el=document.getElementById(id);
   if(el && el.classList && el.classList.contains('card')) return solo(el);
-  if((n||0)<120) setTimeout(function(){jump(id,(n||0)+1);},200);
+  n=n||0;
+  if(n===4) forceBuild(id);
+  if(n<800) setTimeout(function(){jump(id,n+1);},200);
  }
  function fromHash(){
   var h=(location.hash||'').replace(/^#/,''); if(!h) return exitSolo();

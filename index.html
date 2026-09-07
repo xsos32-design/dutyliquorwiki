@@ -318,9 +318,14 @@ var AXN=['甜潤','果香','清爽','木質苦','煙燻','辛香','酒體','酒�
 var AXI=['\u{1F36F}','\u{1F351}','\u{1F34B}','\u{1F330}','\u{1F525}','\u{1F336}','\u{1FAD7}','\u{1F943}'];
 var AXH=['蜂蜜焦糖糖漬那一掛','新鮮水果與果乾','柑橘酸度、清新乾淨','木質、單寧、可可的乾苦感','泥煤煙燻與藥水碘味','肉桂胡椒薑等香料','入口的厚薄與份量','酒精濃度帶來的嗆度'];
 function scoreBox(p){
- var q=p.tsq?1:0;
- var h='<div class="scbox"><div class="schd"><b>\u{1F4CA} 口感評分</b><u>0–5 分・由本檔案的官方風味描述推算</u>'
-  +(q?'<i class="scwarn">\u26a0 文案資訊少，僅供參考</i>':'')+'</div><div class="scrows">';
+ var q=p.tsq?1:0, sm='';
+ for(var i=0;i<8;i++){ var v=p.tsc[i]; sm+='<i class="a'+i+(v===0?' z':'')+'">'+AXI[i]+(v===0?'–':v)+'</i>'; }
+ return '<div class="scbox sc-mini" data-sc="'+p.id+'"><div class="schd"><b>\u{1F4CA} 口感評分</b>'
+  +'<span class="scsum">'+sm+'</span>'+(q?'<i class="scwarn">\u26a0 文案少</i>':'')
+  +'<u class="scmore">展開 \u25BE</u></div></div>';
+}
+function scoreRows(p){
+ var h='<div class="scrows">';
  for(var i=0;i<8;i++){
   var v=p.tsc[i], ev=(p.tse&&p.tse[i])||'';
   var dots='';
@@ -329,7 +334,7 @@ function scoreBox(p){
    +'<span class="scd">'+dots+'</span><b class="scv'+(v===0?' z':'')+'">'+(v===0?'–':v)+'</b>'
    +'<i class="sce">'+esc(v===0?'文案未描述':(ev||'綜合判定'))+'</i></div>';
  }
- return h+'</div></div>';
+ return h+'<div class="scnote">0–5 分由本檔案的官方風味描述＋酒精度＋桶型推算；「–」代表文案沒提到。</div></div>';
 }
 function card(p){
  var h='<section class="card" id="'+p.id+'"><div class="chead"><div class="shots">';
@@ -338,7 +343,7 @@ function card(p){
  if(p.poster) h+='<div class="shot"><a href="'+esc(p.poster)+'" target="_blank"><img loading="lazy" src="'+esc(p.poster)+'" alt="'+esc(p.nameZh)+'"></a><span class="lbl">原廠文宣（點開）</span></div>';
  if(!p.photo&&!p.shot) h+='<div class="shot dead">實品圖待補</div>';
  h+='</div><div class="meta"><div class="eyebrow"><span class="no">'+p.no+'</span><span class="cat">'+esc(p.cat)+'</span>'
-   +(p.dfLimited?'<span class="cat" style="border-color:rgba(201,164,92,.9);background:rgba(201,164,92,.12)">'+esc(p.dfText||'免稅限定')+'</span>':'')+'<button type="button" class="shb" data-sh="'+p.id+'">\u002B 在架上</button></div>';
+   +(p.dfLimited?'<span class="cat" style="border-color:rgba(201,164,92,.9);background:rgba(201,164,92,.12)">'+esc(p.dfText||'免稅限定')+'</span>':'')+'<button type="button" class="shb'+((window.SHELF&&window.SHELF[p.id])?' on':'')+'" data-sh="'+p.id+'">'+((window.SHELF&&window.SHELF[p.id])?'\u2714 在架上':'\u002B 在架上')+'</button></div>';
  h+='<div class="zh">'+esc(p.nameZh)+'</div><div class="en">'+esc(p.nameEn)+'</div><div class="specs">';
  var o=p.official||{}, mn=p.manual||{};
  function pick(a,b,c){return a||b||c||'';}
@@ -1833,7 +1838,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 <div id="shview">
  <div class="shwrap">
   <h1>🏬 我的架上 · 學習模式</h1>
-  <p class="shdesc">勾選你這一櫃實際有貨的品項，這裡只練這些。清單存在這支手機的瀏覽器裡，換手機請用下方的匯出碼帶走。</p>
+  <p class="shdesc">勾選你這一櫃實際有貨的品項，這裡只練這些。要移除：按下方清單的 ✕，或回商品卡再按一次「✔ 在架上」。清單存在這支手機的瀏覽器裡，換手機請用下方的匯出碼帶走。</p>
   <div id="shstat" class="shstat"></div>
   <div class="shbtns">
    <button type="button" id="shonly" class="shbig">🔎 只看我勾的品項</button>
@@ -1919,10 +1924,11 @@ body.shon #main,body.shon #kbview{display:none}
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
 
  /* --- 卡片按鈕狀態 --- */
- function paint(){
-  [].forEach.call(document.querySelectorAll('.shb'),function(b){
+ function paint(id){
+  var sel=id?'.shb[data-sh="'+id+'"]':'.shb';
+  [].forEach.call(document.querySelectorAll(sel),function(b){
    var on=!!window.SHELF[b.getAttribute('data-sh')];
-   b.classList.toggle('on',on); b.textContent=on?'✔ 在架上':'+ 在架上';
+   b.classList.toggle('on',on); b.textContent=on?'\u2714 在架上':'+ 在架上';
   });
   var n=ids().length;
   var f=document.querySelector('.fbtn[data-f="shelf"]');
@@ -1933,14 +1939,18 @@ body.shon #main,body.shon #kbview{display:none}
  window.shelfPaint=paint;
  var L=document.getElementById('list');
  if(L)L.addEventListener('click',function(e){
+  var m=e.target.closest?e.target.closest('.sc-mini'):null;
+  if(m){ var pp=byId[m.getAttribute('data-sc')]; if(pp){ m.classList.remove('sc-mini');
+   m.querySelector('.scmore').remove(); m.insertAdjacentHTML('beforeend',scoreRows(pp)); } return; }
   var b=e.target.closest?e.target.closest('.shb'):null; if(!b)return;
   e.preventDefault(); e.stopPropagation();
   var id=b.getAttribute('data-sh');
   if(window.SHELF[id])delete window.SHELF[id]; else window.SHELF[id]=1;
-  save(); paint(); render();
+  save(); paint(id); render();
+  var f=document.querySelector('.fbtn[data-f="shelf"]');
+  if(f&&f.classList.contains('on')){try{window.apply();}catch(e){}}
  });
- var mo=new MutationObserver(function(){paint();});
- if(L)mo.observe(L,{childList:true});
+
 
  /* --- 面板 --- */
  var V=document.getElementById('shview');
@@ -1965,7 +1975,7 @@ body.shon #main,body.shon #kbview{display:none}
   var lw=document.getElementById('shlist');
   if(!a.length){lw.innerHTML='<div class="shempty">還沒有勾選任何品項。<br>回到商品列表，在每張卡片右上角按「＋ 在架上」。</div>';return;}
   lw.innerHTML=a.map(function(k){var p=byId[k];
-   return '<div class="shi" data-go="'+k+'"><b>'+esc2(p.nameZh)+'</b><em>'+p.no+
+   return '<div class="shi" data-go="'+k+'"><button type="button" class="shx" data-x="'+k+'" title="從架上移除">\u2715</button><b>'+esc2(p.nameZh)+'</b><em>'+p.no+
     (p.abv?'　'+esc2(p.abv):'')+'</em></div>';}).join('');
  }
  function render(){ if(document.body.classList.contains('shon'))stat(); }
@@ -2042,6 +2052,10 @@ body.shon #main,body.shon #kbview{display:none}
   if(f&&!f.classList.contains('on'))f.click();
   window.scrollTo({top:0,behavior:'smooth'});});
  document.getElementById('shlist').addEventListener('click',function(e){
+  var x=e.target.closest?e.target.closest('.shx'):null;
+  if(x){ var k=x.getAttribute('data-x'); delete window.SHELF[k]; save(); paint(k); stat();
+   var f=document.querySelector('.fbtn[data-f="shelf"]'); if(f&&f.classList.contains('on')){try{window.apply();}catch(e2){}}
+   return; }
   var i=e.target.closest?e.target.closest('.shi'):null; if(!i)return;
   document.body.classList.remove('shon');
   var d=document.getElementById('dsh'); if(d)d.classList.remove('on');
@@ -2063,8 +2077,22 @@ body.shon #main,body.shon #kbview{display:none}
    window.scrollTo({top:0,behavior:'smooth'});
   });
  }
- setTimeout(paint,400); setTimeout(paint,1500); paint();
+ paint();
 })();
 </script>
+
+<style>
+.sc-mini{cursor:pointer}
+.sc-mini .schd{margin-bottom:0}
+.scsum{display:inline-flex;flex-wrap:wrap;gap:3px 7px;font-size:11.5px;color:#E6D9BE}
+.scsum i{font-style:normal;font-variant-numeric:tabular-nums}
+.scsum i.z{opacity:.45}
+.scmore{margin-left:auto;text-decoration:none;font-size:11px;color:var(--gold2,#E8CD8A);white-space:nowrap}
+.scnote{grid-column:1/-1;margin-top:6px;font-size:10.5px;color:var(--dim2);line-height:1.5}
+.shlist .shi{position:relative;padding-right:34px}
+.shx{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:50%;cursor:pointer;
+ border:1px solid rgba(255,140,140,.4);background:rgba(255,90,90,.10);color:#FFC4C4;font-size:12px;line-height:1}
+.shx:hover{background:rgba(255,90,90,.25)}
+</style>
 </body>
 </html>

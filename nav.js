@@ -13,7 +13,9 @@
    {k:'promo', t:'活動比較卡',       s:'檔期異動・上下月比較',     ico:'🔁',
     u:'https://xsos32-design.github.io/promotion/'},
    {k:'card',  t:'折扣小卡',         s:'現場快查・折扣一覽',       ico:'🏷',
-    u:'https://xsos32-design.github.io/promotion/card.html'}
+    u:'https://xsos32-design.github.io/promotion/card.html'},
+   {k:'shelf', t:'我的架上',         s:'本月目標・獎勵・抽考',     ico:'🏬',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/#shelf'}
   ]},
   {g:'巧克力', items:[
    {k:'choc',   t:'巧克力商品完整檔案', s:'172 項・9 大類・話術／商訓', ico:'🍫',
@@ -21,7 +23,9 @@
    {k:'cpromo', t:'活動比較卡',         s:'檔期異動・上下月比較',       ico:'🔁',
     u:'https://xsos32-design.github.io/chocolatepromo/'},
    {k:'ccard',  t:'折扣小卡',           s:'現場快查・折扣一覽',         ico:'🏷',
-    u:'https://xsos32-design.github.io/chocolatepromo/card.html'}
+    u:'https://xsos32-design.github.io/chocolatepromo/card.html'},
+   {k:'cshelf', t:'我的架上',           s:'出清目標・Push Money・抽考', ico:'🏬',
+    u:'https://xsos32-design.github.io/chocolatewiki/#shelf'}
   ]}
  ];
  var OWNER='小韋';
@@ -100,6 +104,13 @@
   h+='<span class="xwown">製作／整理　<b>'+OWNER+'</b>　<i>⚠ 內部使用</i></span>';
   bar.innerHTML=h;
   document.body.insertBefore(bar,document.body.firstChild);
+  bar.addEventListener('click',function(e){
+   var a=e.target.closest?e.target.closest('a.xwa'):null; if(!a)return;
+   if(!/#shelf$/.test(a.getAttribute('href')))return;
+   var same=(CUR==='wiki'&&/dutyliquorwiki/.test(a.href))||(CUR==='choc'&&/chocolatewiki/.test(a.href));
+   if(same){ e.preventDefault(); var d=document.getElementById('dsh');
+    if(d){ if(!document.body.classList.contains('shon'))d.click(); window.scrollTo({top:0,behavior:'smooth'}); } }
+  });
 
   function h2(){document.documentElement.style.setProperty('--xwh',bar.offsetHeight+'px');}
   h2(); window.addEventListener('resize',h2); setTimeout(h2,300);

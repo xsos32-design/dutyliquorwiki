@@ -1773,8 +1773,9 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   <p class="shdesc">勾選你這一櫃實際有貨的品項，這裡只練這些。要移除：按下方清單的 ✕，或回商品卡再按一次「✔ 在架上」。清單存在這支手機的瀏覽器裡，換手機請用下方的匯出碼帶走。</p>
   <div id="shstat" class="shstat"></div>
   <div class="shbtns">
+   <button type="button" id="shdocbtn" class="shbig gold">📋 全部資料一次看</button>
    <button type="button" id="shonly" class="shbig">🔎 只看我勾的品項</button>
-   <button type="button" id="shquiz" class="shbig gold">🎯 開始抽考</button>
+   <button type="button" id="shquiz" class="shbig">🎯 開始抽考</button>
   </div>
   <div id="shquizbox" class="shquiz" hidden>
    <div class="shq"><b id="shqname"></b><span id="shqask"></span></div>
@@ -1799,6 +1800,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   </div>
   <div id="shlist" class="shlist"></div>
  </div>
+ <div id="shdoc" hidden></div>
 </div>
 <style>
 body.shon #shview{display:block}
@@ -1844,6 +1846,56 @@ body.shon #main,body.shon #kbview{display:none}
 .shb.on{border-color:rgba(126,219,166,.65);background:rgba(126,219,166,.15);color:#9FE9C0}
 .eyebrow{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .shf{border-color:rgba(126,219,166,.45)!important}
+/* ===== 我的架上：全部資料一次看 ===== */
+#shview.docon .shwrap{display:none}
+#shdoc{padding:0 0 120px}
+#shdoc .dbar{position:sticky;top:0;z-index:5;display:flex;flex-wrap:wrap;gap:8px;align-items:center;
+ padding:12px 0 12px;margin-bottom:10px;background:linear-gradient(180deg,rgba(6,13,24,.99) 70%,rgba(6,13,24,0));
+ border-bottom:1px solid rgba(201,164,92,.22)}
+#shdoc .dbar .dcount{font-size:12.5px;color:var(--gold2);margin-right:auto;white-space:nowrap}
+#shdoc .dbar .dcount b{font-family:'Cormorant Garamond',serif;font-size:19px}
+#shdoc .dbtn{font-size:12.5px;padding:7px 12px;white-space:nowrap;border-radius:9px;cursor:pointer;
+ border:1px solid rgba(201,164,92,.45);background:rgba(201,164,92,.10);color:var(--gold2)}
+#shdoc .dbtn:hover{background:rgba(201,164,92,.22)}
+#shdoc .dbtn.on{background:linear-gradient(180deg,rgba(201,164,92,.40),rgba(201,164,92,.22));color:#FBF1DC}
+#shdoc .dempty{padding:40px 10px;text-align:center;color:var(--dim2);font-size:14px;line-height:2}
+#shdoc .dgrp{font-family:'Noto Serif TC',serif;font-size:15px;color:#E8CD8A;margin:22px 0 8px;
+ padding-bottom:6px;border-bottom:1px solid rgba(201,164,92,.25)}
+#shdoc .di{border:1px solid rgba(201,164,92,.22);border-radius:12px;padding:13px 15px;margin-bottom:11px;
+ background:rgba(10,18,28,.55);break-inside:avoid}
+#shdoc .dh{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:6px}
+#shdoc .dno{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--dim2);
+ border:1px solid rgba(201,164,92,.3);border-radius:6px;padding:1px 7px}
+#shdoc .dzh{font-family:'Noto Serif TC',serif;font-size:17px;color:#F2E4C8;line-height:1.4}
+#shdoc .den{font-size:11.5px;color:var(--dim2);width:100%}
+#shdoc .dpill{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}
+#shdoc .dpill span{font-size:11.5px;padding:3px 9px;border-radius:999px;
+ border:1px solid rgba(201,164,92,.35);color:var(--gold2)}
+#shdoc .dpill span.hot{border-color:rgba(255,120,120,.6);background:rgba(255,90,90,.14);color:#FFC9C9;font-weight:700}
+#shdoc .dpill span.warn{border-color:rgba(255,140,140,.55);background:rgba(255,90,90,.10);color:#FFC4C4}
+#shdoc .dpill span.tg{border-color:rgba(255,196,80,.5);background:rgba(255,196,80,.12);color:#FFE2A0}
+#shdoc .dpill span.rw{border-color:rgba(126,219,166,.5);background:rgba(126,219,166,.10);color:#9FE9C0}
+#shdoc .dpos{font-family:'Noto Serif TC',serif;font-size:14px;color:#E8CD8A;line-height:1.75;margin:6px 0}
+#shdoc .dl{display:grid;grid-template-columns:62px 1fr;gap:8px;font-size:12.5px;line-height:1.85;margin-top:4px}
+#shdoc .dl>span{color:var(--dim2);letter-spacing:1px}
+#shdoc .dl>div{color:#E2D6C2;min-width:0}
+#shdoc .dtalk{margin-top:8px;padding:9px 11px;border-left:3px solid rgba(201,164,92,.6);
+ background:rgba(201,164,92,.07);border-radius:0 8px 8px 0;font-size:12.5px;line-height:1.9;color:#EADDCB}
+#shdoc .dsc{display:flex;flex-wrap:wrap;gap:5px;margin-top:7px}
+#shdoc .dsc i{font-style:normal;font-size:11.5px;color:var(--gold2);border:1px solid rgba(201,164,92,.25);
+ border-radius:6px;padding:2px 6px}
+#shdoc .dsc i.z{opacity:.35}
+#shdoc .more{display:none}
+#shdoc.full .more{display:block}
+#shdoc.full .dsc.more{display:flex}
+@media print{
+ body.shon #fdock,body.shon #ftop,body.shon #fback,body.shon #pnwrap,body.shon #xwbar,
+ body.shon #shdoc .dbar{display:none!important}
+ #shdoc .di{border-color:#999;background:#fff;color:#111;break-inside:avoid}
+ #shdoc .dzh,#shdoc .dpos,#shdoc .dgrp{color:#111}
+ #shdoc .dl>div,#shdoc .dtalk{color:#222;background:none}
+}
+
 </style>
 <script>
 (function(){
@@ -2238,6 +2290,124 @@ document.addEventListener('click',function(e){
  });
  window.addEventListener('scroll',function(){ if(!btn.classList.contains('show')) render(); },{passive:true});
  render();
+})();
+</script>
+
+<script>
+/* ===== 我的架上 · 全部資料一次看 ===== */
+(function(){
+ var box=document.getElementById('shdoc'), btn=document.getElementById('shdocbtn');
+ if(!box||!btn||typeof P==='undefined') return;
+ var view=document.getElementById('shview');
+ var ICO=['\u{1F36F}','\u{1F351}','\u{1F34B}','\u{1F330}','\u{1F525}','\u{1F336}','\u{1FAD7}','\u{1F943}'];
+ var LBL=['甜潤','果香','清爽','木質苦','煙燻','辛香','酒體','酒感'];
+ var MAP={}; try{P.forEach(function(p){MAP[p.id]=p;});}catch(e){}
+ function E(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){
+  return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+ function ids(){return Object.keys(window.SHELF||{}).filter(function(k){return window.SHELF[k]&&MAP[k];});}
+ function L(k,v,cls){return v?'<div class="dl'+(cls?' '+cls:'')+'"><span>'+E(k)+'</span><div>'+E(v)+'</div></div>':'';}
+
+ function talkOf(p){
+  var t=(p.fab&&p.fab.talk)||(p.fab2&&p.fab2.talk)||(p.manual&&p.manual.talk)||'';
+  return t;
+ }
+ function item(p){
+  var s=p.shop||{}, h='';
+  h+='<div class="di"><div class="dh"><span class="dno">'+E(p.no||'')+'</span>'
+   + '<span class="dzh">'+E(p.nameZh||'')+'</span>'
+   + (p.nameEn?'<span class="den">'+E(p.nameEn)+'</span>':'')+'</div>';
+
+  /* 價格與標記 */
+  var pl=[];
+  if(s.pct>0&&s.sale&&s.price&&s.sale<s.price){
+   pl.push('<span class="hot">特價 NT$'+Number(s.sale).toLocaleString()+'</span>');
+   pl.push('<span>原價 NT$'+Number(s.price).toLocaleString()+'</span>');
+  } else if(s.price){ pl.push('<span>售價 NT$'+Number(s.price).toLocaleString()+'</span>'); }
+  else if(p.price){ pl.push('<span>'+E(p.price)+'</span>'); }
+  if(s.ean&&s.ean.length) pl.push('<span>品號 '+E(s.ean[0])+'</span>');
+  if(p.dfText) pl.push('<span>'+E(p.dfText)+'</span>');
+  if(p.no95&&p.no95.length) pl.push('<span class="warn">\u{1F6AB} 不可 95 折</span>');
+  if(p.tg) pl.push('<span class="tg">\u{1F3AF} 業績目標</span>');
+  if(p.rw) pl.push('<span class="rw">\u{1F4B0} 銷售獎勵</span>');
+  if(pl.length) h+='<div class="dpill">'+pl.join('')+'</div>';
+
+  if(p.pos) h+='<div class="dpos">'+E(p.pos)+'</div>';
+
+  h+=L('規格',[p.abv,p.vol,p.cat].filter(Boolean).join('　·　'));
+  h+=L('產區',[p.region,p.brand,p.group].filter(Boolean).join('　·　'));
+  h+=L('木桶',p.casks);
+  if(p.tg) h+=L('目標',p.tg);
+  if(p.rw) h+=L('獎勵',p.rw);
+  if(p.no95&&p.no95.length) h+=L('折扣',' \u{1F6AB} '+p.no95.join('、')+'（不可員購 9／95 折・聯名卡 95 折）');
+  if(p.promo&&p.promo.length) h+=L('促銷',p.promo.map(function(x){return x.t+(x.sub?'（'+x.sub+'）':'');}).join('；'));
+
+  /* 口感評分 */
+  if(p.tsc&&p.tsc.length===8){
+   var sc='';
+   for(var i=0;i<8;i++){var v=p.tsc[i];sc+='<i class="'+(v===0?'z':'')+'">'+ICO[i]+LBL[i]+(v===0?'–':v)+'</i>';}
+   h+='<div class="dsc">'+sc+'</div>';
+  }
+
+  var tk=talkOf(p);
+  if(tk) h+='<div class="dtalk">'+E(tk)+'</div>';
+
+  /* 完整模式才顯示 */
+  if(p.notes&&p.notes.length)
+   h+='<div class="more">'+p.notes.map(function(n){return L(n.k||'補充',n.v);}).join('')+'</div>';
+  if(p.points&&p.points.length) h+='<div class="more">'+L('重點','・'+p.points.join('　・'))+'</div>';
+  if(p.tips&&p.tips.length)
+   h+='<div class="more">'+p.tips.map(function(n){return L(n.k||'提醒',n.v);}).join('')+'</div>';
+  if(p.food) h+='<div class="more">'+L('餐搭',p.food)+'</div>';
+  if(p.scenes&&p.scenes.length) h+='<div class="more">'+L('場合',p.scenes.join('、'))+'</div>';
+
+  h+='</div>';
+  return h;
+ }
+
+ function build(){
+  var L2=ids().map(function(k){return MAP[k];});
+  L2.sort(function(a,b){
+   var c=String(a.cat||'').localeCompare(String(b.cat||''),'zh-Hant');
+   if(c)return c;
+   return String(a.no||'').localeCompare(String(b.no||''),'en',{numeric:true});
+  });
+  var head='<div class="dbar">'
+   +'<button type="button" class="dbtn on" id="dback">←</button>'
+   +'<span class="dcount">共 <b>'+L2.length+'</b> 支</span>'
+   +'<button type="button" class="dbtn" id="dfull">顯示完整</button>'
+   +'<button type="button" class="dbtn" id="dprint">\u{1F5A8} 列印</button>'
+   +'</div>';
+  if(!L2.length){
+   box.innerHTML=head+'<div class="dempty">架上還沒有品項。<br>回商品卡按「＋ 在架上」勾選你這一櫃有貨的酒，再回來這裡一次看完。</div>';
+  } else {
+   var out='', cur='';
+   L2.forEach(function(p){
+    if(p.cat!==cur){cur=p.cat||'';out+='<div class="dgrp">'+E(cur)+'</div>';}
+    out+=item(p);
+   });
+   box.innerHTML=head+out;
+  }
+  document.getElementById('dback').addEventListener('click',close);
+  document.getElementById('dprint').addEventListener('click',function(){window.print();});
+  var fb=document.getElementById('dfull');
+  fb.classList.toggle('on',box.classList.contains('full'));
+  fb.textContent=box.classList.contains('full')?'顯示精簡':'顯示完整';
+  fb.addEventListener('click',function(){
+   var f=box.classList.toggle('full');
+   fb.classList.toggle('on',f);
+   fb.textContent=f?'顯示精簡':'顯示完整';
+  });
+ }
+ function open(){ build(); box.hidden=false; view.classList.add('docon');
+  window.scrollTo({top:0,behavior:'auto'}); }
+ function close(){ box.hidden=true; view.classList.remove('docon');
+  window.scrollTo({top:0,behavior:'auto'}); }
+ btn.addEventListener('click',open);
+ /* 關閉我的架上面板時一併收起 */
+ var dsh=document.getElementById('dsh');
+ if(dsh) dsh.addEventListener('click',function(){ if(!document.body.classList.contains('shon')) close(); });
+ document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!box.hidden) close(); });
+ window.xwShelfDocClose=close;
 })();
 </script>
 </body>

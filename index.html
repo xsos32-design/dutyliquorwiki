@@ -1866,6 +1866,8 @@ body.shon #main,body.shon #kbview{display:none}
 #shdoc .dh{display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;margin-bottom:6px}
 #shdoc .dno{font-family:'Cormorant Garamond',serif;font-size:13px;color:var(--dim2);
  border:1px solid rgba(201,164,92,.3);border-radius:6px;padding:1px 7px}
+#shdoc .dyr{font-family:'Cormorant Garamond',serif;font-size:13px;color:#E8CD8A;border:1px solid rgba(201,164,92,.5);background:rgba(201,164,92,.12);border-radius:6px;padding:1px 8px}
+#shdoc .dyr.vin{color:#BFDCFF;border-color:rgba(126,180,255,.5);background:rgba(126,180,255,.10)}
 #shdoc .dzh{font-family:'Noto Serif TC',serif;font-size:17px;color:#F2E4C8;line-height:1.4}
 #shdoc .den{font-size:11.5px;color:var(--dim2);width:100%}
 #shdoc .dpill{display:flex;flex-wrap:wrap;gap:6px;margin:7px 0}
@@ -2302,6 +2304,18 @@ document.addEventListener('click',function(e){
  var ICO=['\u{1F36F}','\u{1F351}','\u{1F34B}','\u{1F330}','\u{1F525}','\u{1F336}','\u{1FAD7}','\u{1F943}'];
  var LBL=['甜潤','果香','清爽','木質苦','煙燻','辛香','酒體','酒感'];
  var MAP={}; try{P.forEach(function(p){MAP[p.id]=p;});}catch(e){}
+ /* --- 年份解析：先抓「年數」，沒有再抓「年份（西元）」 --- */
+ var RE_AGE=/(?:^|[^\d])(\d{1,3})\s*(?:年(?!份)|Years?\s*Old|Years?\b|YO\b|Y\b)/i;
+ var RE_VIN=/(?:^|[^\d])(19\d{2}|20[0-2]\d)(?:[^\d]|$)/;
+ var YR={};
+ function yr(p){
+  if(YR[p.id]) return YR[p.id];
+  var s=(p.nameZh||'')+' '+(p.nameEn||'');
+  var m=RE_AGE.exec(s), r;
+  if(m) r={r:0,v:parseInt(m[1],10),t:m[1]+' 年'};
+  else { var v=RE_VIN.exec(s); r = v ? {r:1,v:parseInt(v[1],10),t:v[1]+' 年份'} : {r:2,v:0,t:''}; }
+  return (YR[p.id]=r);
+ }
  function E(t){return String(t==null?'':t).replace(/[&<>"]/g,function(c){
   return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
  function ids(){return Object.keys(window.SHELF||{}).filter(function(k){return window.SHELF[k]&&MAP[k];});}
@@ -2313,7 +2327,9 @@ document.addEventListener('click',function(e){
  }
  function item(p){
   var s=p.shop||{}, h='';
+  var Y=yr(p);
   h+='<div class="di"><div class="dh"><span class="dno">'+E(p.no||'')+'</span>'
+   + (Y.t?'<span class="dyr'+(Y.r===1?' vin':'')+'">'+E(Y.t)+'</span>':'')
    + '<span class="dzh">'+E(p.nameZh||'')+'</span>'
    + (p.nameEn?'<span class="den">'+E(p.nameEn)+'</span>':'')+'</div>';
 
@@ -2369,6 +2385,9 @@ document.addEventListener('click',function(e){
   L2.sort(function(a,b){
    var c=String(a.cat||'').localeCompare(String(b.cat||''),'zh-Hant');
    if(c)return c;
+   var ya=yr(a), yb=yr(b);
+   if(ya.r!==yb.r) return ya.r-yb.r;          /* 有年數 → 有年份 → 無 */
+   if(ya.v!==yb.v) return ya.v-yb.v;          /* 年份小到大 */
    return String(a.no||'').localeCompare(String(b.no||''),'en',{numeric:true});
   });
   var head='<div class="dbar">'

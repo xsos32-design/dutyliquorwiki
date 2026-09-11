@@ -1557,6 +1557,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  +'box-shadow:0 14px 40px -16px rgba(0,0,0,.85);max-width:94vw;'
  +'bottom:calc(96px + env(safe-area-inset-bottom))}'
  +'#xwsolobar.show{display:flex}#xwsolobar b{color:#E8CD8A}'
+ +'#xwsolobar{padding:8px 14px}#xwsolobar span{white-space:nowrap}'
  +'#xwsolobar button{background:rgba(232,161,60,.18);border:1px solid rgba(232,161,60,.55);'
  +'color:#FFDFA6;border-radius:999px;padding:7px 13px;font:inherit;cursor:pointer;white-space:nowrap}'
  +'#xwsolobar button:hover{background:rgba(232,161,60,.32)}'
@@ -1565,8 +1566,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 
  var bar=document.createElement('div');
  bar.id='xwsolobar';
- bar.innerHTML='<span>由<b>活動比較卡</b>開啟　·　目前只顯示這 1 支</span>'
-   +'<button type="button" id="xwsoloall">顯示全部</button>';
+ bar.innerHTML='<span>由<b>活動比較卡</b>開啟　·　目前只顯示這 1 支</span>';
  function ready(fn){ if(document.body) fn(); else document.addEventListener('DOMContentLoaded',fn); }
  ready(function(){ document.body.appendChild(bar); });
 
@@ -1626,7 +1626,6 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  }
  document.addEventListener('click',function(e){
   var t=e.target;
-  if(t && (t.id==='xwsoloall' || (t.closest && t.closest('#xwsoloall')))){ e.preventDefault(); exitSolo(); return; }
   if(t && t.closest && (t.closest('.fbtn')||t.closest('#fdock')||t.closest('#fpanel')||t.closest('#menu'))) exitSolo();
  },true);
  document.addEventListener('keydown',function(e){ if(e.key==='Escape') exitSolo(); });

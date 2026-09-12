@@ -262,7 +262,7 @@ footer .src{font-size:11px;color:var(--dim2);margin-top:8px;line-height:1.7}
   </select>
  </div>
  <div id="excl" class="exclbox"></div>
- <div class="selrow"><button id="freset" type="button">清除所有篩選</button></div>
+ <div class="selrow"><button id="freset" type="button">✕ 清除全部篩選</button></div>
  <div class="cnt" id="cnt"></div>
  <div id="navlist"></div>
  <div style="padding:18px 22px 0;font-size:11px;line-height:1.75;color:var(--dim2);border-top:1px solid rgba(201,164,92,.15);margin-top:14px">
@@ -362,10 +362,21 @@ function card(p){
  if(o.casks&&p.casks&&o.casks!==p.casks) extra.push(['官方桶型（商訓）',o.casks]);
  if(mn.cask&&p.casks&&mn.cask!==p.casks) extra.push(['官方桶型（教材）',mn.cask]);
  if(mn.year) extra.push(['熟成年份（教材）',mn.year]);
- [['類別 TYPE',p.type],['產區 REGION',p.region],['酒精度 ABV',abv],['木桶 CASK',cask],
+ var _sp=[['類別 TYPE',p.type],['產區 REGION',p.region],['酒精度 ABV',abv],['木桶 CASK',cask],
   ['集團 GROUP',p.group],['過濾 FILTRATION',p.filt],['容量 VOLUME',vol],['原料 INGREDIENT',p.ingredient],
-  ['建議飲用 SERVE',p.serve]].concat(extra).forEach(function(kv){
-  if(kv[1])h+='<div class="spec"><div class="k">'+kv[0]+'</div><div class="v">'+esc(kv[1])+'</div></div>';});
+  ['建議飲用 SERVE',p.serve]].concat(extra);
+ /* 類別與產區寫的是同一件事就不要重複佔兩格 */
+ if(p.type&&p.region&&String(p.type).trim()===String(p.region).trim())
+  _sp=[['類別・產區 TYPE',p.type]].concat(_sp.slice(2));
+ /* 官方沒公開的欄位不必每個都佔一格，收成一列灰字 */
+ var _unk=[];
+ _sp.forEach(function(kv){
+  if(!kv[1])return;
+  if(/^官方未(公開|標示|列)|官方查無/.test(String(kv[1]).trim())){ _unk.push(kv[0].split(' ')[0]); return; }
+  h+='<div class="spec"><div class="k">'+kv[0]+'</div><div class="v">'+esc(kv[1])+'</div></div>';
+ });
+ if(_unk.length)h+='<div class="spec unk" style="grid-column:1/-1"><div class="k">官方未公開</div>'
+  +'<div class="v">'+_unk.join('、')+'（現場以酒標為準）</div></div>';
  h+='</div><div class="pricebar">';
  var sp=p.shop;
  if(sp&&sp.price){ if(sp.pct>0&&sp.sale&&sp.sale<sp.price){h+='<span class="pill web hot">特價 NT$'+Number(sp.sale).toLocaleString()+'</span>'+'<span class="pill was">原價 NT$'+Number(sp.price).toLocaleString()+'</span>';} else h+='<span class="pill web">售價 NT$'+Number(sp.price).toLocaleString()+'</span>'; }else{sp=null;}
@@ -423,7 +434,7 @@ function card(p){
  var NT=(p.notes||[]).slice();
  if(o.flavor&&!NT.some(function(n){return n.v===o.flavor;})) NT.push({k:'官方風味',v:o.flavor});
  if((NT.length)||(p.tips&&p.tips.length)){
-  h+='<div class="sec"><h3>品飲筆記 TASTING NOTES</h3>';
+  h+='<details class="sec fold"><summary><h3>品飲筆記 TASTING NOTES</h3></summary>';
   if(p.notesLead)h+='<div class="ntlead">'+esc(p.notesLead)+'</div>';
   NT.forEach(function(n){
    var ex=(n.k==='官方補充'||n.k==='建議飲用'||n.k==='搭餐')?' extra':'';
@@ -431,9 +442,9 @@ function card(p){
   if(p.tips&&p.tips.length){h+='<div class="tips">';
    p.tips.forEach(function(t){h+='<div><b>'+esc(t.k)+'</b><span>'+esc(t.v)+'</span></div>';});
    h+='</div>';}
-  h+='</div>';}
+  h+='</details>';}
 
- if(p.why)h+='<div class="sec"><h3>為什麼有這支酒 ORIGIN</h3><p>'+esc(p.why)+'</p></div>';
+ if(p.why)h+='<details class="sec fold"><summary><h3>為什麼有這支酒 ORIGIN</h3></summary><p>'+esc(p.why)+'</p></details>';
 
  /* ===== 銷售重點：重點＋情境＋搭餐 合一 ===== */
  var KP='';
@@ -441,7 +452,7 @@ function card(p){
  if(p.scenes&&p.scenes.length)KP+='<div class="kprow"><div class="kpk">推薦情境</div><div class="kpv"><ul class="pts">'+p.scenes.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul></div></div>';
  if(p.food)KP+='<div class="kprow"><div class="kpk">搭配推薦</div><div class="kpv"><p>'+esc(p.food)+'</p></div></div>';
  if(p.awards&&p.awards.length)KP+='<div class="kprow"><div class="kpk">得獎紀錄</div><div class="kpv"><div class="awards">'+p.awards.map(function(a){return '<span>'+esc(a)+'</span>';}).join('')+'</div></div></div>';
- if(KP)h+='<div class="sec" style="grid-column:1/-1"><h3>銷售重點 KEY POINTS</h3>'+KP+'</div>';
+ if(KP)h+='<details class="sec fold" style="grid-column:1/-1"><summary><h3>銷售重點 KEY POINTS</h3></summary>'+KP+'</details>';
 
  if(p.verify)h+='<div class="warn">⚠ '+esc(p.verify)+'</div>';
  return h+'</div></section>';
@@ -711,21 +722,21 @@ apply();
 </style>
 <div id="fmask"></div>
 <div id="fpanel">
- <div class="phead"><b>篩 選 條 件</b><span class="px" id="pclose">✕</span></div>
+ <div class="phead"><b>篩 選 條 件</b><span class="px" id="pclose" title="關閉">✕ 關閉</span></div>
+<div class="pbar"><button type="button" id="fwopen2" class="pfw" title="用風味輪挑">🎡 風味輪</button><button class="btnB" id="preset" type="button">✕ 清除全部</button><button class="btnA" id="pdone" type="button">✓ 看結果</button></div>
  <div class="pgrp"><h5>快 速 條 件</h5><div class="ptog" id="ptog"></div></div>
- <div class="pgrp"><h5>搜 尋</h5><input id="pq" type="search" placeholder="搜品名、產區、桶型、集團…" autocomplete="off"><div id="pfind"><span class="cnt2" id="pfbcnt">0 / 0</span><button id="pfbPrev" type="button">‹ 上一個</button><button id="pfbNext" type="button">下一個 ›</button><button id="pfbCard" type="button" style="flex:1 0 100%">⇥ 跳下一支酒</button></div></div>
+ <div class="pgrp" id="pqgrp"><h5>搜 尋</h5><input id="pq" type="search" placeholder="搜品名、產區、桶型、集團…" autocomplete="off"><div id="pfind"><span class="cnt2" id="pfbcnt">0 / 0</span><button id="pfbPrev" type="button">‹ 上一個</button><button id="pfbNext" type="button">下一個 ›</button><button id="pfbCard" type="button" style="flex:1 0 100%">⇥ 跳下一支酒</button></div></div>
  <div class="pgrp"><h5>價 格 ・ 排 序</h5>
   <div class="psel"><select id="pprice"></select><select id="psort"></select></div>
-  <div class="prow2" style="margin-top:8px"><button class="btnB" id="preset" type="button" style="grid-column:1/-1">清除全部</button></div>
- </div>
+   </div>
  <div class="pgrp"><h5>去 除 不 想 看 的（取消勾選即隱藏）</h5>
   <div id="excl2" class="exclbox"></div>
  </div>
- <div class="prow2"><button class="btnA" id="pdone" type="button" style="grid-column:1/-1">看結果</button></div>
+ 
 </div>
 <div id="fdock"><div class="drow" id="ddrow"></div></div>
 <button id="ftop" type="button" title="回頂端">↑</button>
-<button id="fback" type="button" title="返回上一步（回到剛剛看的位置）">↩<i></i></button>
+<button id="fback" type="button" title="返回（回到剛剛看的位置）">←<i></i></button>
 <script>
 (function(){
  buildExcl();
@@ -734,7 +745,7 @@ apply();
  var rp=$('fprice'),rs=$('fsort'),rq=$('q'),rr=$('freset');
  var cats=[],cnt={};
  P.forEach(function(p){if(p.cat){if(cats.indexOf(p.cat)<0)cats.push(p.cat);cnt[p.cat]=(cnt[p.cat]||0)+1;}});
- var h='<span class="dchip dfilt" id="dfilt">⚙ 篩選<span class="dot"></span></span><span class="sep"></span>'
+ var h='<span class="dchip dsearch" id="dsearch">\uD83D\uDD0D 搜尋</span>'+'<span class="dchip dfilt" id="dfilt">⚙ 篩選<span class="dot"></span></span><span class="sep"></span>'
       +'<span class="dchip" data-cat="">全部 <span class="n">'+P.length+'</span></span>';
  cats.forEach(function(c){h+='<span class="dchip" data-cat="'+c+'">'+(CATICON[c]||'')+' '+c+' <span class="n">'+cnt[c]+'</span></span>';});
  h+='<span class="sep"></span><span class="dcnt" id="dcnt"></span>';
@@ -761,18 +772,30 @@ apply();
   if($('pprice').value!==rp.value)$('pprice').value=rp.value;
   if($('psort').value!==rs.value)$('psort').value=rs.value;
   if($('pq').value!==rq.value)$('pq').value=rq.value;
-  var dc=$('dcnt'); if(dc)dc.textContent=[].slice.call(document.querySelectorAll('#list .card')).filter(function(c){return c.style.display!=='none';}).length+' 支';
+  var nvis=0; try{ for(var _k in window.VIS){ if(window.VIS[_k]) nvis++; } }catch(e){ nvis=0; }
+  var dc=$('dcnt'); if(dc)dc.textContent=nvis+' 支';
+  var pd=$('pdone'); if(pd)pd.textContent='\u2713 看 '+nvis+' 支結果';
  };
  $('ddrow').addEventListener('click',function(e){
   var t=e.target.closest('.dchip');if(!t)return;
   if(t.id==='dfilt'){op(true);return;}
+  if(t.id==='dsearch'){return;}
   var c=t.getAttribute('data-cat');if(c===null)return;
   EX.cat={};
   if(c){cats.forEach(function(x){if(x!==c)EX.cat[x]=1;});}
   buildExcl();apply();window.scrollTo({top:0,behavior:'smooth'});setTimeout(window.__syncDock,0);});
  function op(v){$('fpanel').classList.toggle('open',v);$('fmask').classList.toggle('on',v);}
  $('pclose').addEventListener('click',function(){op(false);});
- $('pdone').addEventListener('click',function(){op(false);});
+ $('pdone').addEventListener('click',function(){op(false);
+  window.scrollTo({top:0,behavior:'smooth'});});
+ var dse=$('dsearch');
+ if(dse) dse.addEventListener('click',function(){
+  op(false);
+  document.body.classList.remove('kbon','shon');
+  var dk=$('dkb'),ds=$('dsh'); if(dk)dk.classList.remove('on'); if(ds)ds.classList.remove('on');
+  document.body.classList.add('open');
+  setTimeout(function(){var qq=document.getElementById('q'); if(qq){qq.focus();try{qq.select();}catch(e){}}},220);
+ });
  $('fmask').addEventListener('click',function(){op(false);});
  $('ptog').addEventListener('click',function(e){
   var t=e.target.closest('span[data-pf]');if(!t)return;
@@ -784,7 +807,8 @@ apply();
  $('pq').addEventListener('input',function(){rq.value=this.value;rq.dispatchEvent(new Event('input'));});
  $('preset').addEventListener('click',function(){rr.click();setTimeout(window.__syncDock,0);});
  rq.addEventListener('input',function(){setTimeout(window.__syncDock,0);});
- document.addEventListener('click',function(){setTimeout(window.__syncDock,0);});
+ var _sdT=null;
+ document.addEventListener('click',function(){clearTimeout(_sdT);_sdT=setTimeout(window.__syncDock,90);});
  [rp,rs].forEach(function(el){el.addEventListener('change',function(){setTimeout(window.__syncDock,0);});});
  var ft=$('ftop');
  ft.addEventListener('click',function(){window.scrollTo({top:0,behavior:'smooth'});});
@@ -1056,7 +1080,8 @@ body.kbon #main{display:none}
  var dr=document.getElementById('ddrow');
  if(dr){
   var kb=document.createElement('span'); kb.className='dchip'; kb.id='dkb'; kb.textContent='📚 新人教材';
-  dr.insertBefore(kb, dr.children[1]);
+  var _df=document.getElementById('dfilt');
+  dr.insertBefore(kb, _df?_df.nextSibling:dr.children[1]);
   kb.addEventListener('click',function(){
    var on=document.body.classList.toggle('kbon');
    kb.classList.toggle('on',on);
@@ -1262,7 +1287,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 </style>
 
 <div id="toast"></div>
-<div id="pnwrap"><span id="pnbadge"></span><button id="pnPrev" type="button" title="上一支（鍵盤 ←）">▲</button><button id="pnNext" type="button" title="下一支（鍵盤 →）">▼</button></div>
+<div id="pnwrap"><span id="pnbadge"></span><button id="pnPrev" type="button" title="上一支酒（鍵盤 ←）" aria-label="上一支酒">▲</button><button id="pnNext" type="button" title="下一支酒（鍵盤 →）" aria-label="下一支酒">▼</button></div>
 <script>
 (function(){
  var $=function(i){return document.getElementById(i);};
@@ -1299,8 +1324,8 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   q.setAttribute('placeholder','搜品名／產區／桶型…');
   var fb=document.createElement('div'); fb.id='findbar';
   fb.innerHTML='<span class="cnt2" id="fbcnt">0 / 0</span>'
-   +'<button id="fbPrev" type="button" title="上一個（Shift+Enter）">‹ 上一個</button>'
-   +'<button id="fbNext" type="button" title="下一個（Enter）">下一個 ›</button>'
+   +'<button id="fbPrev" type="button" title="上一筆（Shift+Enter）">‹ 上一筆</button>'
+   +'<button id="fbNext" type="button" title="下一筆（Enter）">下一筆 ›</button>'
    +'<button id="fbCard" type="button" title="跳到下一支有符合的酒">⇥ 跳下一支酒</button>';
   stick.appendChild(fb);
  }
@@ -1699,6 +1724,12 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  });
  setTimeout(sync,500);
  var ob=document.getElementById('fwopen');
+ var ob2=document.getElementById('fwopen2');
+ if(ob2) ob2.addEventListener('click',function(){
+  var fp=document.getElementById('fpanel'),fm=document.getElementById('fmask');
+  if(fp)fp.classList.remove('open'); if(fm)fm.classList.remove('on');
+  if(ob)ob.click();
+ });
  if(ob) ob.addEventListener('click',function(){
   if(!document.body.classList.contains('kbon')){
    document.body.classList.add('kbon');
@@ -1804,6 +1835,90 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 #pnwrap,#ftop,#fback{transition:opacity .35s ease}
 body.idlefade #pnwrap,body.idlefade #ftop,body.idlefade #fback{opacity:.2!important}
 #pnwrap:hover,#ftop:hover,#fback:hover,#pnwrap:active,#ftop:active,#fback:active{opacity:1!important}
+
+/* === 效能：離開畫面的卡片與章節不做排版／繪製（修卡頓與當機） === */
+.card{content-visibility:auto;contain-intrinsic-size:auto 560px}
+.kbsec{content-visibility:auto;contain-intrinsic-size:auto 420px}
+.kbchap{contain:layout style}
+#shdoc>*{content-visibility:auto;contain-intrinsic-size:auto 420px}
+@media print{.card,.kbsec,#shdoc>*{content-visibility:visible!important}}
+
+/* ==================================================================
+   版面分工（一個功能只放一個地方）
+   ☰ 目錄抽屜 = 搜尋 + 目錄            底部 dock = 切換頁面 + 篩選入口
+   ⚙ 篩選面板 = 所有篩選條件            右側浮動 = 移動（上一支/下一支/回頂端/返回）
+   ================================================================== */
+/* 抽屜不再重複放篩選：快速條件、風味標籤、價格排序、去除清單都只在⚙篩選面板 */
+#nav .navstick > .filters{display:none!important}
+#nav .tstbox{display:none!important}
+#nav .selrow{display:none!important}
+#nav #excl{display:none!important}
+/* 「跳下一支酒」與右側 ▼ 下一支重複 → 只留 ▼ */
+#fbCard,#pfbCard{display:none!important}
+/* 面板裡的搜尋與抽屜重複 → 搜尋統一在抽屜 */
+#pqgrp{display:none!important}
+/* 抽屜標題下方直接接搜尋與目錄，收掉多餘留白 */
+#nav .navstick{padding-bottom:6px}
+#nav .cnt{margin-top:4px}
+/* 面板底部兩顆主鍵固定在下方，不隨內容捲走 */
+#fpanel .pfoot{position:sticky;bottom:0;background:linear-gradient(180deg,rgba(8,14,22,.2),rgba(8,14,22,.96) 40%);
+ padding:10px 0 4px;margin-top:6px;display:grid;grid-template-columns:1fr 1fr;gap:8px;z-index:3}
+#fpanel .pfoot button{width:100%;margin:0}
+/* 右側浮動鍵：統一大小、統一間距、統一右邊界 */
+#pnwrap,#ftop,#fback{right:8px!important}
+#pnwrap button,#ftop,#fback{width:38px!important;height:38px!important;font-size:17px!important}
+#fback{bottom:112px!important}
+#ftop{bottom:158px!important}
+#pnwrap{bottom:204px!important}
+
+.pfw{margin-left:auto;margin-right:10px;cursor:pointer;font-family:inherit;font-size:12px;
+ padding:5px 11px;border-radius:999px;border:1px solid rgba(201,164,92,.45);
+ background:rgba(201,164,92,.12);color:var(--gold2)}
+.pfw:active{background:rgba(201,164,92,.26)}
+#fpanel .phead{display:flex;align-items:center;gap:8px}
+
+/* 面板標題列：一行放好，不要擠成直排 */
+#fpanel .phead{display:flex!important;align-items:center;gap:10px;flex-wrap:nowrap}
+#fpanel .phead>b{flex:0 0 auto;white-space:nowrap;letter-spacing:2px}
+#fpanel .pfw{flex:0 0 auto;margin-left:auto;margin-right:0;white-space:nowrap;letter-spacing:0}
+#fpanel .phead .px{flex:0 0 auto;white-space:nowrap;letter-spacing:0;font-size:12.5px}
+/* 面板底部固定兩顆：不透明底、不壓字 */
+#fpanel .pfoot{background:rgba(6,11,18,.97)!important;border-top:1px solid rgba(201,164,92,.22);
+ padding:10px 0 6px!important;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+#fpanel>.pgrp:last-of-type{margin-bottom:56px}
+
+/* 篩選面板：標題 + 一條固定工具列（風味輪／清除／看結果），捲動時一直看得到 */
+#fpanel .phead{display:flex!important;align-items:center;justify-content:space-between;gap:10px;flex-wrap:nowrap;margin-bottom:8px}
+#fpanel .phead>b{flex:0 0 auto;white-space:nowrap;letter-spacing:2px;font-size:14px}
+#fpanel .phead .px{flex:0 0 auto;white-space:nowrap;letter-spacing:0;font-size:12.5px;color:var(--dim2)}
+#fpanel .pbar{position:sticky;top:0;z-index:6;display:grid;grid-template-columns:auto 1fr 1.2fr;gap:7px;
+ padding:8px 0 10px;margin:0 0 6px;background:rgba(8,15,26,.985);
+ border-bottom:1px solid rgba(201,164,92,.20)}
+#fpanel .pbar button{width:auto!important;white-space:nowrap;letter-spacing:0!important;padding:9px 8px;font-size:12px}
+#fpanel .pbar .pfw{border-color:rgba(201,164,92,.5);background:rgba(201,164,92,.12);color:var(--gold2);border-radius:999px;padding:9px 13px}
+#fpanel .pbar .btnA{background:linear-gradient(180deg,rgba(201,164,92,.34),rgba(201,164,92,.16));color:#FBF1DC;font-weight:600}
+#fpanel>.pgrp:last-of-type{margin-bottom:10px}
+
+/* 讓固定工具列真正貼齊面板頂端，上方不再露出捲過去的字 */
+#fpanel{padding-top:0!important}
+#fpanel .phead{padding-top:14px}
+#fpanel .pbar{top:0!important;background:#070D16!important}
+
+#ddrow .dsearch{border-color:rgba(126,180,255,.45);color:#BFDCFF;background:rgba(126,180,255,.10)}
+#ddrow .dsearch:active{background:rgba(126,180,255,.22)}
+
+/* 次要區塊可收合：卡片短一半，要看再點開 */
+details.sec.fold{padding:0}
+details.sec.fold>summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;padding:2px 0}
+details.sec.fold>summary::-webkit-details-marker{display:none}
+details.sec.fold>summary h3{margin:0!important}
+details.sec.fold>summary::after{content:'▾ 展開';margin-left:auto;font-size:11px;color:var(--gold2);
+ border:1px solid rgba(201,164,92,.4);background:rgba(201,164,92,.10);border-radius:999px;padding:2px 9px;white-space:nowrap}
+details.sec.fold[open]>summary::after{content:'▴ 收起'}
+details.sec.fold[open]>summary{margin-bottom:8px}
+/* 官方未公開那一列壓低視覺重量 */
+.spec.unk .v{color:var(--dim2);font-size:12px}
+.spec.unk .k{color:var(--dim2)}
 </style>
 
 <div id="shview">
@@ -1814,7 +1929,7 @@ body.idlefade #pnwrap,body.idlefade #ftop,body.idlefade #fback{opacity:.2!import
   <div id="shstat" class="shstat"></div>
   <div class="shbtns">
    <button type="button" id="shdocbtn" class="shbig gold">📋 全部資料一次看</button>
-   <button type="button" id="shonly" class="shbig">🔎 只看我勾的品項</button>
+   <button type="button" id="shonly" class="shbig">🏬 只看我的架上</button>
    <button type="button" id="shquiz" class="shbig">🎯 開始抽考</button>
   </div>
   <div id="shquizbox" class="shquiz" hidden>
@@ -1825,7 +1940,7 @@ body.idlefade #pnwrap,body.idlefade #ftop,body.idlefade #fback{opacity:.2!import
     <button type="button" id="shok" class="shbig ok" hidden>✔ 我答對了</button>
     <button type="button" id="shng" class="shbig ng" hidden>✘ 我答錯了</button>
     <button type="button" id="shnext" class="shbig" hidden>➜ 下一題</button>
-    <button type="button" id="shskip" class="shsm">↷ 跳過</button>
+    <button type="button" id="shskip" class="shsm">↷ 這題跳過</button>
     <button type="button" id="shquit" class="shsm">■ 結束抽考</button>
    </div>
    <div id="shscore" class="shscore"></div>
@@ -2484,7 +2599,7 @@ document.addEventListener('click',function(e){
    return String(a.no||'').localeCompare(String(b.no||''),'en',{numeric:true});
   });
   var head='<div class="dbar">'
-   +'<button type="button" class="dbtn on" id="dback">←</button>'
+   +'<button type="button" class="dbtn on" id="dback" title="返回我的架上">←</button>'
    +'<span class="dcount">共 <b>'+L2.length+'</b> 支</span>'
    +'<button type="button" class="dbtn" id="dfull">顯示完整</button>'
    +'<button type="button" class="dbtn" id="dprint">\u{1F5A8} 列印</button>'
@@ -2527,6 +2642,18 @@ document.addEventListener('click',function(e){
 /* 右側浮動鍵：停止捲動 2 秒後淡出，一動就回來 */
 (function(){var t=null;function wake(){document.body.classList.remove('idlefade');clearTimeout(t);t=setTimeout(function(){document.body.classList.add('idlefade');},2000);}
 ['scroll','touchstart','mousemove','keydown'].forEach(function(e){window.addEventListener(e,wake,{passive:true});});wake();})();
+</script>
+<script>
+/* 上方固定列的實際高度 → --xwh，讓抽屜／教材／架上三頁的頂端一致，不再被標題列切掉 */
+(function(){
+ function h(){
+  var m=document.getElementById('menu'); if(!m) return;
+  var v=Math.round(m.getBoundingClientRect().height);
+  if(v>10) document.documentElement.style.setProperty('--xwh', v+'px');
+ }
+ window.addEventListener('resize',h); window.addEventListener('load',h);
+ h(); setTimeout(h,300); setTimeout(h,1200);
+})();
 </script>
 </body>
 </html>

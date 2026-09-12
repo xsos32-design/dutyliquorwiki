@@ -51,7 +51,8 @@ a{color:var(--gold);text-decoration:none}a:hover{color:var(--gold2)}
 .shots{flex:0 0 auto;display:flex;gap:12px}
 .shot{width:158px;height:216px;background:#FFF;border:1px solid rgba(201,164,92,.3);display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
 .shot img{max-width:100%;max-height:100%;object-fit:contain;display:block}
-.shot.dead{background:#0C1523;color:var(--dim2);font-size:11px;letter-spacing:1px;text-align:center;padding:10px}
+.shot.dead{width:74px;background:#0C1523;color:var(--dim2);font-size:10.5px;letter-spacing:1px;text-align:center;padding:8px;writing-mode:vertical-rl}
+.shots:empty{display:none}
 .shot .lbl{position:absolute;bottom:0;left:0;right:0;background:rgba(6,13,24,.82);color:var(--gold2);font-size:9.5px;letter-spacing:1px;text-align:center;padding:3px 2px}
 .meta{flex:1;min-width:0}
 .eyebrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:7px}
@@ -336,13 +337,15 @@ function scoreRows(p){
  }
  return h+'<div class="scnote">0–5 分由本檔案的官方風味描述＋酒精度＋桶型推算；「–」代表文案沒提到。</div></div>';
 }
+function _imgdead(i){var q=i.parentNode;if(q&&q.tagName==='A')q=q.parentNode;if(q&&q.parentNode)q.parentNode.removeChild(q);}
+window._imgdead=_imgdead;
 function card(p){
  var h='<section class="card" id="'+p.id+'"><div class="chead"><div class="shots">';
- if(p.photo) h+='<div class="shot"><img loading="lazy" src="'+esc(p.photo)+'" alt="'+esc(p.nameZh)+'" onerror="this.parentNode.className=&quot;shot dead&quot;;this.parentNode.textContent=&quot;實品圖待補&quot;"><span class="lbl">實品照'+(p.photoSrc?'・'+esc(p.photoSrc):(p.shop&&p.shop.img===p.photo?'・昇恆昌官網':''))+'</span></div>';
- if(p.shot)  h+='<div class="shot"><img loading="lazy" src="'+esc(p.shot)+'" alt="'+esc(p.nameZh)+'"><span class="lbl">'+(p.shotSrc?esc(p.shotSrc):(p.poster?'原廠海報圖':'原廠商訓圖'))+'</span></div>';
- if(p.poster) h+='<div class="shot"><a href="'+esc(p.poster)+'" target="_blank"><img loading="lazy" src="'+esc(p.poster)+'" alt="'+esc(p.nameZh)+'"></a><span class="lbl">原廠文宣（點開）</span></div>';
+ if(p.photo) h+='<div class="shot"><img loading="lazy" src="'+esc(p.photo)+'" alt="'+esc(p.nameZh)+'" onerror="_imgdead(this)"><span class="lbl">實品照'+(p.photoSrc?'・'+esc(p.photoSrc):(p.shop&&p.shop.img===p.photo?'・昇恆昌官網':''))+'</span></div>';
+ if(p.shot)  h+='<div class="shot"><img loading="lazy" src="'+esc(p.shot)+'" alt="'+esc(p.nameZh)+'" onerror="_imgdead(this)"><span class="lbl">'+(p.shotSrc?esc(p.shotSrc):(p.poster?'原廠海報圖':'原廠商訓圖'))+'</span></div>';
+ if(p.poster) h+='<div class="shot"><a href="'+esc(p.poster)+'" target="_blank"><img loading="lazy" src="'+esc(p.poster)+'" alt="'+esc(p.nameZh)+'" onerror="_imgdead(this)"></a><span class="lbl">原廠文宣（點開）</span></div>';
  if(p.live&&p.live.length){ p.live.forEach(function(f){
-  h+='<div class="shot live" data-img="'+esc(f)+'"><img loading="lazy" src="'+esc(f)+'" alt="現場實拍"><span class="lbl">\u{1F4F7} 現場 POP 實拍・2026/09</span></div>'; }); }
+  h+='<div class="shot live" data-img="'+esc(f)+'"><img loading="lazy" src="'+esc(f)+'" alt="現場實拍" onerror="_imgdead(this)"><span class="lbl">\u{1F4F7} 現場 POP 實拍・2026/09</span></div>'; }); }
  if(!p.photo&&!p.shot&&!(p.live&&p.live.length)) h+='<div class="shot dead">實品圖待補</div>';
  h+='</div><div class="meta"><div class="eyebrow"><span class="no">'+p.no+'</span><span class="cat">'+esc(p.cat)+'</span>'
    +(p.dfLimited?'<span class="cat" style="border-color:rgba(201,164,92,.9);background:rgba(201,164,92,.12)">'+esc(p.dfText||'免稅限定')+'</span>':'')+'<button type="button" class="shb'+((window.SHELF&&window.SHELF[p.id])?' on':'')+'" data-sh="'+p.id+'">'+((window.SHELF&&window.SHELF[p.id])?'\u2714 在架上':'\u002B 在架上')+'</button></div>';
@@ -372,7 +375,9 @@ function card(p){
  if(sp&&sp.ean&&sp.ean.length)h+='<span class="pill ean">EAN '+esc(sp.ean.join(' / '))+'</span>';
  h+='</div>';
  if(p.promo&&p.promo.length){
-  h+='<div class="prombar">'+p.promo.map(function(x){
+  var _pm=p.promo.filter(function(x){ return !(sp&&sp.pct>0&&/紅標特價|現場價標/.test(x.t+'|'+x.k)); });
+  if(_pm.length)
+  h+='<div class="prombar">'+_pm.map(function(x){
    return '<span class="pm'+(x.k==='現場折扣小卡'?' web':'')+'">'+esc(x.t)
      +(x.sub?'<i>'+esc(x.sub)+'</i>':'')+'<i>'+esc(x.k)+'</i></span>';}).join('')+'</div>';
  }
@@ -684,13 +689,16 @@ apply();
 #fpanel .btnB{color:#9BA6B4;letter-spacing:2px;cursor:pointer}
 #fpanel .phead{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 #fpanel .phead b{font-family:'Noto Serif TC',serif;font-size:14px;letter-spacing:3px;color:var(--gold2)}
+#ptog .pgh{flex:1 0 100%;font-style:normal;font-size:11.5px;letter-spacing:3px;color:var(--gold2);
+ margin:10px 0 2px;padding-bottom:4px;border-bottom:1px solid rgba(201,164,92,.22)}
+#ptog .pgh:first-child{margin-top:0}
 #fpanel .px{cursor:pointer;color:var(--dim2);font-size:20px;line-height:1;padding:0 6px}
 #fmask{position:fixed;inset:0;background:rgba(3,7,13,.55);z-index:58;opacity:0;pointer-events:none;transition:opacity .2s}
 #fmask.on{opacity:1;pointer-events:auto}
-#ftop{position:fixed;right:16px;bottom:112px;z-index:57;width:44px;height:44px;border-radius:50%;
+#ftop{position:fixed;right:16px;bottom:112px;z-index:57;width:40px;height:40px;border-radius:50%;
  border:1px solid rgba(201,164,92,.5);background:rgba(10,18,28,.9);color:var(--gold2);font-size:17px;cursor:pointer;
  display:none;align-items:center;justify-content:center;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
-#fback{position:fixed;right:16px;bottom:112px;z-index:57;width:44px;height:44px;border-radius:50%;border:1px solid rgba(126,180,255,.55);background:rgba(10,18,28,.92);color:#BFDCFF;font-size:19px;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
+#fback{position:fixed;right:16px;bottom:112px;z-index:57;width:40px;height:40px;border-radius:50%;border:1px solid rgba(126,180,255,.55);background:rgba(10,18,28,.92);color:#BFDCFF;font-size:19px;cursor:pointer;display:none;align-items:center;justify-content:center;line-height:1;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 #fback.show{display:flex}
 #fback:hover{background:rgba(126,180,255,.20)}
 #fback:active{transform:scale(.92)}
@@ -731,10 +739,12 @@ apply();
  cats.forEach(function(c){h+='<span class="dchip" data-cat="'+c+'">'+(CATICON[c]||'')+' '+c+' <span class="n">'+cnt[c]+'</span></span>';});
  h+='<span class="sep"></span><span class="dcnt" id="dcnt"></span>';
  $('ddrow').innerHTML=h;
- var TOG=[['promo','🏷 折扣中'],['info','📇 商品資訊卡'],['df','免稅限定'],['award','有得獎紀錄'],['noimg','📷 缺實品圖'],['hasimg','有實品圖']];
+ var TOG=[['--','商品狀態'],['promo','🏷 折扣中'],['info','📇 商品資訊卡'],['df','免稅限定'],['award','有得獎紀錄'],['noimg','📷 缺實品圖'],['hasimg','有實品圖']];
  var TTOG=[["t:輕盈好入口", "🪶 輕盈好入口"], ["t:厚重濃郁", "💪 厚重濃郁"], ["t:溫和低酒感", "😌 溫和低酒感"], ["t:高酒感", "🔥 高酒感"], ["t:無煙燻", "🚫 無煙燻"], ["t:煙燻泥煤", "💨 煙燻泥煤"], ["t:甜潤", "🍯 甜潤"], ["t:果香", "🍎 果香"], ["t:柑橘清爽", "🍋 柑橘清爽"], ["t:雪莉果乾", "🍇 雪莉果乾"], ["t:巧克力咖啡", "☕ 巧克力咖啡"], ["t:香草奶油", "🥥 香草奶油"], ["t:辛香料", "🌶 辛香料"], ["t:花香", "🌸 花香"], ["t:熱帶水果", "🥭 熱帶水果"], ["t:堅果", "🌰 堅果"], ["t:海鹽礦石", "🧂 海鹽礦石"], ["t:木質檀香", "🪵 木質檀香"], ["t:麥芽穀物", "🌾 麥芽穀物"]];
- TOG=TOG.concat(TTOG).concat([["no95","\u{1F6AB} 不可 95 折"],["shelf","\u{1F3EC} 我的架上"],["tg","\u{1F3AF} 業績目標"],["bd","\u{1F517} 搭貨門檻"],["rw","\u{1F4B0} 銷售獎勵"]]).concat([["s:0g4","\u{1F36F} 很甜 4+"],["s:0z1","\u{1F36F} 不甜 0–1"],["s:1g4","\u{1F351} 果香 4+"],["s:2g4","\u{1F34B} 清爽 4+"],["s:4z0","\u{1F6AB} 完全不煙燻"],["s:4g4","\u{1F525} 重煙燻 4+"],["s:3g4","\u{1F330} 木質苦 4+"],["s:5g4","\u{1F336} 辛香 4+"],["s:6g4","\u{1F4AA} 厚重 4+"],["s:6z2","\u{1FAB6} 輕盈 ≤2"],["s:7z2","\u{1F60C} 順口 ≤2"],["s:7g5","\u{1F9EF} 原酒級 5"]]);
- $('ptog').innerHTML=TOG.map(function(t){return '<span data-pf="'+t[0]+'">'+t[1]+'</span>';}).join('');
+ TOG=TOG.concat([['--','風味標籤']]).concat(TTOG).concat([['--','營運標記'],["no95","\u{1F6AB} 不可 95 折"],["shelf","\u{1F3EC} 我的架上"],["tg","\u{1F3AF} 業績目標"],["bd","\u{1F517} 搭貨門檻"],["rw","\u{1F4B0} 銷售獎勵"]]).concat([['--','口感分數快篩'],["s:0g4","\u{1F36F} 很甜 4+"],["s:0z1","\u{1F36F} 不甜 0–1"],["s:1g4","\u{1F351} 果香 4+"],["s:2g4","\u{1F34B} 清爽 4+"],["s:4z0","\u{1F6AB} 完全不煙燻"],["s:4g4","\u{1F525} 重煙燻 4+"],["s:3g4","\u{1F330} 木質苦 4+"],["s:5g4","\u{1F336} 辛香 4+"],["s:6g4","\u{1F4AA} 厚重 4+"],["s:6z2","\u{1FAB6} 輕盈 ≤2"],["s:7z2","\u{1F60C} 順口 ≤2"],["s:7g5","\u{1F9EF} 原酒級 5"]]);
+ $('ptog').innerHTML=TOG.map(function(t){
+   return t[0]==='--' ? '<i class="pgh">'+t[1]+'</i>'
+        : '<span data-pf="'+t[0]+'">'+t[1]+'</span>';}).join('');
  function co(f,t){t.innerHTML=f.innerHTML;t.value=f.value;}
  co(rp,$('pprice'));co(rs,$('psort'));
  window.__syncDock=function(){
@@ -1165,7 +1175,11 @@ html,body{background:radial-gradient(1200px 700px at 70% -10%,#0B1A2E 0%,#060D18
 /* ---------- 上一支／下一支 ---------- */
 #pnwrap{position:fixed;right:16px;bottom:220px;z-index:57;display:none;flex-direction:column;gap:8px}
 #pnwrap.show{display:flex}
-#pnwrap button{width:44px;height:44px;font-size:13px;border-radius:50%;border:1px solid rgba(201,164,92,.5);
+#pnwrap,#ftop,#fback{opacity:.8;transition:opacity .18s}
+#pnwrap:hover,#ftop:hover,#fback:hover,#pnwrap:active,#ftop:active,#fback:active{opacity:1}
+body.shon #pnwrap,body.kbon #pnwrap{display:none!important}
+body.shon #fback,body.kbon #fback{display:none!important}
+#pnwrap button{width:40px;height:40px;font-size:12.5px;border-radius:50%;border:1px solid rgba(201,164,92,.5);
  background:rgba(10,18,28,.92);color:var(--gold2);font-size:16px;cursor:pointer;
  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 #pnwrap button:hover{background:rgba(201,164,92,.2)}
@@ -1783,12 +1797,20 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
 .kbol,.kbul{margin:6px 0 8px;padding-left:20px}
 .kbol li,.kbul li{font-size:13px;line-height:1.8;margin:3px 0}
 .kbsec h4{margin:12px 0 4px;font-size:13px;color:#E8CD8A;letter-spacing:.5px}
+
+/* === 右側浮動鍵：閒置淡出，不擋內容 === */
+#pnwrap,#ftop,#fback{right:8px!important}
+#pnwrap button,#ftop,#fback{width:38px!important;height:38px!important;font-size:17px!important}
+#pnwrap,#ftop,#fback{transition:opacity .35s ease}
+body.idlefade #pnwrap,body.idlefade #ftop,body.idlefade #fback{opacity:.2!important}
+#pnwrap:hover,#ftop:hover,#fback:hover,#pnwrap:active,#ftop:active,#fback:active{opacity:1!important}
 </style>
 
 <div id="shview">
  <div class="shwrap">
   <h1>🏬 我的架上 · 學習模式</h1>
-  <p class="shdesc">勾選你這一櫃實際有貨的品項，這裡只練這些。要移除：按下方清單的 ✕，或回商品卡再按一次「✔ 在架上」。清單存在這支手機的瀏覽器裡，換手機請用下方的匯出碼帶走。</p>
+  <p class="shdesc fold" id="shdesc" title="點一下展開／收起">勾選你這一櫃實際有貨的品項，這裡只練這些。要移除：按下方清單的 ✕，或回商品卡再按一次「✔ 在架上」。清單存在這支手機的瀏覽器裡，換手機請用下方的匯出碼帶走。</p>
+  <button type="button" id="shdtog" class="shdtog">▾ 展開說明</button>
   <div id="shstat" class="shstat"></div>
   <div class="shbtns">
    <button type="button" id="shdocbtn" class="shbig gold">📋 全部資料一次看</button>
@@ -1803,9 +1825,12 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
     <button type="button" id="shok" class="shbig ok" hidden>✔ 我答對了</button>
     <button type="button" id="shng" class="shbig ng" hidden>✘ 我答錯了</button>
     <button type="button" id="shnext" class="shbig" hidden>➜ 下一題</button>
+    <button type="button" id="shskip" class="shsm">↷ 跳過</button>
+    <button type="button" id="shquit" class="shsm">■ 結束抽考</button>
    </div>
    <div id="shscore" class="shscore"></div>
   </div>
+  <div id="shlist" class="shlist"></div>
   <div class="shpre"><h3>⭐ 本月預設（目標＋獎勵）</h3><div id="shprebody"></div></div>
   <div class="shmgr">
    <h3>清單管理</h3>
@@ -1816,7 +1841,6 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
    </div>
    <textarea id="shcode" class="shcode" hidden placeholder="清單碼"></textarea>
   </div>
-  <div id="shlist" class="shlist"></div>
  </div>
  <div id="shdoc" hidden></div>
 </div>
@@ -1825,8 +1849,14 @@ body.shon #shview{display:block}
 body.shon #main,body.shon #kbview{display:none}
 #shview{display:none;padding:26px 16px 120px;max-width:900px;margin:0 auto}
 #shview h1{font-family:'Noto Serif TC',serif;font-size:24px;color:#E8CD8A;margin:0 0 6px}
-.shdesc{font-size:12.5px;line-height:1.8;color:var(--dim2);margin:0 0 14px}
+.shdesc{font-size:12.5px;line-height:1.8;color:var(--dim2);margin:0 0 14px;cursor:pointer}
+.shdesc.fold{display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}
+.shdesc{margin:0 0 4px!important}.shdtog{display:inline-block;margin:0 0 14px;padding:3px 10px;font-size:11.5px;border-radius:999px;border:1px solid rgba(201,164,92,.45);background:rgba(201,164,92,.10);color:var(--gold2);cursor:pointer;line-height:1.6}.shdtog:active{background:rgba(201,164,92,.22)}
+#shview .shbtns{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px}
+#shview .shbtns .shbig{width:100%;text-align:center}
 .shstat{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.shstat b.hot{border-color:rgba(126,219,166,.55)!important;background:rgba(126,219,166,.10)!important;color:#9FE9C0!important}
+.shstat b.tot{border-color:rgba(201,164,92,.65)!important;background:rgba(201,164,92,.14)!important;color:#F2D9A8!important}
 .shstat span{font-size:11.5px;padding:4px 9px;border-radius:999px;
  border:1px solid rgba(201,164,92,.3);background:rgba(201,164,92,.08);color:#E6D9BE}
 .shstat span b{color:#E8CD8A}
@@ -1839,10 +1869,14 @@ body.shon #main,body.shon #kbview{display:none}
 .shsm{font-size:12px;padding:6px 11px;border-radius:8px;cursor:pointer;
  border:1px solid rgba(201,164,92,.3);background:rgba(255,255,255,.04);color:var(--dim2)}
 .shsm.danger{border-color:rgba(255,140,140,.35);color:#FFC4C4}
+body.quizon #shview .shdesc,body.quizon #shview .shstat,body.quizon #shview .shpre,
+body.quizon #shview .shmgr,body.quizon #shview #shlist,body.quizon #shview .shbtns{display:none!important}
+body.quizon #shview h1{font-size:19px}
 .shquiz{margin:12px 0;padding:14px;border:1px solid rgba(201,164,92,.3);border-radius:12px;
  background:rgba(201,164,92,.06)}
 .shq b{display:block;font-family:'Noto Serif TC',serif;font-size:17px;color:#E8CD8A;margin-bottom:6px;line-height:1.5}
-.shq span{font-size:13.5px;color:var(--fg,#dfe7f2)}
+.shq span{display:inline-block;font-size:13.5px;color:var(--fg,#dfe7f2);line-height:1.7}
+.shq span.qd{color:#BFDCFF}.shq span.qf{color:#9FE9C0}
 .sha{white-space:pre-wrap;margin:10px 0 0;padding:11px 12px;border-radius:9px;background:rgba(255,255,255,.05);
  border:1px solid rgba(255,255,255,.10);font-size:13.5px;line-height:1.85;color:#EFE6D2}
 .shqbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
@@ -1967,6 +2001,7 @@ body.shon #main,body.shon #kbview{display:none}
 
  /* --- 面板 --- */
  var V=document.getElementById('shview');
+ (function(){var d=document.getElementById('shdesc'),t=document.getElementById('shdtog');if(!d||!t)return;function up(){var f=d.classList.contains('fold');t.textContent=f?'▾ 展開說明':'▴ 收起說明';}t.addEventListener('click',function(){d.classList.toggle('fold');up();});d.addEventListener('click',function(){d.classList.toggle('fold');up();});up();})();
  function shFit(){
   var m=document.getElementById('menu');
   if(!m||!V)return;
@@ -1980,9 +2015,9 @@ body.shon #main,body.shon #kbview{display:none}
   var a=ids(), byCat={}, no95=0, promo=0;
   a.forEach(function(k){var p=byId[k];byCat[p.cat]=(byCat[p.cat]||0)+1;
    if(p.no95&&p.no95.length)no95++; if(p.promo&&p.promo.length)promo++;});
-  var h='<span>總計 <b>'+a.length+'</b> 項</span>';
+  var h='<span>總計 <b class="tot">'+a.length+'</b> 項</span>';
   Object.keys(byCat).forEach(function(c){h+='<span>'+esc2(c)+' <b>'+byCat[c]+'</b></span>';});
-  if(promo)h+='<span>本檔有折扣 <b>'+promo+'</b></span>';
+  if(promo)h+='<span>本檔有折扣 <b class="hot">'+promo+'</b></span>';
   if(no95)h+='<span style="border-color:rgba(255,140,140,.4);color:#FFC4C4">不可 95 折 <b>'+no95+'</b></span>';
   document.getElementById('shstat').innerHTML=h;
   var lw=document.getElementById('shlist');
@@ -2095,7 +2130,9 @@ body.shon #main,body.shon #kbview{display:none}
   if(!cur){box.hidden=true;return;}
   box.hidden=false;
   document.getElementById('shqname').textContent=cur.p.nameZh;
-  document.getElementById('shqask').textContent=cur.q;
+  var _ask=document.getElementById('shqask');
+  _ask.textContent=cur.q;
+  _ask.className=/FAB/.test(cur.q)?'qf':'qd';
   var A=document.getElementById('shqans'); A.hidden=true; A.textContent=cur.a;
   document.getElementById('shshow').hidden=false;
   document.getElementById('shok').hidden=true;
@@ -2104,7 +2141,13 @@ body.shon #main,body.shon #kbview{display:none}
  }
  function score(){document.getElementById('shscore').textContent=
    total?('本次 '+right+' / '+total+'　正確率 '+Math.round(right/total*100)+'%'):'';}
- document.getElementById('shquiz').addEventListener('click',function(){right=0;total=0;score();newQ();});
+ document.getElementById('shquiz').addEventListener('click',function(){
+   right=0;total=0;score();newQ();document.body.classList.add('quizon');
+   window.scrollTo({top:0,behavior:'smooth'});});
+ document.getElementById('shskip').addEventListener('click',newQ);
+ document.getElementById('shquit').addEventListener('click',function(){
+   document.body.classList.remove('quizon');
+   document.getElementById('shquizbox').hidden=true;});
  document.getElementById('shshow').addEventListener('click',function(){
   document.getElementById('shqans').hidden=false; this.hidden=true;
   document.getElementById('shok').hidden=false; document.getElementById('shng').hidden=false;});
@@ -2478,6 +2521,12 @@ document.addEventListener('click',function(e){
  document.addEventListener('keydown',function(e){ if(e.key==='Escape'&&!box.hidden) close(); });
  window.xwShelfDocClose=close;
 })();
+</script>
+
+<script>
+/* 右側浮動鍵：停止捲動 2 秒後淡出，一動就回來 */
+(function(){var t=null;function wake(){document.body.classList.remove('idlefade');clearTimeout(t);t=setTimeout(function(){document.body.classList.add('idlefade');},2000);}
+['scroll','touchstart','mousemove','keydown'].forEach(function(e){window.addEventListener(e,wake,{passive:true});});wake();})();
 </script>
 </body>
 </html>

@@ -1843,7 +1843,7 @@ body.shon #main,body.shon #kbview{display:none}
  background:rgba(201,164,92,.06)}
 .shq b{display:block;font-family:'Noto Serif TC',serif;font-size:17px;color:#E8CD8A;margin-bottom:6px;line-height:1.5}
 .shq span{font-size:13.5px;color:var(--fg,#dfe7f2)}
-.sha{margin:10px 0 0;padding:11px 12px;border-radius:9px;background:rgba(255,255,255,.05);
+.sha{white-space:pre-wrap;margin:10px 0 0;padding:11px 12px;border-radius:9px;background:rgba(255,255,255,.05);
  border:1px solid rgba(255,255,255,.10);font-size:13.5px;line-height:1.85;color:#EFE6D2}
 .shqbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:11px}
 .shscore{margin-top:9px;font-size:12px;color:var(--dim2)}
@@ -2035,28 +2035,60 @@ body.shon #main,body.shon #kbview{display:none}
   var a=ids(); if(!a.length)return null;
   var p=byId[a[Math.floor(Math.random()*a.length)]];
   var qs=[];
-  if(p.abv&&/\d/.test(p.abv))qs.push(['這支的酒精度是幾 %？',p.abv]);
-  if(p.casks&&p.casks.length>4)qs.push(['用什麼桶？',p.casks]);
-  if(p.region)qs.push(['產區／產地是哪裡？',p.region]);
-  if(p.pos)qs.push(['一句話怎麼賣？',p.pos]);
-  var _e=(p.shop&&p.shop.ean&&p.shop.ean[0])?String(p.shop.ean[0]):'';
-  if(_e)qs.push(['條碼（EAN）是幾號？',_e]);
-  if(p.vol)qs.push(['容量多少？',String(p.vol)]);
-  if(p.awards&&p.awards.length)qs.push(['得過什麼獎？',p.awards.join('／')]);
-  if(p.tsc){
-   var top=p.tsc.map(function(v,i){return [AXN2[i],v];})
-    .filter(function(x){return x[1]>=4;}).map(function(x){return x[0]+' '+x[1]+'分';});
-   if(top.length)qs.push(['口感評分 4 分以上的是哪幾項？',top.join('、')]);
+  var QD=[], QF=[];
+  function D(q,ans){ if(ans!=null&&String(ans).trim()!=='') QD.push(['\u{1F4CB} 商品資料｜'+q,String(ans)]); }
+  function F(q,ans){ if(ans!=null&&String(ans).trim()!=='') QF.push(['\u{1F5E3} FAB 話術｜'+q,String(ans)]); }
+
+  /* ---------- 商品資料 ---------- */
+  if(p.abv&&/\d/.test(p.abv)) D('酒精度是幾 %？',p.abv);
+  if(p.vol) D('容量多少？',p.vol);
+  if(p.casks&&p.casks.length>4) D('用什麼桶？',p.casks);
+  if(p.region) D('產區／產地是哪裡？',p.region);
+  if(p.type) D('酒種分類是什麼？',p.type);
+  if(p.brand) D('品牌是哪一家？集團呢？',p.brand+(p.group?'　·　'+p.group:''));
+  if(p.filt&&!/官方未標示/.test(p.filt)) D('過濾方式？',p.filt);
+  var sp=p.shop||{};
+  if(sp.pct>0&&sp.sale&&sp.price) D('現在賣多少？原價多少？','特價 NT$'+Number(sp.sale).toLocaleString()+'（原價 NT$'+Number(sp.price).toLocaleString()+'）');
+  else if(sp.price) D('售價多少？','NT$'+Number(sp.price).toLocaleString());
+  else if(p.price&&!/待確認|未標價/.test(p.price)) D('售價多少？',p.price);
+  if(sp.ean&&sp.ean[0]) D('品號是幾號？',sp.ean[0]);
+  if(p.barcode) D('條碼是幾號？',p.barcode);
+  if(p.awards&&p.awards.length) D('得過什麼獎？',p.awards.join('／'));
+  if(p.dfText) D('這支有什麼免稅／通路標記？',p.dfText);
+  if(p.notes&&p.notes.length){
+   var n=p.notes[Math.floor(Math.random()*p.notes.length)];
+   if(n&&n.v) D((n.k||'官方補充')+'怎麼說？',n.v);
   }
-  if(p.promo&&p.promo.length)qs.push(['這支這一檔有什麼折扣？',p.promo.map(function(x){return x.t;}).join('／')]);
-  if(p.tg)qs.push(['這支是不是本月業績打單目標？','\u{1F3AF} 是 —— '+p.tg]);
-  if(p.rw)qs.push(['賣掉這支有什麼銷售獎勵？','\u{1F4B0} '+p.rw]);
-  if(p.no95&&p.no95.length)qs.push(['這支可以用員購／聯名卡 95 折嗎？','❌ 不可以 —— '+p.no95.join('、')]);
-  else qs.push(['這支可以用員購／聯名卡 95 折嗎？','✅ 可以（非限量、非金酒、非單瓶促銷價）']);
+  if(p.points&&p.points.length) D('三個重點講得出來嗎？','・'+p.points.join('\n・'));
+
+  /* ---------- FAB ---------- */
+  [p.fab,p.fab2].forEach(function(fb){
+   if(!fb) return;
+   var tag=fb.src?'（'+fb.src+'）':'';
+   F('F 特點是什麼？'+tag,fb.F);
+   if(fb.A&&fb.A.length) F('A 優勢講得出幾點？'+tag,'・'+fb.A.join('\n・'));
+   F('B 好處是什麼？'+tag,fb.B);
+   F('完整話術怎麼講？'+tag,fb.talk);
+  });
+  if(p.manual){
+   F('教材怎麼形容這支的風格？',p.manual.style);
+   F('教材的話術怎麼講？',p.manual.talk);
+  }
+  if(p.official){
+   D('原廠標示的規格？',[p.official.abv,p.official.vol,p.official.casks].filter(Boolean).join('　·　'));
+   D('原廠品飲筆記？',p.official.flavor);
+   F('原廠怎麼定位這支？',p.official.style);
+  }
+  if(p.pos) F('一句話怎麼賣？',p.pos);
+
+  /* FAB 與商品資料各半，兩邊都有的話一半一半出題 */
+  if(QD.length&&QF.length) qs = (Math.random()<0.5) ? QF : QD;
+  else qs = QD.length ? QD : QF;
   if(!qs.length)return null;
   var q=qs[Math.floor(Math.random()*qs.length)];
   return {p:p,q:q[0],a:q[1]};
  }
+
  function newQ(){
   cur=pickQ();
   var box=document.getElementById('shquizbox');

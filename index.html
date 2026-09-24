@@ -3148,5 +3148,18 @@ details.wine[open]>summary::before{-webkit-mask-image:var(--i-chevD);mask-image:
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot); else boot();
 })();
 </script>
+
+<style id="v2l-css">
+:root{--hl:rgba(201,164,92,.26)}
+/* 底線 → 螢光筆重點（整站最主要的視覺雜訊來源） */
+u{text-decoration:none;
+  background-image:linear-gradient(transparent 54%,var(--hl) 54%,var(--hl) 94%,transparent 94%);
+  background-repeat:no-repeat;border-radius:2px;padding:0 .06em}
+u.scmore,.th u,.schd u,button u,summary u,a u,label u,nav u{background-image:none;padding:0;border-radius:0}
+::selection{background:var(--hl);color:var(--ink)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:5px}
+/* 長段落的可讀性 */
+.why,.story,.pos,.origin p,.fab p,.points li{line-height:1.85}
+</style>
 </body>
 </html>

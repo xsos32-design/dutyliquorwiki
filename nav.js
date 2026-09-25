@@ -7,6 +7,10 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
 
  var GROUPS=[
+  {g:'活動', items:[
+   {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'📅',
+    u:'https://xsos32-design.github.io/promotion/calendar.html'}
+  ]},
   {g:'酒類', items:[
    {k:'wiki',  t:'酒類商品完整檔案', s:'565 支・話術／規格／圖片', ico:'🥃',
     u:'https://xsos32-design.github.io/dutyliquorwiki/'},
@@ -35,6 +39,7 @@
   if(/chocolatepromo/.test(p)) return /card\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
   if(/dutyliquorwiki/.test(p)) return 'wiki';
+  if(/calendar\.html$/.test(p)) return 'cal';
   if(/card\.html$/.test(p))    return 'card';
   if(/promotion/.test(p))      return 'promo';
   return '';
@@ -69,6 +74,7 @@
  +'#xwbar .xwa.on{background:linear-gradient(180deg,'+T.on1+','+T.on2+');'
  +'border-color:'+T.onb+';color:'+T.ink2+';font-weight:600}'
  +'#xwbar .xwa small{font-size:10px;opacity:.62;font-weight:400}'
+ +'#xwbar .xwa.xcal{border-color:'+T.onb+';color:'+T.ink2+';font-weight:600}'
  +'#xwbar .xwown{margin-left:auto;white-space:nowrap;font-size:11px;letter-spacing:.5px;color:'+T.dim+';padding-right:4px}'
  +'#xwbar .xwown b{color:'+T.gold+';font-weight:600}'
  +'#xwbar .xwown i{font-style:normal;color:#FFB4B4}'
@@ -96,7 +102,7 @@
    if(gi) h+='<span class="xwsep"></span>';
    h+='<span class="xwg"><span class="xwgl">'+G.g+'</span>';
    G.items.forEach(function(s){
-    h+='<a class="xwa'+(s.k===CUR?' on':'')+'" href="'+s.u+'"'+(s.k===CUR?' aria-current="page"':'')+'>'
+    h+='<a class="xwa'+(s.k==='cal'?' xcal':'')+(s.k===CUR?' on':'')+'" href="'+s.u+'"'+(s.k===CUR?' aria-current="page"':'')+'>'
       +s.ico+' '+s.t+'<small>'+s.s+'</small></a>';
    });
    h+='</span>';

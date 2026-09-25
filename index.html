@@ -331,9 +331,9 @@ var AXH=['蜂蜜焦糖糖漬那一掛','新鮮水果與果乾','柑橘酸度、�
 function scoreBox(p){
  var q=p.tsq?1:0, sm='';
  for(var i=0;i<8;i++){ var v=p.tsc[i]; sm+='<i class="a'+i+(v===0?' z':'')+'">'+AXI[i]+(v===0?'–':v)+'</i>'; }
- return '<div class="scbox sc-mini" data-sc="'+p.id+'"><div class="schd"><b>\u{1F4CA} 口感評分</b>'
+ return '<div class="scbox" data-sc="'+p.id+'"><div class="schd"><b>\u{1F4CA} 口感評分</b>'
   +'<span class="scsum">'+sm+'</span>'+(q?'<i class="scwarn">\u26a0 文案少</i>':'')
-  +'<u class="scmore">展開 \u25BE</u></div></div>';
+  +'</div>'+scoreRows(p)+'</div>';
 }
 function scoreRows(p){
  var h='<div class="scrows">';
@@ -444,7 +444,7 @@ function card(p){
  var NT=(p.notes||[]).slice();
  if(o.flavor&&!NT.some(function(n){return n.v===o.flavor;})) NT.push({k:'官方風味',v:o.flavor});
  if((NT.length)||(p.tips&&p.tips.length)){
-  h+='<details class="sec fold"><summary><h3>品飲筆記 TASTING NOTES</h3></summary>';
+  h+='<details class="sec fold" open><summary><h3>品飲筆記 TASTING NOTES</h3></summary>';
   if(p.notesLead)h+='<div class="ntlead">'+esc(p.notesLead)+'</div>';
   NT.forEach(function(n){
    var ex=(n.k==='官方補充'||n.k==='建議飲用'||n.k==='搭餐')?' extra':'';
@@ -3160,6 +3160,8 @@ u.scmore,.th u,.schd u,button u,summary u,a u,label u,nav u{background-image:non
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:5px}
 /* 長段落的可讀性 */
 .why,.story,.pos,.origin p,.fab p,.points li{line-height:1.85}
+.scbox .schd{margin-bottom:6px}
+.scbox .scrows{margin-top:2px}
 </style>
 </body>
 </html>

@@ -132,3 +132,64 @@
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build);
  else build();
 })();
+
+/* ===== 2026/09/29 導覽修正 =====
+   1) 目錄點商品：一次就跳到位（先關目錄、立即定位，圖片載入造成位移時自動再校正）
+   2) 站內連結（活動頁 → 百科）改成同一個分頁開，手機「上一頁」才回得去
+   3) 圖片連結改成頁內放大檢視，不另開分頁 */
+(function(){
+ function headH(){ var xw=document.getElementById('xwbar');
+  return (window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0)+12; }
+ function to(y){ try{ window.scrollTo({top:y,behavior:'instant'}); }catch(e){ window.scrollTo(0,y); } }
+ var run=0;
+ window.__goCard=function(id){
+  document.body.classList.remove('open');
+  var L=document.getElementById('list');
+  if(L && L.classList.contains('xwsolo') && window.xwExitSolo) window.xwExitSolo();
+  var el=document.getElementById(id);
+  if(!el || !el.classList || !el.classList.contains('card')){ location.hash=id; return; }
+  var my=++run, t0=Date.now(), stop=false;
+  function place(){
+   if(my!==run || stop) return;
+   var y=Math.max(0,Math.round(window.pageYOffset+el.getBoundingClientRect().top-headH()));
+   if(Math.abs(window.pageYOffset-y)>3) to(y);
+  }
+  function cancel(){ if(Date.now()-t0>400) stop=true; }
+  window.addEventListener('touchmove',cancel,{passive:true});
+  window.addEventListener('wheel',cancel,{passive:true});
+  place(); requestAnimationFrame(place);
+  [60,160,320,560,900,1400,2100,3000].forEach(function(ms){ setTimeout(place,ms); });
+  setTimeout(function(){ window.removeEventListener('touchmove',cancel); window.removeEventListener('wheel',cancel); },3100);
+  el.classList.add('xwflash'); setTimeout(function(){ el.classList.remove('xwflash'); },1800);
+ };
+
+ var IMG=/\.(jpe?g|png|webp|gif)$/i;
+ function lightbox(src){
+  var o=document.getElementById('xwlb');
+  if(!o){
+   var st=document.createElement('style');
+   st.textContent='#xwlb{position:fixed;inset:0;z-index:2147483600;background:rgba(0,0,0,.88);display:none;align-items:center;justify-content:center;padding:16px}'
+    +'#xwlb.on{display:flex}#xwlb img{max-width:100%;max-height:100%;object-fit:contain;border-radius:8px}'
+    +'#xwlb button{position:absolute;top:max(12px,env(safe-area-inset-top));right:12px;width:42px;height:42px;border-radius:50%;border:0;background:#fff;color:#111;font-size:18px;cursor:pointer}'
+    +'.card.xwflash{outline:3px solid #E8CD8A;outline-offset:2px;transition:outline-color 1.6s}';
+   document.head.appendChild(st);
+   o=document.createElement('div'); o.id='xwlb';
+   o.innerHTML='<img alt=""><button type="button" aria-label="關閉">✕</button>';
+   document.body.appendChild(o);
+   o.addEventListener('click',function(){ o.classList.remove('on'); o.querySelector('img').removeAttribute('src'); });
+  }
+  o.querySelector('img').src=src; o.classList.add('on');
+ }
+ document.addEventListener('keydown',function(e){ var o=document.getElementById('xwlb'); if(e.key==='Escape'&&o) o.classList.remove('on'); });
+ document.addEventListener('click',function(e){
+  if(e.defaultPrevented || e.button>0 || e.metaKey || e.ctrlKey || e.shiftKey) return;
+  var a=e.target && e.target.closest ? e.target.closest('a[target="_blank"]') : null; if(!a) return;
+  var u; try{ u=new URL(a.getAttribute('href')||'',location.href); }catch(x){ return; }
+  if(IMG.test(u.pathname)){ e.preventDefault(); lightbox(u.href); return; }
+  if(u.host===location.host || /(^|\.)xsos32-design\.github\.io$/.test(u.host)) a.removeAttribute('target');
+ });
+ /* 預先把站內連結的 target 拿掉（長按「在新分頁開啟」仍可用） */
+ function strip(){ [].forEach.call(document.querySelectorAll('a[target="_blank"][href*="xsos32-design.github.io"]'),function(a){ a.removeAttribute('target'); }); }
+ if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',strip); else strip();
+ setTimeout(strip,1500);
+})();

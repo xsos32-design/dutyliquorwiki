@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="utf-8">
+<meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="七大酒類、656 支商品的速讀檔案：產區、桶型、口感、話術與 10 月折扣。個人整理學習筆記。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/dutyliquorwiki/"><meta property="og:title" content="昇恆昌酒類速讀檔案"><meta property="og:description" content="七大酒類、656 支商品的速讀檔案：產區、桶型、口感、話術與 10 月折扣。個人整理學習筆記。"><meta property="og:image" content="https://xsos32-design.github.io/dutyliquorwiki/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/dutyliquorwiki/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><!--/brand-og-->
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#060D18">
+
 <title>昇恆昌酒類速讀檔案</title>
 <link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -3377,5 +3377,31 @@ function build(){
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',build);else build();
 })();
 </script>
-</body>
+<style id="brand-css">
+/* ── 品牌主視覺（深藍金） ── */
+#nav .navhead{position:relative;padding-top:24px!important;padding-bottom:20px!important;
+  background:#060D18 url(img/brand/hero.webp) 80% center/cover no-repeat;border-bottom:1px solid rgba(201,164,92,.35)!important}
+#nav .navhead::before{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(90deg,rgba(5,11,20,.96) 0%,rgba(5,11,20,.86) 55%,rgba(5,11,20,.40) 100%)}
+#nav .navhead::after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,#8E6E33,#E8CD8A 40%,#C9A45C 70%,transparent)}
+#nav .navhead>*{position:relative}
+#nav .navhead h1{text-shadow:0 2px 12px rgba(0,0,0,.5)}
+@media (min-width:901px){#nav{top:0!important;padding-top:0!important}}
+@media (max-width:900px){#menu{top:0!important}#main{padding-top:calc(var(--xwh,52px) + 14px)!important}#nav{padding-top:0!important}}
+details.catacc>summary.catrow b>.ic{display:none}
+@media (max-width:900px){
+  #menu{background:linear-gradient(90deg,rgba(6,13,24,.98) 45%,rgba(6,13,24,.55) 100%),#060D18 url(img/brand/hero.webp) right center/auto 100% no-repeat!important}
+}
+/* 目錄分類封面 */
+details.catacc>summary.catrow{align-items:center!important}
+details.catacc>summary.catrow::before{content:'';flex:0 0 36px;width:36px;height:36px;border-radius:8px;margin-right:4px;
+  background:#0B1626 center/cover no-repeat;border:1px solid rgba(201,164,92,.40);box-shadow:0 2px 8px rgba(0,0,0,.35)}
+details.catacc[data-c="威士忌"]>summary::before{background-image:url(img/brand/cat/whisky.webp)}
+details.catacc[data-c="白蘭地"]>summary::before{background-image:url(img/brand/cat/brandy.webp)}
+details.catacc[data-c="高粱白酒"]>summary::before{background-image:url(img/brand/cat/kaoliang.webp)}
+details.catacc[data-c="葡萄酒"]>summary::before{background-image:url(img/brand/cat/wine.webp)}
+details.catacc[data-c="香檳氣泡"]>summary::before{background-image:url(img/brand/cat/champagne.webp)}
+details.catacc[data-c="清酒梅酒"]>summary::before{background-image:url(img/brand/cat/sake.webp)}
+details.catacc[data-c="調酒利口酒"]>summary::before{background-image:url(img/brand/cat/liqueur.webp)}
+</style></body>
 </html>

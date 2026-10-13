@@ -3702,5 +3702,147 @@ html body #ftop{left:calc(50% + 63px)!important;width:58px!important;height:50px
 body{padding-bottom:calc(76px + env(safe-area-inset-bottom))}
 
 </style>
-</body>
+<style id="r15-wk">/* r15 wiki layer：圖片圖庫、按鍵列、品類色、口感色 */
+section.card{position:relative;--cc:#C9A45C}
+section.card::before{content:'';position:absolute;left:18px;right:18px;top:0;height:3px;border-radius:0 0 3px 3px;
+ background:linear-gradient(90deg,transparent,var(--cc) 18%,var(--cc) 82%,transparent);opacity:.9;pointer-events:none}
+section.card .eyebrow .cat.r15c{border-color:color-mix(in srgb,var(--cc) 70%,transparent)!important;
+ background:color-mix(in srgb,var(--cc) 14%,transparent)!important;color:color-mix(in srgb,var(--cc) 55%,#fff)!important}
+
+/* ── 圖片：說明條移到圖片下方，不再蓋住瓶身 ── */
+section.card .shot:not(.dead){padding-bottom:28px!important;box-sizing:border-box}
+section.card .shot:not(.dead) img{max-height:100%!important}
+section.card .shot .lbl{position:absolute!important;left:0!important;right:0!important;bottom:0!important;top:auto!important;
+ background:#F3EEE3!important;color:#6B5A3A!important;padding:6px 8px!important;font-size:11px!important;line-height:16px!important;
+ letter-spacing:.3px;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-top:1px solid #E6DECB!important}
+section.card .shot.live .lbl{background:#E3F2EA!important;color:#2F6B4D!important;border-top-color:#C9E4D5!important}
+/* 缺圖：設計過的佔位 */
+section.card .shot.dead{writing-mode:horizontal-tb!important;display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+ background:repeating-linear-gradient(135deg,rgba(255,255,255,.025) 0 10px,transparent 10px 20px),#101A29!important;
+ border:1px dashed color-mix(in srgb,var(--cc) 55%,transparent)!important;color:#8E9BAD!important;font-size:12px!important;letter-spacing:2px!important}
+section.card .shot.dead::before{content:'';width:34px;height:34px;background:color-mix(in srgb,var(--cc) 70%,#fff);opacity:.55;
+ -webkit-mask:var(--i-bottle,var(--i-package)) center/contain no-repeat;mask:var(--i-bottle,var(--i-package)) center/contain no-repeat}
+.r15choc section.card .shot.dead::before{-webkit-mask-image:var(--i-gift);mask-image:var(--i-gift)}
+
+/* ── 手機：多張圖改成左右滑動圖庫 ── */
+@media (max-width:900px){
+ section.card .shots{gap:0!important}
+ section.card .shots>.shot{height:300px!important}
+ section.card .shots.r15g{display:flex!important;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;scrollbar-width:none;
+  border-radius:14px;box-shadow:0 10px 24px -16px rgba(0,0,0,.9);-webkit-overflow-scrolling:touch}
+ section.card .shots.r15g::-webkit-scrollbar{display:none}
+ section.card .shots.r15g>.shot{flex:0 0 100%!important;width:100%!important;scroll-snap-align:center;scroll-snap-stop:always;border-radius:0!important;box-shadow:none!important}
+ section.card .shots>.shot.dead{height:150px!important}
+}
+.r15dots{display:flex;align-items:center;justify-content:center;gap:6px;margin:10px 0 2px}
+.r15dots button{appearance:none;border:0;padding:0;width:7px;height:7px;border-radius:99px;background:rgba(201,164,92,.35);cursor:pointer;transition:width .2s,background .2s}
+.r15dots button.on{width:20px;background:#E8CD8A}
+.r15dots em{font-style:normal;font-size:11px;color:#8E9BAD;margin-left:6px;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+@media (min-width:901px){.r15dots{display:none}}
+
+/* ── 按鍵列：在架上／比較 ── */
+section.card .r15acts{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:nowrap}
+section.card .r15acts>button{flex:1 1 0;min-width:0;min-height:42px!important;margin:0!important;padding:0 8px!important;
+ display:inline-flex!important;align-items:center;justify-content:center;gap:6px;border-radius:12px!important;
+ font-size:13.5px!important;font-weight:600;letter-spacing:.5px;white-space:nowrap;cursor:pointer;line-height:1}
+section.card .r15acts>.shb.on{border-color:rgba(126,219,166,.7)!important;background:rgba(126,219,166,.12)!important;color:#9FE9C0!important}
+section.card .r15acts>button:active{transform:scale(.97)}
+
+/* ── 口感標籤：依風味家族上色 ── */
+section.card .tastebar .ts{--tc:#9AA7B8;display:inline-flex;align-items:center;gap:6px;
+ border-color:color-mix(in srgb,var(--tc) 45%,transparent)!important;background:color-mix(in srgb,var(--tc) 10%,transparent)!important;color:#E4E8EE!important}
+section.card .tastebar .ts::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--tc);flex:none}
+section.card .tastebar .ts .ic{display:none!important}
+.ts[data-f=body]{--tc:#8FA8C8}.ts[data-f=smoke]{--tc:#A7AFB8}.ts[data-f=nosmoke]{--tc:#6F7C8C}
+.ts[data-f=sweet]{--tc:#E0B25C}.ts[data-f=fruit]{--tc:#E8875A}.ts[data-f=citrus]{--tc:#D6D36A}.ts[data-f=sherry]{--tc:#C9566E}
+.ts[data-f=spice]{--tc:#C9824F}.ts[data-f=wood]{--tc:#A9805E}.ts[data-f=floral]{--tc:#D99AC0}.ts[data-f=grain]{--tc:#CDB57E}.ts[data-f=sea]{--tc:#6FB7B0}
+
+/* ── 上方工具列：右側淡出，提示可以左右滑 ── */
+#xwbar.r15more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 46px),transparent)}
+@media (min-width:901px){section.card .r15acts{max-width:460px}}
+section.card .r15acts>button:only-child{flex:0 1 240px}
+</style><script id="r15-wk-js">(function(){
+'use strict';
+var CHOC=/巧克力/.test(document.title);
+if(CHOC)document.documentElement.classList.add('r15choc');
+
+var CATC=CHOC?{'精品禮盒':'#D4A85A','餅乾・威化':'#C9925E','片裝・排塊':'#B07A55','分享包・零嘴':'#E08A5C','軟糖・糖果':'#E07A9A',
+ '松露・夾心球':'#C79B74','兒童・玩具組':'#6FB0D8','酒心巧克力':'#B4587A','堅果・鹹點':'#BFA66A','沖泡飲品':'#8FB08A'}
+ :{'威士忌':'#D4A85A','白蘭地':'#C47A48','高粱白酒':'#D0574E','葡萄酒':'#B4587A','香檳氣泡':'#E2CF8C','清酒梅酒':'#D58AA6','調酒利口酒':'#5FB3A3'};
+var TF={'輕盈好入口':'body','厚重濃郁':'body','溫和低酒感':'body','高酒感':'body','煙燻泥煤':'smoke','無煙燻':'nosmoke',
+ '甜潤':'sweet','香草奶油':'sweet','巧克力咖啡':'sweet','果香':'fruit','熱帶水果':'fruit','柑橘清爽':'citrus','雪莉果乾':'sherry',
+ '辛香料':'spice','堅果':'wood','木質檀香':'wood','花香':'floral','麥芽穀物':'grain','海鹽礦石':'sea'};
+
+/* ── 圖庫 ── */
+function gallery(card){
+ var s=card.querySelector('.shots');if(!s)return;
+ var dots=null;
+ function list(){return [].slice.call(s.children).filter(function(x){return x.classList.contains('shot')&&!x.classList.contains('dead');});}
+ function idx(){var w=s.clientWidth||1;return Math.round(s.scrollLeft/w);}
+ function upd(){
+  var L=list(),n=L.length;
+  s.classList.toggle('r15g',n>1);
+  if(n<2){if(dots){dots.remove();dots=null;}return;}
+  if(!dots||dots.childElementCount-1!==n){
+   if(dots)dots.remove();
+   dots=document.createElement('div');dots.className='r15dots';
+   var h='';for(var i=0;i<n;i++)h+='<button type="button" aria-label="第 '+(i+1)+' 張圖"></button>';
+   dots.innerHTML=h+'<em></em>';s.parentNode.insertBefore(dots,s.nextSibling);
+   dots.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var k=[].indexOf.call(dots.children,b);s.scrollTo({left:k*s.clientWidth,behavior:'smooth'});});
+  }
+  var k=Math.min(n-1,Math.max(0,idx()));
+  [].forEach.call(dots.querySelectorAll('button'),function(b,i){b.classList.toggle('on',i===k);});
+  dots.querySelector('em').textContent=(k+1)+' / '+n;
+ }
+ var t=0;s.addEventListener('scroll',function(){if(t)return;t=requestAnimationFrame(function(){t=0;upd();});},{passive:true});
+ s.addEventListener('error',function(){setTimeout(upd,30);},true);
+ upd();
+}
+
+/* ── 按鍵列 ── */
+function actions(card){
+ var ey=card.querySelector('.eyebrow');if(!ey)return;
+ var bs=ey.querySelectorAll('.shb,.cmpb');
+ var row=document.createElement('div');row.className='r15acts';
+ [].forEach.call(bs,function(b){row.appendChild(b);});
+ var en=card.querySelector('.meta .en')||card.querySelector('.meta .zh');
+ if(en)en.parentNode.insertBefore(row,en.nextSibling);else ey.parentNode.insertBefore(row,ey.nextSibling);
+}
+
+/* ── 品類色、口感色 ── */
+function colors(card){
+ var c=card.querySelector('.eyebrow .cat');if(!c)return;
+ var t=c.textContent.replace(/\s+/g,'');var col=null;
+ for(var k in CATC){if(t.indexOf(k.replace(/\s+/g,''))>=0){col=CATC[k];break;}}
+ if(col){card.style.setProperty('--cc',col);c.classList.add('r15c');}
+ [].forEach.call(card.querySelectorAll('.tastebar .ts'),function(s){var f=TF[s.textContent.trim()];if(f)s.setAttribute('data-f',f);});
+}
+
+/* ── 卡片進場時處理 ── */
+function enh(card){
+ if(card.getAttribute('data-r15'))return;card.setAttribute('data-r15','1');
+ try{colors(card);}catch(e){}
+ var prod=!!card.querySelector('.shb');
+ if(prod){try{actions(card);}catch(e){}}
+ try{gallery(card);}catch(e){}
+}
+function scan(root){[].forEach.call((root||document).querySelectorAll('section.card[id]:not([data-r15])'),enh);}
+var L=document.getElementById('list');
+if(L){
+ var q=0;new MutationObserver(function(){if(q)return;q=requestAnimationFrame(function(){q=0;scan(L);});}).observe(L,{childList:true,subtree:true});
+}
+scan();
+document.addEventListener('DOMContentLoaded',function(){scan();});
+
+/* ── 上方工具列：右側淡出、目前頁面捲到可見 ── */
+function xw(){
+ var x=document.getElementById('xwbar');if(!x||x.getAttribute('data-r15'))return!!x;x.setAttribute('data-r15','1');
+ function f(){x.classList.toggle('r15more',x.scrollLeft+x.clientWidth<x.scrollWidth-4);}
+ x.addEventListener('scroll',f,{passive:true});window.addEventListener('resize',f);
+ var on=x.querySelector('.xwa.on');if(on&&x.scrollWidth>x.clientWidth){x.scrollLeft=Math.max(0,on.offsetLeft-x.clientWidth/2+on.offsetWidth/2);}
+ f();return true;
+}
+if(!xw()){var tries=0,iv=setInterval(function(){if(xw()||++tries>40)clearInterval(iv);},250);}
+})();
+</script></body>
 </html>

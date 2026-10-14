@@ -4141,7 +4141,7 @@ function solo(){var bar=document.getElementById('xwsolobar'),L=document.getEleme
 var PRI=choc?['規格','品牌','類別','產地']:['容量','酒精度','產區','類別'];
 function card(c){var sp=c.querySelector('.meta > .specs');if(!sp||sp.getAttribute('data-r21'))return;sp.setAttribute('data-r21','1');
  var cells=[].slice.call(sp.children);if(!cells.length)return;
- function rank(x){var k=(x.querySelector('.k')||{}).textContent||'';var i=PRI.indexOf(k.trim());
+ function rank(x){var k=(x.querySelector('.k')||{}).textContent||'';k=k.trim().split(/[\s・]/)[0];var i=PRI.indexOf(k);
   if(x.classList.contains('unk')||x.classList.contains('r16wide'))return 90+(i<0?0:i);return i<0?50:i;}
  cells.map(function(x,i){return [rank(x),i,x];}).sort(function(a,b){return a[0]-b[0]||a[1]-b[1];}).forEach(function(r){sp.appendChild(r[2]);});
  var old=sp.parentNode.querySelector('.r21more');if(old)old.parentNode.removeChild(old);

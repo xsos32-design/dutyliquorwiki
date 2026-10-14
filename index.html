@@ -4148,9 +4148,10 @@ function card(c){var sp=c.querySelector('.meta > .specs');if(!sp||sp.getAttribut
  if(cells.length>4){sp.classList.add('r21cut');var b=document.createElement('button');b.type='button';b.className='r21more';
   b.textContent='看完整規格（共 '+cells.length+' 項）';b.addEventListener('click',function(){var on=sp.classList.toggle('r21cut');b.textContent=on?'看完整規格（共 '+cells.length+' 項）':'收起規格';});
   sp.parentNode.insertBefore(b,sp.nextSibling);}}
-function scan(){var L=document.getElementById('list');if(!L)return;var cs=L.querySelectorAll('.card');for(var i=0;i<cs.length;i++)card(cs[i]);solo();}
+function scan(){var L=document.getElementById('list');if(!L)return;var cs=L.querySelectorAll('.card');for(var i=0;i<cs.length;i++){try{card(cs[i]);}catch(e){}}try{solo();}catch(e){}}
 function start(){scan();var L=document.getElementById('list');
- if(L&&window.MutationObserver){var pend=0;new MutationObserver(function(){if(pend)return;pend=1;requestAnimationFrame(function(){pend=0;scan();});}).observe(L,{childList:true,subtree:true});}
+ if(window.MutationObserver){var pend=0;new MutationObserver(function(){if(pend)return;pend=1;setTimeout(function(){pend=0;scan();},120);}).observe(document.body,{childList:true,subtree:true});}
+ [300,1000,2500,5000,9000].forEach(function(ms){setTimeout(scan,ms);});
  var bar=document.getElementById('xwsolobar');if(bar&&window.MutationObserver)new MutationObserver(solo).observe(bar,{attributes:true,attributeFilter:['class']});
  setTimeout(scan,600);setTimeout(scan,2000);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();

@@ -638,6 +638,7 @@ function rowsNow(){
    else{var r=fp.split('-');if(!p.pv||p.pv<+r[0]||p.pv>=+r[1])return false;}
   }
   if(!k)return true;
+  if(window.XS){if(!p._x)p._x=XS.key(p._s);return XS.match(k,p._x);}
   return k.split(/\s+/).every(function(t){return p._s.indexOf(t)>=0;});
  });
  if(fs==='asc') rows=rows.slice().sort(function(a,b){return (a.pv||9e9)-(b.pv||9e9);});
@@ -4082,6 +4083,78 @@ function show(){var d=document.getElementById('r20upd');if(!d){d=document.create
  d.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.classList.contains('go'))location.reload();else d.classList.remove('on');});}
  d.classList.add('on');}
 navigator.serviceWorker.addEventListener('message',function(e){if(e.data&&e.data.t==='r20-new')show();});
+})();
+</script><style id="r21">/* r21：卡片先看售價與重點；只顯示 1 支的提示改放卡片上方 */
+#xwsolobar.show{position:static!important;transform:none!important;left:auto!important;bottom:auto!important;width:100%!important;max-width:none!important;box-sizing:border-box;
+ margin:0 0 12px!important;border-radius:14px!important;justify-content:space-between;flex-wrap:wrap;box-shadow:none!important;padding:10px 12px 10px 16px!important}
+#xwsolobar span{white-space:normal!important;line-height:1.5}
+#xwsolobar button{min-height:40px}
+#list .card .meta{display:flex;flex-direction:column}
+#list .card .meta>.eyebrow{order:0}#list .card .meta>.zh{order:1}#list .card .meta>.en{order:2}
+#list .card .meta>.pricebar{order:3;margin-top:10px}
+#list .card .meta>.prombar{order:4}#list .card .meta>.no95{order:5}#list .card .meta>.rwbar{order:6}
+#list .card .meta>.r15acts{order:7}#list .card .meta>.tastebar{order:8}
+#list .card .meta>.specs{order:9}#list .card .meta>.r21more{order:10}#list .card .meta>.scbox{order:11}
+#list .card .meta>*{margin-bottom:0}
+#list .card .meta{gap:10px}
+#list .card .meta>.zh,#list .card .meta>.en,#list .card .meta>.eyebrow{margin-top:0}
+.pricebar .pill.web{font-size:17px!important;font-weight:700!important}
+.specs.r21cut>.spec:nth-child(n+5){display:none!important}
+.r21more{align-self:flex-start;min-height:40px;padding:0 16px;border-radius:12px;border:1px solid rgba(201,164,92,.45);background:transparent;color:#E8CD8A;font:inherit;font-size:14px;cursor:pointer}
+@media (prefers-color-scheme:light){html:not([data-theme=dark]) .r21more{color:#7A5A1E;border-color:#C9A45C}}
+@media print{.specs.r21cut>.spec{display:block!important}.r21more{display:none!important}#list .card .meta{display:block}}
+@media (min-width:700px){.specs.r21cut>.spec:nth-child(n+5){display:block!important}.r21more{display:none!important}}
+</style><script id="r21-js">window.XS=window.XS||(function(){
+ var T="妝晉齒滿齋漣駐輸穩敗織臟別順稜蘋興擷廳繾賀澀徵帳聖價絢峽際將識鵝窯觀鉅噴連濁隊薑蹟報廠瓊項請蠔畝歡紋畫膩裡籠華鋪遺綿證貓崙啟奪頌丟屬縷銀毀壇錐給鍵悅導殼撲養縈繪儲龜圍擾壘師郵這蔭減醞礦澤鑞蕩錢討東錯慶褲數閃濱銷熾鎖趙療巒藍筆叢瓏譽盡還僅職劑勝侖滯齡嗆強響買轉貿與蝕祕執淵橫籃唸單業併櫟禪變沒鮋灘慮韻衝學圓鑽摺灑爾譯紀輒攤鴉槍財潤視倖換趕灣見閘嶺暫卻專鑄宮暈莊鑑夢産碼稱營親機歷線羅牆嬰騎擇錦棲甕幟滾講頭彙農擠諾緣煙獺績繡檔榲鷹納璽電喚軋夠藪擬繽膽辭擱雞塵勵細逕媽飽殘籌勻計動頁賴誕竄莖饗舊嶇對紐騰歸饒雋糧鵲課檢陳頃為餞驟磚遜訊係臺誦優攝簽關悶禮罌蘚窮屢暉觸茲週棟跡軸鱷較澆兒烏鄰運盃曠捲瀧膚瑪麥頒載則盧賃側鋼適窩術釀權蓽隻銘極腦豔蘇癒鹹鐘銜滷駒誠懸侶級佔濾鑰倉貢湧嚇蓋鋸漬續寶凍曉兩違掃餵傑軒歲盪蘆隸爭蒼嘗託麴臘雖鳴錄癮愛蘭瀨鍾諮額詩斂謐資遷純質霧棗種衛統針選韋拋銅備競帶渦掛岡認獎顛馴獲經綴餅雲發綺謎覓緑監誌夾議輩顆處眾訪臨薩欄雙擁馬銳盤說締覽纖讚揚緒覺偽輔網欖內輝艦纏詞鍍紛巔訓類鄧磯護節險乾睞陽鮪漸喬燦薔談寬園獨饞傳魚鴻搶聽隨醬鹽緩雜涼轟戲嶼堊紮鏽島蟲爛諺製緋鳥漲鎊醫繞鐸渾從韃倫該於緻湯馭貯嚀邏葉凱潔韓約龍紅迴無偉嚕蘊餓綁團漢場號譜彌潑販壯徑規勳麯畢輯務準鴨實話孫結爐檜構攪韌產甦進幹間誰領購嚨棄環難懇評龐賢壺靈麼緯皺揮憶廈鎮鍋陸飯當總慣貨櫸頂腳訝驥驅贏繼標豐寫審災醃調壽堅車廢損籤傷闢麵擋緊後溫鉛疊嚴捨貼組義脫訂會鳳艷飛軟驕賽樓塊殺齊獸穀廚冊們鋒稅誤彿綠蝦鏈餾狀夥燉辦絕裊榮長達謹斷絨廣劇曬擊鑿註濕蔔飾歐軍遞劍裝莢貧張麗嚥靂隴蒔呂檸勢鄉搖願庫國戰參鱘餡髮魷滲駁協櫃過語萬燒鮮綻澱圖鏃禦邁琺獵鷗璉維濃補藥屆擔覲勛諧婦舉攜糾塢聯開頓輪層隱飆貝鮭駿懷邊爍蘿剛漿離紳聲徹飢稈顏壓橋敘撐緞輕練崗亞訣穫遠駕勞塗閉題燻樹許紡書謝個幫篩濟億謬決貴淪擺躍鏡須檻詢厲幣臍應樸體嬌鯖藝顯靜飲潛瀰儂燈礎昇習鮑釋錠膠鋁貫輾範況罈壞確驗陣襯闆讀繩瀾撫綢復淺鉤蔘燼貳驤湊積噸鈷聳閒彈繚紙賦礫聞紹閣編時縮讓楓負鱸熱鏟曆顧撻鈴點魯楊員刪飴鬱寧濤瑩軀樑豬羈櫚萊創滸測訴餘階亂賜薦奧試頗鍛驚預館氣複費嗎厭檳錫櫻嶄謂傾飄賞腸條奮綜鈔暢遊氈鶴並誘猶獻踐尋蠟賣脈樂風嘆窺沖陰絲麩樣儀設鍊鷺詳蔥據雛鑒現記勁襲淨採匯蓮煉幾憑儷論彎賓鈦鶯恆誼問贈廟艱黃態簡燙劃虛縣艙頸濫責區贊終築擴鹼門戶摻異鬆鳶鯛篤兌縱繹嚐菸飼綣來鐵詮脹",S="妆晋齿满斋涟驻输稳败织脏别顺棱苹兴撷厅缱贺涩征帐圣价绚峡际将识鹅窑观巨喷连浊队姜迹报厂琼项请蚝亩欢纹画腻里笼华铺遗绵证猫仑启夺颂丢属缕银毁坛锥给键悦导壳扑养萦绘储龟围扰垒师邮这荫减酝矿泽镴荡钱讨东错庆裤数闪滨销炽锁赵疗峦蓝笔丛珑誉尽还仅职剂胜仑滞龄呛强响买转贸与蚀秘执渊横篮念单业并栎禅变没鲉滩虑韵冲学圆钻折洒尔译纪辄摊鸦枪财润视幸换赶湾见闸岭暂却专铸宫晕庄鉴梦产码称营亲机历线罗墙婴骑择锦栖瓮帜滚讲头汇农挤诺缘烟獭绩绣档榅鹰纳玺电唤轧够薮拟缤胆辞搁鸡尘励细迳妈饱残筹匀计动页赖诞窜茎飨旧岖对纽腾归饶隽粮鹊课检陈顷为饯骤砖逊讯系台诵优摄签关闷礼罂藓穷屡晖触兹周栋迹轴鳄较浇儿乌邻运杯旷卷泷肤玛麦颁载则卢赁侧钢适窝术酿权荜只铭极脑艳苏愈咸钟衔卤驹诚悬侣级占滤钥仓贡涌吓盖锯渍续宝冻晓两违扫喂杰轩岁荡芦隶争苍尝托曲腊虽鸣录瘾爱兰濑钟咨额诗敛谧资迁纯质雾枣种卫统针选韦抛铜备竞带涡挂冈认奖颠驯获经缀饼云发绮谜觅绿监志夹议辈颗处众访临萨栏双拥马锐盘说缔览纤赞扬绪觉伪辅网榄内辉舰缠词镀纷巅训类邓矶护节险干睐阳鲔渐乔灿蔷谈宽园独馋传鱼鸿抢听随酱盐缓杂凉轰戏屿垩扎锈岛虫烂谚制绯鸟涨镑医绕铎浑从鞑伦该于致汤驭贮咛逻叶凯洁韩约龙红回无伟噜蕴饿绑团汉场号谱弥泼贩壮径规勋曲毕辑务准鸭实话孙结炉桧构搅韧产苏进干间谁领购咙弃环难恳评庞贤壶灵么纬皱挥忆厦镇锅陆饭当总惯货榉顶脚讶骥驱赢继标丰写审灾腌调寿坚车废损签伤辟面挡紧后温铅叠严舍贴组义脱订会凤艳飞软骄赛楼块杀齐兽谷厨册们锋税误佛绿虾链馏状伙炖办绝袅荣长达谨断绒广剧晒击凿注湿卜饰欧军递剑装荚贫张丽咽雳陇莳吕柠势乡摇愿库国战参鲟馅发鱿渗驳协柜过语万烧鲜绽淀图镞御迈珐猎鸥琏维浓补药届担觐勋谐妇举携纠坞联开顿轮层隐飙贝鲑骏怀边烁萝刚浆离绅声彻饥秆颜压桥叙撑缎轻练岗亚诀获远驾劳涂闭题熏树许纺书谢个帮筛济亿谬决贵沦摆跃镜须槛询厉币脐应朴体娇鲭艺显静饮潜弥侬灯础升习鲍释锭胶铝贯辗范况坛坏确验阵衬板读绳澜抚绸复浅钩参烬贰骧凑积吨钴耸闲弹缭纸赋砾闻绍阁编时缩让枫负鲈热铲历顾挞铃点鲁杨员删饴郁宁涛莹躯梁猪羁榈莱创浒测诉余阶乱赐荐奥试颇锻惊预馆气复费吗厌槟锡樱崭谓倾飘赏肠条奋综钞畅游毡鹤并诱犹献践寻蜡卖脉乐风叹窥冲阴丝麸样仪设炼鹭详葱据雏鉴现记劲袭净采汇莲炼几凭俪论弯宾钛莺恒谊问赠庙艰黄态简烫划虚县舱颈滥责区赞终筑扩碱门户掺异松鸢鲷笃兑纵绎尝烟饲绻来铁诠胀",M={};for(var i=0;i<T.length;i++)M[T.charAt(i)]=S.charAt(i);
+ var AB={"rs": ["皇家礼炮", "royalsalute"], "gf": ["格兰菲迪", "glenfiddich"], "tgl": ["格兰利威", "glenlivet"], "hp": ["高原骑士", "highlandpark"], "kvl": ["噶玛兰", "kavalan"], "kkl": ["金门高粱", "金酒"], "jw": ["约翰走路", "johnniewalker"], "hsy": ["轩尼诗", "hennessy"], "bld": ["bruichladdich", "octomore"], "gn": ["格兰杰", "glenmorangie"], "vcp": ["凯歌", "veuveclicquot"], "dp": ["香槟王", "domperignon"], "mc": ["酩悦", "moet"], "adb": ["黑桃", "armanddebrignac"], "balv": ["百富", "balvenie"], "dal": ["大摩", "dalmore"], "cb": ["云雾之湾", "cloudybay"], "jb": ["金宾", "jimbeam"], "gdronach": ["格兰多纳", "glendronach"], "lt": ["路易十三", "louisxiii"], "xiii": ["路易十三", "louisxiii"]},VOL={"700": ["700ml", "07l", "70cl"], "700ml": ["700ml", "07l", "70cl"], "07": ["700ml", "07l", "70cl"], "07l": ["700ml", "07l", "70cl"], "70cl": ["700ml", "07l", "70cl"], "1l": ["1l", "1000ml", "1公升", "1升"], "1000ml": ["1l", "1000ml", "1公升", "1升"], "1公升": ["1l", "1000ml", "1公升", "1升"], "1升": ["1l", "1000ml", "1公升", "1升"], "1000": ["1l", "1000ml", "1公升", "1升"], "750": ["750ml", "075l", "75cl"], "750ml": ["750ml", "075l", "75cl"], "075": ["750ml", "075l", "75cl"], "075l": ["750ml", "075l", "75cl"], "75cl": ["750ml", "075l", "75cl"], "500ml": ["500ml", "05l", "50cl"], "05l": ["500ml", "05l", "50cl"], "50cl": ["500ml", "05l", "50cl"]};
+ function sc(s){var o='';for(var i=0;i<s.length;i++){var c=s.charAt(i);o+=M[c]||c;}return o;}
+ function key(t){t=String(t==null?'':t).toLowerCase();try{t=t.normalize('NFD').replace(/[̀-ͯ]/g,'');}catch(e){}
+  return sc(t.replace(/[\s'’·・\-–—_.,，。()（）]/g,''));}
+ function alts(tok){var b=key(tok);if(!b)return [];var a=[b];if(AB[b])a=(b.length<=2?[]:a).concat(AB[b]);
+  var m=/^(\d{1,2})(y|yo|yr|yrs|year|years|年)$/.exec(b);if(m){var n=m[1];a=[n+'年',n+'year',n+'yo',n+'y'];}
+  if(VOL[b])a=a.concat(VOL[b]);return a;}
+ function words(q){return String(q||'').split(/\s+/).filter(Boolean);}
+ function match(q,k){var w=words(q);return w.every(function(t){var a=alts(t);for(var i=0;i<a.length;i++)if(k.indexOf(a[i])>=0)return true;return false;});}
+ function lev(a,b){if(Math.abs(a.length-b.length)>2)return 9;var p=[],i,j;for(j=0;j<=b.length;j++)p[j]=j;
+  for(i=1;i<=a.length;i++){var c=[i];for(j=1;j<=b.length;j++)c[j]=Math.min(p[j]+1,c[j-1]+1,p[j-1]+(a.charAt(i-1)===b.charAt(j-1)?0:1));p=c;}return p[b.length];}
+ function fix(tok,vocab){var b=key(tok);if(!/^[a-z]{4,}$/.test(b))return null;var lim=b.length<=6?1:2,best=null,bd=9;
+  for(var w in vocab){if(w===b)return null;var d=lev(b,w);if(d<bd||(d===bd&&vocab[w]>vocab[best])){bd=d;best=w;}}
+  return bd<=lim?best:null;}
+ return {key:key,alts:alts,match:match,words:words,fix:fix};
+})();
+
+(function(){
+'use strict';
+var choc=!!document.querySelector('meta[name=r21-choc]')||/巧克力/.test(document.title);
+var UNIT=choc?'項':'支';
+/* 1. 只顯示 1 支的提示：放回卡片上方，不再浮在內容上 */
+function adj(){var bar=document.getElementById('xwsolobar');if(!bar||!bar.classList.contains('show'))return;var lim=window.innerWidth<=900?124:84,r=bar.getBoundingClientRect();if(r.top<lim||r.top>window.innerHeight*0.5)window.scrollBy(0,r.top-lim);}
+function solo(){var bar=document.getElementById('xwsolobar'),L=document.getElementById('list');if(!bar||!L)return;
+ if(!bar.getAttribute('data-r21')){bar.setAttribute('data-r21','1');
+  var sp=bar.querySelector('span');if(sp)sp.innerHTML='從連結開啟，目前只顯示這 1 '+UNIT;
+  if(!bar.querySelector('button')){var b=document.createElement('button');b.type='button';b.textContent='顯示全部';
+   b.addEventListener('click',function(){try{history.replaceState(null,'',location.pathname+location.search);}catch(e){}if(window.xwExitSolo)window.xwExitSolo();});bar.appendChild(b);}}
+ var el=L.querySelector('.card.xwtarget');
+ if(bar.classList.contains('show')&&el){if(el.firstChild!==bar){el.insertBefore(bar,el.firstChild);[1000,1500].forEach(function(ms){setTimeout(adj,ms);});}}
+ else if(bar.parentNode!==document.body&&!bar.classList.contains('show')){document.body.appendChild(bar);}}
+/* 2. 卡片：規格先列最常問的，超過 4 格先收起 */
+var PRI=choc?['規格','品牌','類別','產地']:['容量','酒精度','產區','類別'];
+function card(c){var sp=c.querySelector('.meta > .specs');if(!sp||sp.getAttribute('data-r21'))return;sp.setAttribute('data-r21','1');
+ var cells=[].slice.call(sp.children);if(!cells.length)return;
+ function rank(x){var k=(x.querySelector('.k')||{}).textContent||'';var i=PRI.indexOf(k.trim());
+  if(x.classList.contains('unk')||x.classList.contains('r16wide'))return 90+(i<0?0:i);return i<0?50:i;}
+ cells.map(function(x,i){return [rank(x),i,x];}).sort(function(a,b){return a[0]-b[0]||a[1]-b[1];}).forEach(function(r){sp.appendChild(r[2]);});
+ var old=sp.parentNode.querySelector('.r21more');if(old)old.parentNode.removeChild(old);
+ if(cells.length>4){sp.classList.add('r21cut');var b=document.createElement('button');b.type='button';b.className='r21more';
+  b.textContent='看完整規格（共 '+cells.length+' 項）';b.addEventListener('click',function(){var on=sp.classList.toggle('r21cut');b.textContent=on?'看完整規格（共 '+cells.length+' 項）':'收起規格';});
+  sp.parentNode.insertBefore(b,sp.nextSibling);}}
+function scan(){var L=document.getElementById('list');if(!L)return;var cs=L.querySelectorAll('.card');for(var i=0;i<cs.length;i++)card(cs[i]);solo();}
+function start(){scan();var L=document.getElementById('list');
+ if(L&&window.MutationObserver){var pend=0;new MutationObserver(function(){if(pend)return;pend=1;requestAnimationFrame(function(){pend=0;scan();});}).observe(L,{childList:true,subtree:true});}
+ var bar=document.getElementById('xwsolobar');if(bar&&window.MutationObserver)new MutationObserver(solo).observe(bar,{attributes:true,attributeFilter:['class']});
+ setTimeout(scan,600);setTimeout(scan,2000);}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
+window.addEventListener('hashchange',function(){setTimeout(solo,50);setTimeout(solo,400);});
 })();
 </script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style><script id="kbl-js">(function(){var st=0;function put(J){[].forEach.call(document.querySelectorAll('.kblazy'),function(d){var h=J[d.getAttribute('data-kbl')];if(h==null)return;var w=document.createElement('div');w.innerHTML=h;var f=document.createDocumentFragment();while(w.firstChild)f.appendChild(w.firstChild);d.parentNode.replaceChild(f,d);});}

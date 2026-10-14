@@ -1,9 +1,9 @@
 /* 頁面：先用手機裡存好的版本秒開，同時在背景下載新版；新版不同時通知頁面顯示「有新版內容」（r20）。圖片字型：快取優先、背景更新 */
-const V = 'v2026-10-14-2437066578-r21b';
+const V = 'v2026-10-14-2437066578-r21c';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=2437066578'];
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(P + 'core|' + V).then(c => c.addAll(CORE)).catch(() => {}).then(() => self.skipWaiting()));
+  e.waitUntil(caches.open(P + 'core|' + V).then(c => c.addAll(CORE.map(x => new Request(x, {cache: 'reload'})))).catch(() => {}).then(() => self.skipWaiting()));
 });
 self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith(P) && !k.endsWith(V)).map(k => caches.delete(k))))
@@ -18,7 +18,7 @@ self.addEventListener('fetch', e => {
   if (r.mode === 'navigate') {
     const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
     e.respondWith(caches.open(P + 'core|' + V).then(c => c.match(key).then(m => {
-      const net = fetch(r, {cache: 'no-store'}).then(res => {
+      const net = fetch(new Request(u.origin + u.pathname + u.search, {cache: 'no-store', credentials: 'same-origin'})).then(res => {
         if (res.ok && res.type === 'basic') {
           const keep = res.clone();
           if (m) {

@@ -49,10 +49,13 @@ footer{padding:20px 16px 40px;text-align:center;color:var(--dim2);font-size:12px
 <script>
 (function(){
 var P=JSON.parse(document.getElementById('PICK').textContent),R=P.rows;
+var ENDED=(function(){var e=new Date(2026,10,1),n=new Date();try{var q=/[?&]now=(\d{4})-(\d{2})-(\d{2})/.exec(location.search);if(q)n=new Date(+q[1],+q[2]-1,+q[3],12)}catch(x){}return n>=e})();
+if(ENDED){R.forEach(function(r){r.m=''});var _po=document.querySelector('#sort option[value=promo]');if(_po)_po.remove();}
 var CATS=['全部','威士忌','白蘭地','葡萄酒','香檳氣泡','清酒梅酒','高粱白酒','調酒利口酒'];
 var BUD=[['不限',0,1e12],['1,000 以下',1,1000],['1,000–3,000',1000,3000],['3,000–6,000',3000,6000],['6,000–15,000',6000,15000],['15,000 以上',15000,1e12]];
 var st={cat:0,bud:0,tas:[],sce:-1,box:0,sort:'fit',show:30};
 try{var sv=JSON.parse(localStorage.getItem('pick-st')||'null');if(sv){st.cat=sv.cat||0;st.bud=sv.bud||0;st.tas=sv.tas||[];st.sce=sv.sce==null?-1:sv.sce;st.sort=sv.sort||'fit';st.box=sv.box||0}}catch(e){}
+if(ENDED&&st.sort==='promo')st.sort='fit';
 function chips(id,list,isOn,on){var el=document.getElementById(id);el.innerHTML='';list.forEach(function(l,i){var b=document.createElement('button');b.className='chip';b.type='button';b.textContent=l;b.setAttribute('aria-pressed',isOn(i)?'true':'false');b.onclick=function(){on(i);st.show=30;draw()};el.appendChild(b)})}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
 function draw(){
@@ -87,5 +90,31 @@ document.getElementById('more').onclick=function(){st.show+=30;draw()};
 draw();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
 })();
-</script><script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
+</script><script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script><style id="r20-exp">/* r20 活動到期：10/31 過後自動收起 10 月折扣標示 */
+#r20exp{max-width:1060px;margin:10px auto;padding:12px 16px;border-radius:14px;background:#3A2A12;border:1px solid rgba(232,190,110,.55);color:#F5D9A8;font-size:14px;line-height:1.6;box-sizing:border-box}
+#r20exp b{color:#FFE7B8}
+body.r20ended .prombar,body.r20ended .fbtn[data-f="promo"],body.r20ended #promotog,body.r20ended #promopanel,body.r20ended .rwbar{display:none!important}
+body.r20ended #r16home .promo,body.r20ended #r20home .promo{opacity:.55}
+body.r20ended.r20promo .wrap>*:not(#r20exp){opacity:.45;filter:grayscale(.6)}
+@media print{#r20exp{display:none!important}}
+</style><script id="r20-exp-js">(function(){
+'use strict';
+var END=new Date(2026,10,1,0,0,0); /* 2026/11/01 00:00 起視為 10 月活動結束 */
+var now=new Date();
+try{var m=/[?&]now=(\d{4})-(\d{2})-(\d{2})/.exec(location.search);if(m)now=new Date(+m[1],+m[2]-1,+m[3],12);}catch(e){}
+if(now<END)return;
+var b=document.body;b.classList.add('r20ended');
+var promo=/活動速查|促銷|折扣/.test(document.title)&&!/速讀檔案/.test(document.title);
+if(promo)b.classList.add('r20promo');
+var d=document.createElement('div');d.id='r20exp';d.setAttribute('role','status');
+d.innerHTML=promo?'<b>10 月活動已於 10/31 結束。</b>以下是 10 月的內容，僅供參考，不要再對客人報這些折扣；11 月活動辦法更新後會換上新內容。實際折抵以 POS 為準。'
+ :'<b>10 月活動已於 10/31 結束，</b>商品卡上的 10 月折扣標示已先收起；11 月活動辦法更新後會再補上。實際折抵以 POS 為準。';
+var host=document.querySelector('.wrap')||document.getElementById('main')||b;
+if(promo&&host.parentNode)host.insertBefore(d,host.firstChild);
+else{var main=document.getElementById('main');if(main)main.insertBefore(d,main.firstChild);else b.insertBefore(d,b.firstChild);}
+function relabel(){[].forEach.call(document.querySelectorAll('#r16home .promo b,#r20home .promo b'),function(x){if(!/已結束/.test(x.textContent))x.textContent=x.textContent.replace(/本月/,'10 月')+'（已結束）';});}
+function place(){var h=document.getElementById('r16home')||document.getElementById('r20home');if(h&&!promo&&h.nextSibling!==d)h.parentNode.insertBefore(d,h.nextSibling);}
+relabel();place();setTimeout(function(){relabel();place();},900);
+})();
+</script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
 section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body></html>

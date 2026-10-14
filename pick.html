@@ -50,7 +50,7 @@ footer{padding:20px 16px 40px;text-align:center;color:var(--dim2);font-size:12px
 (function(){
 var P=JSON.parse(document.getElementById('PICK').textContent),R=P.rows;
 var ENDED=(function(){var e=new Date(2026,10,1),n=new Date();try{var q=/[?&]now=(\d{4})-(\d{2})-(\d{2})/.exec(location.search);if(q)n=new Date(+q[1],+q[2]-1,+q[3],12)}catch(x){}return n>=e})();
-if(ENDED){R.forEach(function(r){r.m=''});var _po=document.querySelector('#sort option[value=promo]');if(_po)_po.remove();}
+if(ENDED){R.forEach(function(r){r.m='';if(r.q)r.q=r.q.replace(/[；，]本檔有折扣(，是系列裡現在最划算的)?/g,'').replace(/這個月單瓶就打 85 折。/g,'')});var _po=document.querySelector('#sort option[value=promo]');if(_po)_po.remove();}
 var CATS=['全部','威士忌','白蘭地','葡萄酒','香檳氣泡','清酒梅酒','高粱白酒','調酒利口酒'];
 var BUD=[['不限',0,1e12],['1,000 以下',1,1000],['1,000–3,000',1000,3000],['3,000–6,000',3000,6000],['6,000–15,000',6000,15000],['15,000 以上',15000,1e12]];
 var st={cat:0,bud:0,tas:[],sce:-1,box:0,sort:'fit',show:30};
@@ -90,7 +90,8 @@ document.getElementById('more').onclick=function(){st.show+=30;draw()};
 draw();
 if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch(function(){})}
 })();
-</script><script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script><style id="r20-exp">/* r20 活動到期：10/31 過後自動收起 10 月折扣標示 */
+</script><script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
+section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style><style id="r20-exp">/* r20 活動到期：10/31 過後自動收起 10 月折扣標示 */
 #r20exp{max-width:1060px;margin:10px auto;padding:12px 16px;border-radius:14px;background:#3A2A12;border:1px solid rgba(232,190,110,.55);color:#F5D9A8;font-size:14px;line-height:1.6;box-sizing:border-box}
 #r20exp b{color:#FFE7B8}
 body.r20ended .prombar,body.r20ended .fbtn[data-f="promo"],body.r20ended #promotog,body.r20ended #promopanel,body.r20ended .rwbar{display:none!important}
@@ -116,5 +117,4 @@ function relabel(){[].forEach.call(document.querySelectorAll('#r16home .promo b,
 function place(){var h=document.getElementById('r16home')||document.getElementById('r20home');if(h&&!promo&&h.nextSibling!==d)h.parentNode.insertBefore(d,h.nextSibling);}
 relabel();place();setTimeout(function(){relabel();place();},900);
 })();
-</script><style id="r17-font">html body,html body *:not(svg):not(path):not(circle):not(rect){font-family:"Microsoft JhengHei","微軟正黑體",system-ui,-apple-system,"PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif!important}
-section.card .en,#r16home .en,.en,i.en,.navhead .sub{font-style:normal!important}</style></body></html>
+</script></body></html>

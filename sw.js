@@ -1,5 +1,5 @@
 /* 離線模式：頁面走「網路優先、斷線用快取」，圖片字型走「快取優先、背景更新」 */
-const V = 'v2026-10-13-2437066578-r18';
+const V = 'v2026-10-14-2437066578-r19';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=2437066578'];
 self.addEventListener('install', e => {

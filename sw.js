@@ -1,5 +1,5 @@
-/* 離線模式：頁面走「網路優先、斷線用快取」，圖片字型走「快取優先、背景更新」 */
-const V = 'v2026-10-14-2437066578-r19';
+/* 頁面：先用手機裡存好的版本秒開，同時在背景下載新版；新版不同時通知頁面顯示「有新版內容」（r20）。圖片字型：快取優先、背景更新 */
+const V = 'v2026-10-14-2437066578-r20b';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=2437066578'];
 self.addEventListener('install', e => {
@@ -9,23 +9,28 @@ self.addEventListener('activate', e => {
   e.waitUntil(caches.keys().then(ks => Promise.all(ks.filter(k => k.startsWith(P) && !k.endsWith(V)).map(k => caches.delete(k))))
     .then(() => self.clients.claim()));
 });
+function notify(){ self.clients.matchAll({type:'window'}).then(cs => cs.forEach(c => c.postMessage({t:'r20-new'}))); }
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET') return;
   const u = new URL(r.url);
   const scope = new URL(self.registration.scope);
   if (r.mode === 'navigate') {
-    e.respondWith(fetch(r).then(res => {
-      if (res.ok) {
-        const cp = res.clone();
-        const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
-        caches.open(P + 'core|' + V).then(c => c.put(key, cp));
-      }
-      return res;
-    }).catch(() => {
-      const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
-      return caches.match(key).then(m => m || caches.match('./index.html')).then(m => m || caches.match('./'));
-    }));
+    const key = u.origin + u.pathname + (u.pathname.endsWith('/') ? 'index.html' : '');
+    e.respondWith(caches.open(P + 'core|' + V).then(c => c.match(key).then(m => {
+      const net = fetch(r, {cache: 'no-store'}).then(res => {
+        if (res.ok && res.type === 'basic') {
+          const keep = res.clone();
+          if (m) {
+            const old = m.clone();
+            Promise.all([old.text(), res.clone().text()]).then(([a, b]) => { c.put(key, keep).then(() => { if (a !== b) notify(); }); }).catch(() => {});
+          } else c.put(key, keep);
+        }
+        return res;
+      });
+      if (m) { e.waitUntil(net.catch(() => {})); return m.clone(); }
+      return net.catch(() => caches.match('./index.html').then(x => x || caches.match('./')));
+    })));
     return;
   }
   const same = u.origin === scope.origin;

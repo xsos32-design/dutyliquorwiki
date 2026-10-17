@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-Hant" class="t23 noir">
-<head>
+<head><link id="r38font" rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" media="print" onload="this.media='all'"><script id="r38nb">function _nb(t){t=String(t);t=t.replace(/(\d)\s+(年份|年|入|顆|片|支|包|件|g|G|kg|ml|mL|ML|cl|CL|L|公升|%)/g,"$1\u00a0$2");t=t.replace(/(\S)\s+(\d{1,4}\u00a0(?:年份|年))/g,"$1\u00a0$2");return t;}</script><script id="r38gate">(function(){var MO=window.MutationObserver;if(!MO||MO.__r38)return;function W(cb){var pend=[],t=null,self=this;var inner=new MO(function(recs){if(window.BUILT!==false&&!pend.length){return cb.call(self,recs,self);}for(var i=0;i<recs.length;i++)pend.push(recs[i]);if(t)return;t=setTimeout(function fl(){if(window.BUILT===false&&!window.__r38flush){t=setTimeout(fl,700);var r0=pend;pend=[];if(r0.length)cb.call(self,r0,self);return;}t=null;var r=pend;pend=[];if(r.length)cb.call(self,r,self);},700);});this.observe=function(a,b){inner.observe(a,b);};this.disconnect=function(){inner.disconnect();pend=[];if(t){clearTimeout(t);t=null;}};this.takeRecords=function(){var r=pend.concat(inner.takeRecords());pend=[];return r;};}W.__r38=1;W.prototype=MO.prototype;window.MutationObserver=W;})();</script>
 <meta charset="utf-8"><meta name="theme-color" content="#060D18"><!--brand-og--><meta name="description" content="七大酒類商品的速讀檔案：產區、桶型、口感、話術與 10 月折扣。個人整理學習筆記。"><meta property="og:type" content="website"><meta property="og:url" content="https://xsos32-design.github.io/dutyliquorwiki/"><meta property="og:title" content="昇恆昌酒類速讀檔案"><meta property="og:description" content="七大酒類商品的速讀檔案：產區、桶型、口感、話術與 10 月折扣。個人整理學習筆記。"><meta property="og:image" content="https://xsos32-design.github.io/dutyliquorwiki/img/brand/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://xsos32-design.github.io/dutyliquorwiki/img/brand/og.jpg"><link rel="preload" as="image" href="img/brand/hero.webp" fetchpriority="high"><!--/brand-og-->
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
@@ -342,6 +342,13 @@ html.noir:not(#_a):not(#_b) section.card .shots>.shot .lbl{background:rgba(14,12
 
 /* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
 html.noir #list>section.card{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+
+/* r38 排版：標題斷行平均、警語一行放得下 */
+html.noir :is(h1,h2,h3,.zh,.tile-h h3,.cal-head h2,.r24hd h2){text-wrap:balance}
+html.noir :is(p,li,.ld,.d){text-wrap:pretty}
+@media (max-width:600px){html.noir .ban{letter-spacing:3px!important;font-size:14px!important;text-wrap:balance}}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none{grid-area:th!important;border-radius:10px;background:#1A1712 url(https://xsos32-design.github.io/dutyliquorwiki/img/brand/ph_liq.webp) center/62% auto no-repeat!important;border:1px solid rgba(201,164,92,.32)!important}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!important}
 </style></head>
 <body>
 <div id="menu"><button id="mb">☰ 目錄</button><b>昇恆昌酒類速讀檔案</b><button id="fsz" type="button" aria-pressed="false" title="字體放大／還原">A+</button></div>
@@ -540,7 +547,7 @@ function card(p){
  if(!p.photo&&!p.shot&&!(p.live&&p.live.length)) h+='<div class="shot dead">實品圖待補</div>';
  h+='</div><div class="meta"><div class="eyebrow"><span class="no">'+p.no+'</span><span class="cat">'+esc(p.cat)+'</span>'+(p.box?'<span class="cat" title="已由圖片或門市實拍確認有外盒"><i class="ic ic-gift" aria-hidden="true"></i>有外盒</span>':'')
    +(p.dfLimited?'<span class="cat" style="border-color:rgba(201,164,92,.9);background:rgba(201,164,92,.12)">'+esc(p.dfText||'免稅限定')+'</span>':'')+'<button type="button" class="shb'+((window.SHELF&&window.SHELF[p.id])?' on':'')+'" data-sh="'+p.id+'">'+((window.SHELF&&window.SHELF[p.id])?'\u2714 在架上':'\u002B 在架上')+'</button><button type="button" class="cmpb" data-cmp="'+p.id+'" aria-pressed="false">比較</button></div>';
- h+='<div class="zh">'+esc(p.nameZh)+'</div><div class="en">'+esc(p.nameEn)+'</div><div class="specs">';
+ h+='<div class="zh">'+_nb(esc(p.nameZh))+'</div><div class="en">'+esc(p.nameEn)+'</div><div class="specs">';
  var o=p.official||{}, mn=p.manual||{};
  function pick(a,b,c){return a||b||c||'';}
  function same(a,b){return a&&b&&String(a).replace(/\s|%|vol|VOL|\./g,'')===String(b).replace(/\s|%|vol|VOL|\./g,'');}
@@ -2457,7 +2464,7 @@ body.quizon #shview h1{font-size:19px}
   var sel=id?'.shb[data-sh="'+id+'"]':'.shb';
   [].forEach.call(document.querySelectorAll(sel),function(b){
    var on=!!window.SHELF[b.getAttribute('data-sh')];
-   b.classList.toggle('on',on); b.textContent=on?'\u2714 在架上':'+ 在架上';
+   b.classList.toggle('on',on); if(b.getAttribute('data-r38')!==String(on)){b.setAttribute('data-r38',String(on));b.textContent=on?'\u2714 在架上':'+ 在架上';}
   });
   var n=ids().length;
   var f=document.querySelector('.fbtn[data-f="shelf"]');
@@ -3747,7 +3754,7 @@ body.promo-over .prombar::before{content:"10 月活動已結束 ・ ";font-size:
    t.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.classList.contains('go'))openV();else if(b.classList.contains('clr')){SEL=[];sync();}});}
   return t;}
  function sync(){
-  [].forEach.call(document.querySelectorAll('.cmpb'),function(b){var on=SEL.indexOf(b.getAttribute('data-cmp'))>=0;b.setAttribute('aria-pressed',on?'true':'false');b.textContent=on?'已選比較':'比較';});
+  [].forEach.call(document.querySelectorAll('.cmpb'),function(b){var on=SEL.indexOf(b.getAttribute('data-cmp'))>=0;b.setAttribute('aria-pressed',on?'true':'false');if(b.getAttribute('data-r38')!==String(on)){b.setAttribute('data-r38',String(on));b.textContent=on?'已選比較':'比較';}});
   var t=tray();if(!SEL.length){t.classList.remove('on');return;}
   t.classList.add('on');
   var nm=SEL.map(function(id){var p=byId(id);return p?E(p.nameZh):'';});
@@ -4447,7 +4454,7 @@ try{new MutationObserver(later).observe(document.body,{childList:true,subtree:tr
 [400,1200,3000,6000,10000].forEach(function(ms){setTimeout(scan,ms);});
 if(document.readyState!=='loading')scan();else document.addEventListener('DOMContentLoaded',scan);
 })();
-</script><style id="r24">@import url(https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600&display=swap);
+</script><style id="r24">
 /* r24 每日精選、品牌故事入口、卡片品牌連結、風味雷達圖（暗金 Noir） */
 .r24day{display:flex;flex-direction:column;gap:10px}
 .r24hd{display:flex;align-items:center;justify-content:space-between;gap:10px}

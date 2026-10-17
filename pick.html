@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant" class="t23 noir"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<html lang="zh-Hant" class="t23 noir"><head><link id="r38font" rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@600;700&display=swap" media="print" onload="this.media='all'"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#060D18"><title>選酒推薦｜昇恆昌酒類速讀檔案</title>
 <meta name="description" content="依類別、預算、口味、場合挑酒，點了直接看完整商品卡。個人整理學習筆記。">
 <meta property="og:title" content="選酒推薦｜昇恆昌酒類速讀檔案"><meta property="og:image" content="https://xsos32-design.github.io/dutyliquorwiki/img/brand/og.jpg">
@@ -107,6 +107,13 @@ html.noir:not(#_a):not(#_b) section.card .shots>.shot .lbl{background:rgba(14,12
 
 /* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
 html.noir #list>section.card{content-visibility:auto;contain-intrinsic-size:auto 1100px}
+
+/* r38 排版：標題斷行平均、警語一行放得下 */
+html.noir :is(h1,h2,h3,.zh,.tile-h h3,.cal-head h2,.r24hd h2){text-wrap:balance}
+html.noir :is(p,li,.ld,.d){text-wrap:pretty}
+@media (max-width:600px){html.noir .ban{letter-spacing:3px!important;font-size:14px!important;text-wrap:balance}}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none{grid-area:th!important;border-radius:10px;background:#1A1712 url(https://xsos32-design.github.io/dutyliquorwiki/img/brand/ph_liq.webp) center/62% auto no-repeat!important;border:1px solid rgba(201,164,92,.32)!important}
+html.noir:not(#_a):not(#_b) li.galrow .line>.r15th.none+span{grid-area:nm!important}
 </style></head><body>
 <header><a class="back" href="./">‹ 回酒類速讀檔案</a><h1>選酒推薦</h1><p>五步挑酒：類別、預算、口味、場合、包裝，條件都可以不選，點商品就打開完整卡片。價格與折扣以現場價卡、POS 為準。</p></header>
 <main>

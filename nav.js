@@ -297,3 +297,6 @@
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',strip); else strip();
  setTimeout(strip,1500);
 })();
+
+/* 頁首主視覺：job/kv.js 決定哪幾頁要放 */
+(function(){if(window.__xwKVL)return;window.__xwKVL=1;var s=document.createElement("script");s.src="https://xsos32-design.github.io/job/kv.js";s.defer=true;document.head.appendChild(s);})();

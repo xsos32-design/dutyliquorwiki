@@ -135,8 +135,8 @@
    var a=e.target.closest?e.target.closest('a.xwa'):null; if(!a)return;
    if(!/#shelf$/.test(a.getAttribute('href')))return;
    var same=(CUR==='wiki'&&/dutyliquorwiki/.test(a.href))||(CUR==='choc'&&/chocolatewiki/.test(a.href));
-   if(same){ e.preventDefault(); var d=document.getElementById('dsh');
-    if(d){ if(!document.body.classList.contains('shon'))d.click(); window.scrollTo({top:0,behavior:'smooth'}); } }
+   var d=document.getElementById('dsh');
+   if(same&&d){ e.preventDefault(); if(!document.body.classList.contains('shon'))d.click(); window.scrollTo({top:0,behavior:'smooth'}); }
   });
 
   function h2(){document.documentElement.style.setProperty('--xwh',bar.offsetHeight+'px');}

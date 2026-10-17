@@ -106,10 +106,20 @@
  +'#xws .xwtg.w{background:rgba(201,164,92,.2);color:#E8CD8A;border:1px solid rgba(201,164,92,.5)}'
  +'#xws .xwtg.c{background:rgba(233,180,138,.14);color:#E9B48A;border:1px solid rgba(233,180,138,.45)}'
  +'#xws .xwpm{color:#7FD1B5!important;font-weight:700}'
+ +'#xws .xwmd{color:#CFC4AE!important}'
+ +'#xws .xwseg{flex-wrap:wrap}#xws .xwseg em{font-style:normal;opacity:.7;font-size:11.5px;margin-left:2px}'
+ +'#xws .xwtg.a{background:rgba(127,209,181,.14);color:#7FD1B5;border:1px solid rgba(127,209,181,.45)}'
+ +'#xws .xwtg.b,#xws .xwtg.r{background:rgba(160,180,230,.13);color:#B8C7EE;border:1px solid rgba(160,180,230,.42)}'
+ +'#xws .xwtg.g{background:rgba(255,255,255,.08);color:#EDE6D6;border:1px solid rgba(255,255,255,.28)}'
+ +'#xws .xwph.no{display:flex;align-items:center;justify-content:center;color:#C9A45C}#xws .xwph.no .xwi{width:24px;height:24px}'
+ +'#xws .xwgrp{color:#ADA69A;font-size:12px;letter-spacing:2px;margin:14px 2px 8px}'
+ +'#xws .xwchips{display:flex;flex-wrap:wrap;gap:8px}#xws .xwchip{height:34px;padding:0 14px;border-radius:999px;border:1px solid rgba(201,164,92,.45);background:#1F1B16;color:#EDE6D6;font:500 13.5px inherit;cursor:pointer}'
+ +'#xwbar #xwsb{position:sticky;left:0;z-index:3;box-shadow:10px 0 14px -8px rgba(0,0,0,.85)}'
+ +'details.bd[id],article.rg[id],section.tile,section.promo,section[id]{scroll-margin-top:76px}'
  +'body.xws-on{overflow:hidden}'
  +'@media print{#xwbar,#xwfoot,#xws{display:none!important}body{padding-top:0!important}}';
 
- var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>"};
+ var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>"};
  function ic(k){return '<svg class="xwi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SVG[k]||'')+'</svg>';}
  function build(){
   if(document.getElementById('xwbar')) return;
@@ -118,7 +128,7 @@
 
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
-  var h='<button type="button" class="xwsb" id="xwsb" aria-label="搜尋酒和巧克力">'+ic('search')+'搜尋</button><span class="xwsep"></span>';
+  var h='<button type="button" class="xwsb" id="xwsb" aria-label="全站搜尋：酒、巧克力、活動、品牌">'+ic('search')+'搜尋</button><span class="xwsep"></span>';
   GROUPS.forEach(function(G,gi){
    if(gi) h+='<span class="xwsep"></span>';
    h+='<span class="xwg"><span class="xwgl">'+G.g+'</span>';
@@ -169,68 +179,119 @@
   return bd<=lim?best:null;}
  return {key:key,alts:alts,match:match,words:words,fix:fix};
 })();
- var SIDX=null, SLOAD=null, SCAT='all', SVOC=null;
+ var SIDX=null, SLOAD=null, SCAT='all', SVOC=null, SN=null;
  var SURL='https://xsos32-design.github.io/dutyliquorwiki/search.json';
+ /* r36 全站統一搜尋：酒、巧克力、活動、品牌、產區桶型、頁面工具 */
+ var TYPN={w:'酒',c:'巧克力',a:'活動',b:'品牌',r:'產區',g:'頁面'}, TYPO={w:0,c:0,b:1,r:1,a:2,g:3};
+ var CATS=[['all','全部'],['w','酒'],['c','巧克力'],['a','活動'],['br','品牌・產區'],['g','頁面']];
+ var QUICK=['麥卡倫','Godiva','滿額贈','任 2 件','雪莉桶','艾雷島','送禮'];
  function norm(t){ return XS.key(t); }
  function loadIdx(){
   if(SIDX) return Promise.resolve(SIDX);
   if(!SLOAD) SLOAD=fetch(SURL,{cache:'no-cache'}).then(function(r){return r.json();}).then(function(j){
-    SIDX=j.items.map(function(x){ x.k=norm(x.n+' '+x.e+' '+x.c+' '+(x.q||'')+' '+(x.s==='w'?x.i:'')); return x; }); return SIDX; });
+    SN=j.n||null;
+    SIDX=j.items.map(function(x){ x.k=norm([x.n,x.e,x.c,x.q,x.s==='w'||x.s==='c'?'':x.m,(x.s==='w'?x.i:'')].join(' ')); x.kn=norm((x.n||'')+' '+(x.e||'')); return x; }); return SIDX; });
   return SLOAD;
  }
  function esc(t){ return String(t==null?'':t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+ function hintTxt(){ return SN?('酒類 '+N_W+' 支・巧克力 '+N_C+' 項・活動 '+SN.a+'・品牌 '+SN.b+'・產區桶型 '+SN.r+'・頁面 '+SN.g+'。打字就出現，按 Enter 直接開第一筆。')
+   :('酒類 '+N_W+' 支＋巧克力 '+N_C+' 項，也找得到活動、品牌、產區與頁面。打字就出現，按 Enter 直接開第一筆。'); }
+ function recent(){ try{ return JSON.parse(localStorage.getItem('xwsRecent')||'[]'); }catch(e){ return []; } }
+ function remember(t){ t=String(t||'').trim(); if(!t) return; try{ var r=recent().filter(function(x){return x!==t;}); r.unshift(t); localStorage.setItem('xwsRecent',JSON.stringify(r.slice(0,8))); }catch(e){} }
+ function inCat(x,c){ c=c||SCAT; if(c==='all') return true; if(c==='br') return x.s==='b'||x.s==='r'; return x.s===c; }
  function sbuild(){
   var o=document.getElementById('xws'); if(o) return o;
-  o=document.createElement('div'); o.id='xws'; o.setAttribute('role','dialog'); o.setAttribute('aria-label','搜尋酒和巧克力');
-  o.innerHTML='<div class="xwbx"><div class="xwrow"><input id="xwsq" type="search" enterkeyhint="search" autocomplete="off" placeholder="搜酒和巧克力：中文、英文、品號都可以"><button type="button" class="xwx" aria-label="關閉搜尋">關閉</button></div>'
-   +'<div class="xwseg"><button type="button" data-c="all" class="on">全部</button><button type="button" data-c="w">只看酒</button><button type="button" data-c="c">只看巧克力</button></div>'
-   +'<div class="xwhint" id="xwsh">酒類 '+N_W+' 支＋巧克力 '+N_C+' 項。打字就出現，點一下直接打開那張卡片。</div><div id="xwsr"></div></div>';
+  o=document.createElement('div'); o.id='xws'; o.setAttribute('role','dialog'); o.setAttribute('aria-label','全站搜尋');
+  o.innerHTML='<div class="xwbx"><div class="xwrow"><input id="xwsq" type="search" enterkeyhint="search" autocomplete="off" placeholder="搜酒、巧克力、活動、品牌、產區…"><button type="button" class="xwx" aria-label="關閉搜尋">關閉</button></div>'
+   +'<div class="xwseg">'+CATS.map(function(c,i){return '<button type="button" data-c="'+c[0]+'"'+(i?'':' class="on"')+'>'+c[1]+'<em></em></button>';}).join('')+'</div>'
+   +'<div class="xwhint" id="xwsh"></div><div id="xwsr"></div></div>';
   document.body.appendChild(o);
   var q=o.querySelector('#xwsq');
   q.addEventListener('input',srun);
+  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var f=o.querySelector('#xwsr a.xwr'); if(f){ e.preventDefault(); f.click(); } } });
   o.querySelector('.xwx').addEventListener('click',sclose);
   o.addEventListener('click',function(e){ if(e.target===o) sclose(); });
   [].forEach.call(o.querySelectorAll('.xwseg button'),function(b){ b.addEventListener('click',function(){
    SCAT=b.getAttribute('data-c'); [].forEach.call(o.querySelectorAll('.xwseg button'),function(x){x.classList.toggle('on',x===b);}); srun(); }); });
   o.addEventListener('click',function(e){
+   var ch=e.target.closest?e.target.closest('.xwchip'):null;
+   if(ch){ e.preventDefault(); q.value=ch.getAttribute('data-q'); srun(); q.focus(); return; }
    var a=e.target.closest?e.target.closest('a.xwr'):null; if(!a) return;
+   remember(q.value);
    var id=a.getAttribute('data-id'), site=a.getAttribute('data-s');
-   var here=(site==='w'&&CUR==='wiki')||(site==='c'&&CUR==='choc');
-   if(here && window.__goCard){ e.preventDefault(); sclose(); window.__goCard(id); }
+   var here=(site==='w'&&CUR==='wiki')||(site==='c'&&CUR==='choc')||(site==='b'&&/^c:/.test(id)&&CUR==='choc');
+   if(here && window.__goCard){ e.preventDefault(); sclose(); window.__goCard(id.replace(/^c:/,'')); return; }
+   try{ var U=new URL(a.href); if(U.pathname===location.pathname && U.hash){ sclose(); } }catch(err){}
   });
   return o;
  }
+ function emptyView(o){
+  var R=o.querySelector('#xwsr'), r=recent();
+  var h='';
+  if(r.length) h+='<div class="xwgrp">最近搜尋</div><div class="xwchips">'+r.map(function(t){return '<button type="button" class="xwchip" data-q="'+esc(t)+'">'+esc(t)+'</button>';}).join('')+'</div>';
+  h+='<div class="xwgrp">常用</div><div class="xwchips">'+QUICK.map(function(t){return '<button type="button" class="xwchip" data-q="'+esc(t)+'">'+esc(t)+'</button>';}).join('')+'</div>';
+  R.innerHTML=h;
+  [].forEach.call(o.querySelectorAll('.xwseg em'),function(e){e.textContent='';});
+ }
  function srun(){
   var o=sbuild(), raw=o.querySelector('#xwsq').value, q=norm(raw), R=o.querySelector('#xwsr'), H=o.querySelector('#xwsh');
-  if(!q){ R.innerHTML=''; H.textContent='酒類 '+N_W+' 支＋巧克力 '+N_C+' 項。打字就出現，點一下直接打開那張卡片。'; return; }
+  if(!q){ H.textContent=hintTxt(); emptyView(o); return; }
   if(!SIDX){ H.textContent='載入中…'; loadIdx().then(srun).catch(function(){ H.textContent='搜尋資料載入失敗，請確認網路後再試一次。'; }); return; }
-  var words=raw.split(/\s+/).map(norm).filter(Boolean), out=[], n=0;
+  var words=raw.split(/\s+/).map(norm).filter(Boolean), out=[], n=0, cnt={all:0,w:0,c:0,a:0,br:0,g:0};
   for(var i=0;i<SIDX.length;i++){ var x=SIDX[i];
-   if(SCAT!=='all' && x.s!==SCAT) continue;
-   var exact=x.k.indexOf(q)>=0&&XS.match(raw,x.k), nm=norm(x.n+' '+x.e).indexOf(words[0]||q)>=0;
-   if(!exact && !XS.match(raw,x.k)) continue;
-   n++; out.push([exact?0:(nm?1:2),x]); }
-  var fixNote='';
-  if(!n&&!srun.fz){ if(!SVOC){SVOC={};SIDX.forEach(function(x){String(x.e||'').toLowerCase().split(/[^a-z]+/).forEach(function(w){if(w.length>=4)SVOC[w]=(SVOC[w]||0)+1;});});}
+   if(!XS.match(raw,x.k)) continue;
+   cnt.all++; cnt[(x.s==='b'||x.s==='r')?'br':x.s]++;
+   if(!inCat(x)) continue;
+   var kn=x.kn, sc=(kn===q||norm(x.n)===q||(x.e&&norm(x.e)===q))?0:(kn.indexOf(q)===0?1:(kn.indexOf(words[0]||q)>=0?2:(x.k.indexOf(q)>=0?3:4)));
+   n++; out.push([sc*10+(TYPO[x.s]||0),x]); }
+  [].forEach.call(o.querySelectorAll('.xwseg button'),function(b){ var c=b.getAttribute('data-c'), e=b.querySelector('em'); if(e) e.textContent=cnt[c]?' '+cnt[c]:''; });
+  if(!cnt.all&&!srun.fz){ if(!SVOC){SVOC={};SIDX.forEach(function(x){String(x.e||'').toLowerCase().split(/[^a-z]+/).forEach(function(w){if(w.length>=4)SVOC[w]=(SVOC[w]||0)+1;});});}
    var ch=0,fx=raw.split(/\s+/).filter(Boolean).map(function(w){var f=XS.fix(w,SVOC);if(f){ch=1;return f;}return w;});
    if(ch){var inp=o.querySelector('#xwsq'),keep=inp.value;inp.value=fx.join(' ');srun.fz=1;try{srun();}finally{srun.fz=0;inp.value=keep;}
     var H2=o.querySelector('#xwsh');if(o.querySelector('#xwsr').children.length)H2.textContent='找不到「'+raw.trim()+'」，以下是「'+fx.join(' ')+'」的結果（'+H2.textContent+'）';return;}}
-  out.sort(function(a,b){return a[0]-b[0];}); out=out.slice(0,40).map(function(a){return a[1];});
-  H.textContent=n?('找到 '+n+' 項'+(n>40?'，先列前 40 項，再多打幾個字可以縮小範圍':'')):'找不到，換個關鍵字試試（例如品牌英文名或品號）';
+  out.sort(function(a,b){return a[0]-b[0];}); out=out.slice(0,50).map(function(a){return a[1];});
+  H.textContent=n?('找到 '+n+' 筆'+(n>50?'，先列前 50 筆，再多打幾個字可以縮小範圍':'')+'。按 Enter 開第一筆。'):(cnt.all?'這個分類沒有結果，切到「全部」看看（共 '+cnt.all+' 筆）':'找不到，換個關鍵字試試（例如品牌英文名、品號或條碼）');
   R.innerHTML=out.map(function(x){
-   var w=x.s==='w', u=(w?'https://xsos32-design.github.io/dutyliquorwiki/#':'https://xsos32-design.github.io/chocolatewiki/#')+encodeURIComponent(x.i);
-   return '<a class="xwr" href="'+u+'" data-id="'+esc(x.i)+'" data-s="'+x.s+'">'
-    +(x.g?'<span class="xwph" style="background-image:url(\''+esc(x.g)+'\')"></span>':'<span class="xwph no"></span>')
-    +'<span><b><i class="xwtg '+(w?'w':'c')+'">'+(w?'酒':'巧克力')+'</i>'+esc(x.n)+'</b>'
-    +'<span>'+esc([x.c,x.p?'NT$'+Number(x.p).toLocaleString():''].filter(Boolean).join('・'))+'</span>'
-    +(x.m?'<span class="xwpm">'+esc(x.m)+'</span>':'')+'</span></a>';
+   var w=x.s==='w', c=x.s==='c';
+   var u=x.u||((w?'https://xsos32-design.github.io/dutyliquorwiki/#':'https://xsos32-design.github.io/chocolatewiki/#')+encodeURIComponent(x.i));
+   var gl={a:'card',b:(/^c:/.test(x.i)?'choc':'wiki'),r:'map',g:'page'}[x.s];
+   var line2=(w||c)?[x.c,x.p?'NT$'+Number(x.p).toLocaleString():''].filter(Boolean).join('・'):[x.e,x.c].filter(Boolean).join('・');
+   return '<a class="xwr t'+x.s+'" href="'+esc(u)+'" data-id="'+esc(x.i)+'" data-s="'+x.s+'">'
+    +(x.g?'<span class="xwph" style="background-image:url(\''+esc(x.g)+'\')"></span>':'<span class="xwph no">'+(gl?ic(gl):'')+'</span>')
+    +'<span><b><i class="xwtg '+x.s+'">'+TYPN[x.s]+'</i>'+esc(x.n)+'</b>'
+    +'<span>'+esc(line2)+'</span>'
+    +(x.m?'<span class="'+((w||c)?'xwpm':'xwmd')+'">'+esc(x.m)+'</span>':'')+'</span></a>';
   }).join('');
  }
- function sopen(){ var o=sbuild(); o.classList.add('on'); document.body.classList.add('xws-on'); var q=o.querySelector('#xwsq'); q.focus(); loadIdx().catch(function(){}); if(q.value) srun(); }
+ function sopen(){ var o=sbuild(); o.classList.add('on'); document.body.classList.add('xws-on'); var q=o.querySelector('#xwsq'); q.focus(); loadIdx().then(function(){ if(!q.value){ o.querySelector('#xwsh').textContent=hintTxt(); } }).catch(function(){}); srun(); }
  function sclose(){ var o=document.getElementById('xws'); if(o) o.classList.remove('on'); document.body.classList.remove('xws-on'); }
  window.__xwSearch=function(t){ sopen(); var q=document.getElementById('xwsq'); q.value=t||''; srun(); };
- document.addEventListener('keydown',function(e){ if(e.key==='Escape') sclose(); });
+ document.addEventListener('keydown',function(e){ if(e.key==='Escape') sclose();
+  if(e.key==='/' && !e.ctrlKey && !e.metaKey && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target&&e.target.tagName)||'') && !(e.target&&e.target.isContentEditable)){ e.preventDefault(); sopen(); } });
  document.addEventListener('click',function(e){ var b=e.target.closest?e.target.closest('#xwsb'):null; if(b){ e.preventDefault(); sopen(); } });
+ /* r36 活動頁深連結：#xs:sheet:標題 或 #xs:gift:標題 → 切到該分頁並捲到那一組 */
+ function xsGo(){
+  var h=''; try{ h=decodeURIComponent(location.hash||''); }catch(e){ h=location.hash||''; }
+  var m=/^#xs:(\w+):(.+)$/.exec(h);
+  if(!m){ var d=h&&h.length>1?document.getElementById(h.slice(1)):null; if(d&&d.tagName==='DETAILS') d.open=true; return; }
+  var v=m[1], t=XS.key(m[2]), tries=0;
+  (function go(){
+   var tab=document.querySelector('#views [data-v="'+v+'"]');
+   if(tab && tab.getAttribute('aria-selected')!=='true') tab.click();
+   var el=null;
+   [].some.call(document.querySelectorAll('section.tile h3, section.promo h2'),function(hd){
+    var c=hd.cloneNode(true); [].forEach.call(c.querySelectorAll('.tile-n,button,.tag'),function(z){ z.parentNode.removeChild(z); });
+    if(XS.key(c.textContent)===t){ el=hd.closest('section'); return true; } return false; });
+   if(!el||!el.offsetParent){ if(++tries<24) setTimeout(go,250); return; }
+   var bar=document.getElementById('xwbar');
+   var y=el.getBoundingClientRect().top+window.pageYOffset-((bar&&bar.offsetHeight)||0)-14;
+   try{ window.scrollTo({top:Math.max(0,y),behavior:'instant'}); }catch(e){ window.scrollTo(0,Math.max(0,y)); }
+   el.style.outline='3px solid #E8CD8A'; el.style.outlineOffset='3px';
+   setTimeout(function(){ el.style.outline=''; el.style.outlineOffset=''; },2400);
+  })();
+ }
+ window.addEventListener('hashchange',xsGo);
+ if(document.readyState==='complete') setTimeout(xsGo,400); else window.addEventListener('load',function(){ setTimeout(xsGo,400); });
 
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',build);
  else build();

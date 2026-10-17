@@ -339,6 +339,9 @@ html.noir:not(#_a):not(#_b) section.card .shots>.shot:not(.dead):not(.live){back
 html.noir:not(#_a):not(#_b) section.card .shots>.shot img[src*="/cut/"]{filter:drop-shadow(0 12px 16px rgba(0,0,0,.65)) drop-shadow(0 0 1px rgba(232,205,138,.25))!important}
 html.noir:not(#_a):not(#_b) section.card .shots>.shot img:not([src*="/cut/"]){border-radius:8px!important;box-shadow:0 10px 26px rgba(0,0,0,.6),0 0 0 1px rgba(232,205,138,.28)!important}
 html.noir:not(#_a):not(#_b) section.card .shots>.shot .lbl{background:rgba(14,12,9,.82)!important;color:rgba(232,205,138,.92)!important;border-top:1px solid rgba(201,164,92,.38)!important;letter-spacing:2px!important;backdrop-filter:blur(4px)}
+
+/* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
+html.noir #list>section.card{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 </style></head>
 <body>
 <div id="menu"><button id="mb">☰ 目錄</button><b>昇恆昌酒類速讀檔案</b><button id="fsz" type="button" aria-pressed="false" title="字體放大／還原">A+</button></div>
@@ -1718,7 +1721,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   }
   return count;
  }
- function markAll(){/*r32keep*/
+ function markAll(){/*r32keep*/if((q.value||'').trim()&&typeof window.BUILDI==='number'&&window.P&&window.BUILDI<window.P.length&&typeof chunkInto==='function'){var _L=document.getElementById('list');if(_L){while(window.BUILDI<window.P.length)window.BUILDI=chunkInto(_L,window.BUILDI,40);}}window.__r37b=(typeof window.BUILDI==='number')?window.BUILDI:0;
   var _k0=(q.value||'').trim(), _pv=(_k0&&_k0===window.__r32k)?window.__r32pos:null; window.__r32k=_k0;
   clearMarks();
   var k=(q.value||'').trim();
@@ -1732,7 +1735,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   for(var j=0;j<cards.length&&used<LIMIT;j++) used+=walkMark(cards[j],re,LIMIT-used);
   CAPPED=(used>=LIMIT);
   walkMark(document.getElementById('navlist'),re,400);
-  MK=[].slice.call(document.querySelectorAll('#list mark.hl'));MK=MK.filter(function(m){if(m.getClientRects().length)return true;var e=m.parentElement;while(e&&e.id!=='list'){if(getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;});
+  MK=[].slice.call(document.querySelectorAll('#list mark.hl'));MK=MK.filter(function(m){return true;var e=m.parentElement;while(e&&e.id!=='list'){if(getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;});
   MI=MK.length?0:-1;
   if(_pv&&MI>=0){var _nc=document.getElementById(_pv.id);if(_nc){var _sm=MK.filter(function(x){return x.closest('.card')===_nc;});var _t=_sm[Math.min(_pv.o,_sm.length-1)];if(_t)MI=MK.indexOf(_t);}}
   if(MI>=0){MK[MI].classList.add('cur');}
@@ -1792,16 +1795,17 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   m.classList.remove('flash'); void m.offsetWidth; m.classList.add('flash');
   navSync(m);
   document.body.classList.remove('open');
-  scrollToY(markY(m),true);/*r32settle*/(function(mm){[500,850,1300,2000].forEach(function(t){setTimeout(function(){if(MK[MI]!==mm)return;var r=mm.getBoundingClientRect();if(r.top<70||r.bottom>window.innerHeight-90){scrollToY(markY(mm),false);}},t);});})(m);
+  /*r37fast*/(function(){var _y=markY(m);scrollToY(_y,Math.abs(_y-window.pageYOffset)<window.innerHeight*1.2);})();/*r32settle*/(function(mm){[350,800,1500].forEach(function(t){setTimeout(function(){if(MK[MI]!==mm)return;var r=mm.getBoundingClientRect();if(r.top<70||r.bottom>window.innerHeight-90){scrollToY(markY(mm),false);}},t);});})(m);
   updCnt();
  }
  function ensure(){
-  if(!MK.length||!MK[0]||!document.body.contains(MK[0])){markAll();}
+  if(!MK.length||!MK[0]||!document.body.contains(MK[0])||(typeof window.BUILDI==='number'&&window.__r37b!==window.BUILDI)){markAll();}
   return MK.length>0;
  }
+ function _r37vis(m){var e=m.parentElement;while(e&&e.id!=='list'){if(e.style&&getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;}
  function goMatch(dir){
   if(!ensure()){toast('沒有可跳的結果');return;}
-  setCur((( MI<0?(dir>0?-1:0):MI )+dir+MK.length)%MK.length);
+  var _n=MK.length,_i=(MI<0?(dir>0?-1:0):MI);for(var _k=0;_k<_n;_k++){_i=(_i+dir+_n)%_n;if(_r37vis(MK[_i]))break;}setCur(_i);
  }
  function goCard(dir){
   if(!ensure()){toast('沒有可跳的結果');return;}
@@ -3375,8 +3379,7 @@ details.wine[open]>summary::before{-webkit-mask-image:var(--i-chevD);mask-image:
           for(var j=0;j<a.length;j++) if(a[j].nodeType===1||a[j].nodeType===3) pend.push(a[j]);}
         if(tm) return;
         tm=setTimeout(function(){tm=null;var q=pend;pend=[];
-          if(q.length>800){ try{sweep(document.body);}catch(e){} return; }
-          for(var k=0;k<q.length;k++){try{sweep(q[k].nodeType===3?(q[k].parentNode||document.body):q[k]);}catch(e){}}
+          /*r37ic*/var seen=[];for(var k=0;k<q.length;k++){var x=q[k];if(!x||!x.parentNode)continue;if(x.nodeType===3){if(!RE.test(x.nodeValue))continue;x=x.parentNode;}else if(x.nodeName==='MARK'){continue;}if(seen.indexOf(x)>=0)continue;seen.push(x);try{sweep(x);}catch(e){}}
         },220);
       });
       mo.observe(document.body,{childList:true,subtree:true});

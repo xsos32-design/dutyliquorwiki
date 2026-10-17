@@ -104,6 +104,9 @@ html.noir:not(#_a):not(#_b) section.card .shots>.shot:not(.dead):not(.live){back
 html.noir:not(#_a):not(#_b) section.card .shots>.shot img[src*="/cut/"]{filter:drop-shadow(0 12px 16px rgba(0,0,0,.65)) drop-shadow(0 0 1px rgba(232,205,138,.25))!important}
 html.noir:not(#_a):not(#_b) section.card .shots>.shot img:not([src*="/cut/"]){border-radius:8px!important;box-shadow:0 10px 26px rgba(0,0,0,.6),0 0 0 1px rgba(232,205,138,.28)!important}
 html.noir:not(#_a):not(#_b) section.card .shots>.shot .lbl{background:rgba(14,12,9,.82)!important;color:rgba(232,205,138,.92)!important;border-top:1px solid rgba(201,164,92,.38)!important;letter-spacing:2px!important;backdrop-filter:blur(4px)}
+
+/* r37 效能：畫面外的商品卡先不排版，捲到附近才排（大幅減少找字、捲動的卡頓） */
+html.noir #list>section.card{content-visibility:auto;contain-intrinsic-size:auto 1100px}
 </style></head><body>
 <header><a class="back" href="./">‹ 回酒類速讀檔案</a><h1>選酒推薦</h1><p>五步挑酒：類別、預算、口味、場合、包裝，條件都可以不選，點商品就打開完整卡片。價格與折扣以現場價卡、POS 為準。</p></header>
 <main>

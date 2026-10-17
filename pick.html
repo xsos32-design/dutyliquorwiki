@@ -88,6 +88,13 @@ html.noir .talkbox{background-image:linear-gradient(180deg,rgba(255,236,196,.03)
 html.noir .fabrow .t{color:#E8CD8A!important;letter-spacing:2px}
 
 @media (prefers-reduced-motion:reduce){html.noir *{transition:none!important}}
+
+/* r34 Gemini 美術：無圖佔位插畫、金色裝飾分隔 */
+html.noir:not(#_a):not(#_b) section.card .shots>.shot.dead{height:200px!important;background:url(img/brand/ph_liq.webp) center 36%/auto 64% no-repeat,radial-gradient(60% 70% at 50% 40%,#2A231A,#0F0D0B 75%)!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-end!important;padding:0 0 12px!important;color:rgba(232,205,138,.78)!important;letter-spacing:4px!important}
+html.noir.r15choc:not(#_a):not(#_b) section.card .shots>.shot.dead{background-image:url(img/brand/ph_choc.webp),radial-gradient(60% 70% at 50% 40%,#2A231A,#0F0D0B 75%)!important;background-size:auto 58%,auto!important}
+html.noir:not(#_a):not(#_b) section.card .shots>.shot.dead::before{display:none!important}
+html.noir .ban::before{content:"";display:block;width:min(300px,78%);height:38px;margin:0 auto 12px;background:url(img/brand/orn.webp) center/contain no-repeat;opacity:.92}
+html.noir:not(#_a):not(#_b) :is(#r16home,#r20home) :is(.r24hd,.row>h2){background:url(img/brand/orn.webp) center top/min(240px,62%) auto no-repeat!important;padding-top:36px!important;margin-top:18px}
 </style></head><body>
 <header><a class="back" href="./">‹ 回酒類速讀檔案</a><h1>選酒推薦</h1><p>五步挑酒：類別、預算、口味、場合、包裝，條件都可以不選，點商品就打開完整卡片。價格與折扣以現場價卡、POS 為準。</p></header>
 <main>

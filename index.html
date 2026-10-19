@@ -486,6 +486,7 @@ html.noir:not(#_a):not(#_b) section.card .r24rd+.scbox .scsum,html.noir:not(#_a)
 .r60tc{display:none}
 html.noir:not(#_a):not(#_b) section.card .talkbox.r49x>.r60tc{display:flex;margin:14px auto 2px;width:max-content;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:999px;border:1px solid rgba(201,162,77,.55);background:#1B1813;color:#E9CF8E;font:600 13px inherit;letter-spacing:1px;cursor:pointer;white-space:nowrap}
 @media print{.r60tc{display:none!important}}
+html body section.card .sec h3,html body .sec h3{padding-left:13px!important;position:relative}
 .shlist .shi.r60t{display:grid;grid-template-columns:56px 1fr;column-gap:12px;align-items:center}
 .shlist .shi.r60t>b,.shlist .shi.r60t>em{grid-column:2}
 .shlist .shi .r60th{grid-row:1/span 2;grid-column:1;width:56px;height:56px;border-radius:9px;background:#fff;object-fit:contain;display:block}
@@ -495,6 +496,10 @@ section.card .tastebar .ts.r60q::after{content:'?';margin-left:3px;font-size:10p
 section.card .r60qn{order:10;flex-basis:100%;width:100%;margin:2px 0 0;font-size:11.5px;line-height:1.6;color:#C9B9A0}
 #shprebody a.r60t{display:inline-flex;align-items:center;gap:6px;margin:3px 0}
 #shprebody .r60ta{width:30px;height:30px;flex:none;border-radius:6px;background:#fff;object-fit:contain}
+</style><style id="r61c">
+.shots .shot.r61kv img{object-fit:cover!important;background:#14120F}
+.shots .shot.r61kv .lbl{background:linear-gradient(0deg,rgba(14,12,10,.92),rgba(14,12,10,.6))}
+.shots .shot.r61kv .lbl b{color:#F2D89A;font-weight:700;margin-right:4px}
 </style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
@@ -4988,5 +4993,19 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
    if(hit&&!tb.parentNode.querySelector('.r60qn')){var n=document.createElement('div');n.className='r60qn';n.textContent='標「?」的風味輪標籤和下方口感評分不一致，待查證。';tb.parentNode.insertBefore(n,tb.nextSibling);}});}
  var n=0;(function tick(){cask();qmark();if(++n<40)setTimeout(tick,n<10?600:2500);})();
  try{new MutationObserver(function(){clearTimeout(window._r60m);window._r60m=setTimeout(function(){cask();qmark();},200);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
+})();</script><script id="r61j">(function(){
+ var KV={"choya-075l-3": 33056, "macallan-18y-2": 33056}, LBL="AI 生成・細字以實品照為準";
+ function add(){[].forEach.call(document.querySelectorAll('section.card:not(.r61k)'),function(c){
+  var s=c.querySelector('.shots');if(!s)return;c.classList.add('r61k');if(!KV[c.id])return;
+  var d=document.createElement('div');d.className='shot r61kv';
+  var im=document.createElement('img');im.loading='lazy';im.decoding='async';im.src='p/kv_'+c.id+'.webp?v='+KV[c.id];
+  var z=c.querySelector('.meta .zh');im.alt=(z?z.textContent.trim():'')+' 形象照（AI 生成）';
+  im.onerror=function(){d.parentNode&&d.parentNode.removeChild(d);};
+  var l=document.createElement('span');l.className='lbl';l.innerHTML='<b>形象照</b>'+LBL;
+  d.appendChild(im);d.appendChild(l);s.insertBefore(d,s.firstChild);s.scrollLeft=0;
+  try{s.dispatchEvent(new Event('error'));}catch(e){}
+ });}
+ var n=0;(function tick(){add();if(++n<40)setTimeout(tick,n<10?500:2500);})();
+ try{new MutationObserver(function(){clearTimeout(window._r61m);window._r61m=setTimeout(add,120);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
 })();</script></body>
 </html>

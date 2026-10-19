@@ -410,7 +410,7 @@ html.noir:not(#_a):not(#_b) section.card.r49f .tastebar.r49t::after{content:"收
 </style><style id="r53l">
 @media(max-width:640px){.r53whl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}.r53whl #fwheel{min-width:540px;max-width:none!important}}
 #kbview{padding-bottom:40px!important}
-</style><script id="r56j">(function(){function m(){window.__r56busy=Date.now();}['scroll','touchstart','pointerdown','keydown','wheel'].forEach(function(e){window.addEventListener(e,m,{passive:true,capture:true});});})();</script><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
+</style><script id="r56j">(function(){function m(){window.__r56busy=Date.now();}['scroll','touchstart','pointerdown','keydown','wheel'].forEach(function(e){window.addEventListener(e,m,{passive:true,capture:true});});})();</script><style id="r57c">#menu>b{cursor:pointer;-webkit-tap-highlight-color:transparent}#mb *{pointer-events:none}</style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
 
@@ -1014,7 +1014,7 @@ document.addEventListener('click',function(e){
  var it=e.target.closest?e.target.closest('.navitem'):null;
  if(it){var el=document.getElementById(it.getAttribute('data-go'));
   if(window.__goCard){window.__goCard(it.getAttribute('data-go'));}else if(el){el.scrollIntoView({behavior:'smooth',block:'start'});document.body.classList.remove('open');}}
- if(e.target.id==='mb')document.body.classList.toggle('open');
+ if(e.target.closest&&e.target.closest('#mb'))document.body.classList.toggle('open');
 });
 
 apply();
@@ -4648,5 +4648,20 @@ var n=0;(function tick(){var box=document.getElementById(SITE==='liq'?'dchk':'r4
  });}
  lab(); var n=0;(function k(){lab(); if(++n<20) setTimeout(k,n<6?500:2000);})();
  document.addEventListener('click',function(){setTimeout(lab,300);},true);
-})();</script><script id="r53wj">(function(){function c(){var w=document.querySelector('.r53whl');if(w&&w.scrollWidth>w.clientWidth&&!w._c){w.scrollLeft=(w.scrollWidth-w.clientWidth)/2;if(w.clientWidth)w._c=1;}}document.addEventListener('click',function(){setTimeout(c,350);},true);setTimeout(c,800);})();</script></body>
+})();</script><script id="r53wj">(function(){function c(){var w=document.querySelector('.r53whl');if(w&&w.scrollWidth>w.clientWidth&&!w._c){w.scrollLeft=(w.scrollWidth-w.clientWidth)/2;if(w.clientWidth)w._c=1;}}document.addEventListener('click',function(){setTimeout(c,350);},true);setTimeout(c,800);})();</script><script id="r57t">(function(){
+ function isOpen(){return document.body.classList.contains('open');}
+ function close(){document.body.classList.remove('open');}
+ function narrow(){return window.innerWidth<900;}
+ function buildAll(){try{if(window.__r56all){window.__r56all();return;}
+  if(typeof chunkInto==='function'&&typeof BUILDI==='number'&&window.P&&BUILDI<P.length){var L=document.getElementById('list');if(L){while(BUILDI<P.length)BUILDI=chunkInto(L,BUILDI,40);}}}catch(e){}}
+ document.addEventListener('click',function(e){
+  var t=e.target;if(!t||!t.closest)return;
+  if(t.closest('#nav .navitem,#nav [data-go]'))buildAll();
+  if(t.closest('#menu>b')){document.body.classList.toggle('open');return;}
+  if(!isOpen()||!narrow()||!t.isConnected)return;
+  if(t.closest('#nav,#menu,#xwbar,#xwmenu,#fpanel,#fmask,#xws,#xwveil'))return;
+  close();e.preventDefault();e.stopPropagation();
+ },true);
+ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())close();});
+})();</script></body>
 </html>

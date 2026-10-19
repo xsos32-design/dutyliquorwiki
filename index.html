@@ -500,6 +500,10 @@ section.card .r60qn{order:10;flex-basis:100%;width:100%;margin:2px 0 0;font-size
 .shots .shot.r61kv img{object-fit:cover!important;background:#14120F}
 .shots .shot.r61kv .lbl{background:linear-gradient(0deg,rgba(14,12,10,.92),rgba(14,12,10,.6))}
 .shots .shot.r61kv .lbl b{color:#F2D89A;font-weight:700;margin-right:4px}
+.r61cap{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 4px;padding:0 10px;text-align:center}
+.r61cap .r61ck{display:inline-block;padding:3px 12px;border-radius:999px;border:1px solid rgba(232,205,138,.8);background:rgba(120,74,40,.55);color:#FFF6E0;font-size:13px;font-weight:700;letter-spacing:.5px}
+.r61cap .r61fl{color:#F2D89A;font-size:14px;font-weight:700;line-height:1.5}
+.r61cap .r61fl i{font-style:normal;font-weight:400;color:#ADA69A;font-size:12px;margin-right:6px}
 </style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
@@ -4994,7 +4998,7 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  var n=0;(function tick(){cask();qmark();if(++n<40)setTimeout(tick,n<10?600:2500);})();
  try{new MutationObserver(function(){clearTimeout(window._r60m);window._r60m=setTimeout(function(){cask();qmark();},200);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
 })();</script><script id="r61j">(function(){
- var KV={"choya-075l-3": 35132, "glenmorangie-12y-accord": 35734, "macallan-18y-2": 35734}, LBL="AI 生成・細字以實品照為準";
+ var KV={"choya-075l-3": 36207, "glenmorangie-12y-accord": 36206, "macallan-18y-2": 36207}, LBL="AI 生成・細字以實品照為準", LABS={"macallan-18y-2": {"cask": "桶型：雪莉桶", "flavor": "葡萄乾・椰棗・杏桃乾・黑巧克力・生薑"}, "choya-075l-3": {"cask": "", "flavor": "梅子・李子・葡萄・杏仁糖"}, "glenmorangie-12y-accord": {"cask": "桶型：波本桶 → Oloroso 雪莉桶", "flavor": "太妃糖・奶油糖・葡萄乾・李子・水蜜桃"}};
  function add(){[].forEach.call(document.querySelectorAll('section.card:not(.r61k)'),function(c){
   var s=c.querySelector('.shots');if(!s)return;c.classList.add('r61k');if(!KV[c.id])return;
   var d=document.createElement('div');d.className='shot r61kv';
@@ -5002,6 +5006,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   var z=c.querySelector('.meta .zh');im.alt=(z?z.textContent.trim():'')+' 形象照（AI 生成）';
   im.onerror=function(){d.parentNode&&d.parentNode.removeChild(d);};
   var l=document.createElement('span');l.className='lbl';l.innerHTML='<b>形象照</b>'+LBL;
+  var L=LABS[c.id];if(L&&(L.cask||L.flavor)){var m=document.createElement('div');m.className='r61cap';
+   m.innerHTML=(L.cask?'<span class="r61ck">'+L.cask+'</span>':'')+(L.flavor?'<span class="r61fl"><i>風味</i>'+L.flavor+'</span>':'');s.parentNode.insertBefore(m,s.nextSibling);}
   d.appendChild(im);d.appendChild(l);s.insertBefore(d,s.firstChild);s.scrollLeft=0;
   try{s.dispatchEvent(new Event('error'));}catch(e){}
  });}

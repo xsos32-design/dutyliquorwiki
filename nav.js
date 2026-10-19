@@ -178,6 +178,26 @@
 
   function h2(){document.documentElement.style.setProperty('--xwh',bar.offsetHeight+'px');}
   h2(); window.addEventListener('resize',h2); setTimeout(h2,300);
+  /*r56veil*/(function(){
+   var st=document.createElement('style');
+   st.textContent='#xwveil{position:fixed;inset:0;z-index:2147483646;display:flex;align-items:center;justify-content:center;background:rgba(11,10,9,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);opacity:0;transition:opacity .12s;pointer-events:none}'
+    +'#xwveil.on{opacity:1;pointer-events:auto}#xwveil div{display:flex;align-items:center;gap:10px;padding:12px 18px;border-radius:14px;background:#1B1914;border:1px solid rgba(201,164,92,.5);color:#F2D89A;font:600 14px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif}'
+    +'#xwveil i{width:16px;height:16px;border-radius:50%;border:2px solid rgba(242,216,154,.3);border-top-color:#F2D89A;animation:xwsp .7s linear infinite}@keyframes xwsp{to{transform:rotate(360deg)}}';
+   document.head.appendChild(st);
+   var v=document.createElement('div');v.id='xwveil';v.innerHTML='<div><i></i><span></span></div>';document.body.appendChild(v);
+   var tm=null;
+   function hide(){v.classList.remove('on');clearTimeout(tm);}
+   document.addEventListener('click',function(e){
+    if(e.defaultPrevented||e.button>0||e.metaKey||e.ctrlKey||e.shiftKey)return;
+    var a=e.target.closest?e.target.closest('#xwbar a.xwa,#xwmenu a.xwmi'):null;if(!a||a.target==='_blank')return;
+    var u;try{u=new URL(a.href,location.href);}catch(x){return;}
+    if(u.origin===location.origin&&u.pathname===location.pathname)return;
+    var t=(a.querySelector('b')||a).textContent.trim();
+    v.querySelector('span').textContent='正在開啟「'+t+'」…';v.classList.add('on');
+    clearTimeout(tm);tm=setTimeout(hide,9000);
+   });
+   window.addEventListener('pageshow',hide);
+  })();
   /*r50sd*/(function(){
    var ft=document.getElementById('ftop'); if(!ft) return;
    var st=document.createElement('style'); st.id='xwsdcss';

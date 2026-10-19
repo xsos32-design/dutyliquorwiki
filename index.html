@@ -410,7 +410,7 @@ html.noir:not(#_a):not(#_b) section.card.r49f .tastebar.r49t::after{content:"收
 </style><style id="r53l">
 @media(max-width:640px){.r53whl{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 -4px}.r53whl #fwheel{min-width:540px;max-width:none!important}}
 #kbview{padding-bottom:40px!important}
-</style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
+</style><script id="r56j">(function(){function m(){window.__r56busy=Date.now();}['scroll','touchstart','pointerdown','keydown','wheel'].forEach(function(e){window.addEventListener(e,m,{passive:true,capture:true});});})();</script><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
 
@@ -890,8 +890,9 @@ function buildRest(){
  function step(dl){
   if(BUILDI>=P.length){BUILT=true; if(window.__afterBuild)window.__afterBuild(); return;}
   /* 2026/10 加速：每次只做手機空檔時間做得完的量，避免捲動、打字卡住 */
-  do{ BUILDI=chunkInto(list,BUILDI,8); }
-  while(BUILDI<P.length && dl && dl.timeRemaining && dl.timeRemaining()>8);
+  if(window.__r56busy&&Date.now()-window.__r56busy<700){setTimeout(function(){ric(step);},400);return;}
+  do{ BUILDI=chunkInto(list,BUILDI,6); }
+  while(BUILDI<P.length && dl && dl.timeRemaining && dl.timeRemaining()>12);
   ric(step);
  }
  ric(step);
@@ -922,9 +923,9 @@ function apply(){
    em.textContent='找不到符合的品項'; list.appendChild(em);
   }
   var v0={}; for(var i0=0;i0<rows.length;i0++) v0[rows[i0].id]=1; VIS=v0;
-  BUILDI=chunkInto(list,0,26);
+  BUILDI=chunkInto(list,0,12);
   nav(rows);
-  setTimeout(buildRest,0);
+  setTimeout(buildRest,1500);
   applyVis(rows);
   return;
  }
@@ -4452,7 +4453,7 @@ function card(c){
   [].forEach.call(c.querySelectorAll('details.sec'),function(d){if(/^品飲筆記/.test(head(d))&&!d.querySelector('.note,p,li'))d.parentNode.removeChild(d);});
   fixText(c);
  }
- var body=c.querySelector(':scope>.body');if(body&&!/\bbcard\b/.test(c.className))order(body);
+ var body=c.querySelector(':scope>.body');if(body&&!/\bbcard\b/.test(c.className)){var _n=body.children.length;if(c._r56n!==_n){order(body);c._r56n=body.children.length;}}
 }
 var done=new WeakSet();
 function scan(){

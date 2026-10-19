@@ -471,6 +471,30 @@ body.kbon #r59fb,body.shon #r59fb{display:none!important}
 #fpanel .r59ft{position:sticky;bottom:0;z-index:3;display:flex;gap:8px;margin-top:4px;padding:10px 0 calc(6px + env(safe-area-inset-bottom));background:linear-gradient(0deg,#14120E 75%,rgba(20,18,14,0))}
 #fpanel .r59ft #preset{flex:0 0 auto;width:auto;padding:0 16px}
 #fpanel .r59ft #pdone{flex:1 1 auto;width:auto}
+</style><style id="r60c">
+html.noir:not(#_a):not(#_b) section.card:not(.r49f) .r24rd{display:grid}
+html.noir:not(#_a):not(#_b) section.card:not(.r49f) .scbox{display:block}
+html.noir:not(#_a):not(#_b) section.card .tastebar.r49t{cursor:default}
+html.noir:not(#_a):not(#_b) section.card .tastebar.r49t::after{content:none!important;display:none!important}
+html body .specs.r21cut>.spec.r60cask{display:block!important;grid-column:1/-1}
+html.noir:not(#_a):not(#_b) section.card .meta>.specs{order:8!important}
+html.noir:not(#_a):not(#_b) section.card .meta>.r21more{order:9!important}
+html.noir:not(#_a):not(#_b) section.card .meta>.tastebar{order:10!important}
+html.noir:not(#_a):not(#_b) section.card .meta>.r24rd{order:11!important}
+html.noir:not(#_a):not(#_b) section.card .meta>.scbox{order:12!important}
+html.noir:not(#_a):not(#_b) section.card .r24rd+.scbox .scsum,html.noir:not(#_a):not(#_b) section.card .meta:has(.r24rd) .scbox .scsum{display:none}
+.r60tc{display:none}
+html.noir:not(#_a):not(#_b) section.card .talkbox.r49x>.r60tc{display:flex;margin:14px auto 2px;width:max-content;align-items:center;gap:6px;height:36px;padding:0 16px;border-radius:999px;border:1px solid rgba(201,162,77,.55);background:#1B1813;color:#E9CF8E;font:600 13px inherit;letter-spacing:1px;cursor:pointer;white-space:nowrap}
+@media print{.r60tc{display:none!important}}
+.shlist .shi.r60t{display:grid;grid-template-columns:56px 1fr;column-gap:12px;align-items:center}
+.shlist .shi.r60t>b,.shlist .shi.r60t>em{grid-column:2}
+.shlist .shi .r60th{grid-row:1/span 2;grid-column:1;width:56px;height:56px;border-radius:9px;background:#fff;object-fit:contain;display:block}
+.shlist .shi .r60th.no{background:#28231C;border:1px dashed rgba(201,164,92,.35);box-sizing:border-box;display:flex;align-items:center;justify-content:center;font-size:11px;color:#8D867A}
+section.card .tastebar .ts.r60q{border-style:dashed!important;opacity:.8}
+section.card .tastebar .ts.r60q::after{content:'?';margin-left:3px;font-size:10px;color:#FFB4B4;font-weight:700}
+section.card .r60qn{order:10;flex-basis:100%;width:100%;margin:2px 0 0;font-size:11.5px;line-height:1.6;color:#C9B9A0}
+#shprebody a.r60t{display:inline-flex;align-items:center;gap:6px;margin:3px 0}
+#shprebody .r60ta{width:30px;height:30px;flex:none;border-radius:6px;background:#fff;object-fit:contain}
 </style><style id="r32">/* r32 質感層：AI 生成材質（皮革底紋、絲絨、拉絲香檳金）套用到全站按鈕與區塊 */
 html.noir{--r32g:url(img/brand/tex_gold.webp);--r32v:url(img/brand/tex_velvet.webp);--r32l:url(img/brand/tex_leather.webp)}
 html.noir body{background-color:#0B0A09;background-image:linear-gradient(rgba(11,10,9,.62),rgba(11,10,9,.62)),var(--r32l);background-size:auto,256px 256px;background-attachment:scroll}
@@ -1814,7 +1838,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   for(var j=0;j<cards.length&&used<LIMIT;j++) used+=walkMark(cards[j],re,LIMIT-used);
   CAPPED=(used>=LIMIT);
   walkMark(document.getElementById('navlist'),re,400);
-  MK=[].slice.call(document.querySelectorAll('#list mark.hl'));MK=MK.filter(function(m){return true;var e=m.parentElement;while(e&&e.id!=='list'){if(getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;});
+  MK=[].slice.call(document.querySelectorAll('#list mark.hl'));MK=MK.filter(function(m){return (typeof _r37vis!=='function')||_r37vis(m);var e=m.parentElement;while(e&&e.id!=='list'){if(getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;});
   MI=MK.length?0:-1;
   if(_pv&&MI>=0){var _nc=document.getElementById(_pv.id);if(_nc){var _sm=MK.filter(function(x){return x.closest('.card')===_nc;});var _t=_sm[Math.min(_pv.o,_sm.length-1)];if(_t)MI=MK.indexOf(_t);}}
   if(MI>=0){MK[MI].classList.add('cur');}
@@ -1868,7 +1892,7 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
  function setCur(i){
   if(MI>=0&&MK[MI]&&MK[MI].classList)MK[MI].classList.remove('cur');
   MI=i; var m=MK[MI]; if(!m)return;
-  (function(m){var e=m.parentElement;while(e&&e.id!=='list'){if(e.tagName==='DETAILS'&&!e.open)e.open=true;if(e.classList&&e.classList.contains('tbpane')&&!e.classList.contains('on')){var bx=e.closest('.talkbox'),tb=bx&&bx.querySelector('.tbtab[data-i="'+e.getAttribute('data-i')+'"]');if(tb)tb.click();}e=e.parentElement;}})(m);
+  (function(m){var e=m.parentElement;while(e&&e.id!=='list'){if(e.tagName==='DETAILS'&&!e.open)e.open=true;if(e.classList&&e.classList.contains('scbox')&&!e.classList.contains('r16open'))e.classList.add('r16open');if(e.classList&&e.classList.contains('r21cut')){var _rb=e.parentNode&&e.parentNode.querySelector('.r21more');if(_rb)_rb.click();}if(e.classList&&e.classList.contains('talkbox')&&!e.classList.contains('r49x')){e.classList.add('r49x');if(window.__r60tc)window.__r60tc(e);}if(e.classList&&e.classList.contains('tbpane')&&!e.classList.contains('on')){var bx=e.closest('.talkbox'),tb=bx&&bx.querySelector('.tbtab[data-i="'+e.getAttribute('data-i')+'"]');if(tb)tb.click();}e=e.parentElement;}})(m);
   m.classList.add('cur');
   (function(){var _c=m.closest&&m.closest('.card');if(_c)window.__r32pos={id:_c.id,o:MK.filter(function(x){return x.closest('.card')===_c;}).indexOf(m)};})();
   m.classList.remove('flash'); void m.offsetWidth; m.classList.add('flash');
@@ -1881,7 +1905,8 @@ mark.hl.flash{animation:hlflash .75s ease-out 1}
   if(!MK.length||!MK[0]||!document.body.contains(MK[0])||(typeof window.BUILDI==='number'&&window.__r37b!==window.BUILDI)){markAll();}
   return MK.length>0;
  }
- function _r37vis(m){var e=m.parentElement;while(e&&e.id!=='list'){if(e.style&&getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane'))return false;e=e.parentElement;}return true;}
+ function _r37vis(m){var e=m.parentElement;while(e&&e.id!=='list'){if(e.style&&getComputedStyle(e).display==='none'&&!e.classList.contains('tbpane')&&!e.classList.contains('scrows')&&!(e.classList.contains('spec')&&e.parentNode&&e.parentNode.classList&&e.parentNode.classList.contains('r21cut')))return false;e=e.parentElement;}return true;}
+ /*r60f*/window.__r60first=function(){if(!ensure())return false;for(var _j=0;_j<MK.length;_j++){if(_r37vis(MK[_j])){setCur(_j);return true;}}return false;};
  function goMatch(dir){
   if(!ensure()){toast('沒有可跳的結果');return;}
   var _n=MK.length,_i=(MI<0?(dir>0?-1:0):MI);for(var _k=0;_k<_n;_k++){_i=(_i+dir+_n)%_n;if(_r37vis(MK[_i]))break;}setCur(_i);
@@ -4907,7 +4932,8 @@ function fbar(){
  function paintF(){var v=(q&&q.value||'').trim();cls(de,'r59fon',!!v);d.querySelector('.r59fq b').textContent=v;
   var c=$('fbcnt');if(c&&!c._r59o){c._r59o=1;try{new MutationObserver(paintF).observe(c,{childList:true,characterData:true,subtree:true});}catch(e){}}var t=c?c.textContent.trim():'';var m=/^(\d+)\s*\/\s*(\d+)/.exec(t);if(t==='0 / 0'&&v)m=null,t='…';d.querySelector('.r59fc').textContent=m?(m[1]+' / '+m[2]+(/上限/.test(t)?'+':'')):(v?(t==='…'?'…':'0 筆'):'');}
  if(q)q.addEventListener('input',function(){setTimeout(paintF,30);});
- window.__r59paintF=paintF;paintF();}
+ window.__r59paintF=paintF;paintF();
+ setInterval(function(){if(de.classList.contains('r59fon'))paintF();},400);}
 window.__xwFind=function(t){
  var q=$('q');if(!q)return;
  exitViews();try{if(window.xwExitSolo)window.xwExitSolo();}catch(e){}
@@ -4916,6 +4942,7 @@ window.__xwFind=function(t){
  q.value=t;q.dispatchEvent(new Event('input',{bubbles:true}));
  [900,2000].forEach(function(ms){setTimeout(function(){if(window.__r59paintF)window.__r59paintF();},ms);});
  setTimeout(function(){if(window.__r59paintF)window.__r59paintF();var n=$('fbNext');var c=$('fbcnt');
+  if(window.__r60first&&window.__r60first())return;
   var cd=[].filter.call(document.querySelectorAll('#list .card'),function(x){return x.getClientRects().length&&x.style.display!=='none';})[0];
   if(cd&&c&&/^\d+\s*\//.test(c.textContent.trim()))jump(cd.getBoundingClientRect().top+window.pageYOffset-xwh()-8);},350);};
 document.addEventListener('click',function(e){var s=e.target.closest&&e.target.closest(C.home+' .srch');if(!s)return;
@@ -4934,5 +4961,32 @@ function init(){try{home();}catch(e){}try{drawer();}catch(e){}try{fpanel();}catc
  ['ddrow','ptog','dfilt'].forEach(function(i){var e=$(i);if(e)obs.observe(e,{attributes:true,subtree:true,attributeFilter:['class']});});
  setTimeout(sync,600);setTimeout(paintTiles,800);}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(init,0);});else setTimeout(init,0);
+})();</script><script id="r60j">(function(){
+ function cask(root){[].forEach.call((root||document).querySelectorAll('.specs .spec:not(.r60c0)'),function(s){s.classList.add('r60c0');var k=s.querySelector('.k');if(k&&/^\s*(木桶|桶型|使用桶型)\s*$/.test(k.textContent))s.classList.add('r60cask');});
+  [].forEach.call((root||document).querySelectorAll('section.card .tastebar:not(.r60l)'),function(t){t.classList.add('r60l');var b=t.querySelector(':scope>b');if(b&&b.textContent.trim()==='口感'){b.textContent='風味輪';b.title='這支酒有哪些味道（風味輪上的分類）';}});
+  [].forEach.call((root||document).querySelectorAll('section.card .r24rn:not(.r60l)'),function(n){n.classList.add('r60l');n.textContent='上方「風味輪」標籤＝有哪些味道；這張圖＝每種感覺有多強（0–5 分）。每一分怎麼來，見下方「口感評分」。';});
+  [].forEach.call((root||document).querySelectorAll('section.card .scbox .schd>b:not(.r60l)'),function(b){b.classList.add('r60l');if(b.closest('.meta')&&b.closest('.meta').querySelector('.r24rd')){var i=b.querySelector('i');b.textContent=' 口感評分：每一分的依據';if(i)b.insertBefore(i,b.firstChild);}});}
+ document.addEventListener('click',function(e){
+  var t=e.target;if(!t||!t.closest)return;
+  var c=t.closest('.r60tc');
+  if(c){e.preventDefault();e.stopPropagation();var tb=c.closest('.talkbox');if(tb){tb.classList.remove('r49x');var r=tb.getBoundingClientRect();var bar=document.getElementById('xwbar');var h=(bar?bar.offsetHeight:0)+10;if(r.top<h){try{window.scrollTo({top:window.pageYOffset+r.top-h,behavior:'instant'});}catch(x){window.scrollTo(0,window.pageYOffset+r.top-h);}}}return;}
+  var tb2=t.closest('section.card .talkbox.r49x');
+  if(tb2&&!tb2.querySelector(':scope>.r60tc')){var b=document.createElement('button');b.type='button';b.className='r60tc';b.textContent='收起話術 ▴';tb2.appendChild(b);}
+ },true);
+ window.__r60tc=function(tb){if(tb&&!tb.querySelector(':scope>.r60tc')){var b=document.createElement('button');b.type='button';b.className='r60tc';b.textContent='收起話術 ▴';tb.appendChild(b);}};
+ var PH=null;function ph(id){if(!PH){PH={};(window.P||[]).forEach(function(p){var u=p.photo||p.photo2||p.shot||'';if(u&&p.id)PH[p.id]=u;});}return PH[id]||'';}
+ function thumbs(){var v=document.getElementById('shview');if(!v)return;
+  [].forEach.call(v.querySelectorAll('.shlist .shi[data-go]:not(.r60t)'),function(r){r.classList.add('r60t');var u=ph(r.getAttribute('data-go'));var im=document.createElement(u?'img':'span');im.className='r60th'+(u?'':' no');if(!u)im.textContent='無圖';if(u){im.src=u;im.alt='';im.loading='lazy';im.decoding='async';}r.insertBefore(im,r.firstChild);});
+  [].forEach.call(v.querySelectorAll('#shprebody a[data-go]:not(.r60t)'),function(a){a.classList.add('r60t');var u=ph(a.getAttribute('data-go'));if(!u)return;var im=document.createElement('img');im.className='r60ta';im.src=u;im.alt='';im.loading='lazy';im.decoding='async';a.insertBefore(im,a.firstChild);});}
+ try{var _sv=document.getElementById('shview');if(_sv)new MutationObserver(function(){clearTimeout(window._r60s);window._r60s=setTimeout(thumbs,60);}).observe(_sv,{childList:true,subtree:true});}catch(e){}
+ setTimeout(thumbs,800);
+ var AX=['甜潤','果香','清爽','木質苦','煙燻','辛香','酒體','酒感'];
+ var RU=[['甜潤',0,'le',1],['果香',1,'le',1],['熱帶水果',1,'le',1],['柑橘清爽',2,'le',1],['煙燻泥煤',4,'le',1],['無煙燻',4,'ge',2],['辛香料',5,'le',1],['厚重濃郁',6,'le',2],['輕盈好入口',6,'ge',4],['高酒感',7,'le',2],['溫和低酒感',7,'ge',4]];
+ var BYID=null;function pd(id){if(!BYID){BYID={};(window.P||[]).forEach(function(p){if(p.id)BYID[p.id]=p;});}return BYID[id];}
+ function qmark(){[].forEach.call(document.querySelectorAll('section.card .tastebar.r60l:not(.r60k)'),function(tb){var sps=tb.querySelectorAll('.ts');if(!sps.length)return;tb.classList.add('r60k');var c=tb.closest('section.card');var p=c&&pd(c.id);if(!p||!p.tsc||!p.taste)return;var hit=0;
+   [].forEach.call(sps,function(sp){var tag=sp.textContent.replace(/[^一-鿿A-Za-z0-9]/g,'');RU.forEach(function(r){if(r[0]!==tag)return;var x=p.tsc[r[1]];if(x==null||x===''||x<0)return;if((r[2]==='le'&&x<=r[3])||(r[2]==='ge'&&x>=r[3])){sp.classList.add('r60q');sp.title='這個標籤和口感評分（'+AX[r[1]]+' '+x+' 分）不一致，待查證';hit++;}});});
+   if(hit&&!tb.parentNode.querySelector('.r60qn')){var n=document.createElement('div');n.className='r60qn';n.textContent='標「?」的風味輪標籤和下方口感評分不一致，待查證。';tb.parentNode.insertBefore(n,tb.nextSibling);}});}
+ var n=0;(function tick(){cask();qmark();if(++n<40)setTimeout(tick,n<10?600:2500);})();
+ try{new MutationObserver(function(){clearTimeout(window._r60m);window._r60m=setTimeout(function(){cask();qmark();},200);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
 })();</script></body>
 </html>

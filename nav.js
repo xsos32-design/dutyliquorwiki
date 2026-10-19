@@ -13,7 +13,7 @@
     u:'https://xsos32-design.github.io/promotion/calendar.html'}
   ]},
   {g:'酒類', items:[
-   {k:'wiki',  t:'酒類商品完整檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
+   {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
     u:'https://xsos32-design.github.io/dutyliquorwiki/'},
    {k:'promo', t:'活動比較卡',       s:'檔期異動・上下月比較',     ico:'promo',
     u:'https://xsos32-design.github.io/promotion/'},
@@ -23,7 +23,7 @@
     u:'https://xsos32-design.github.io/dutyliquorwiki/#shelf'}
   ]},
   {g:'巧克力', items:[
-   {k:'choc',   t:'巧克力商品完整檔案', s:N_C+' 項・10 大類・話術／商訓', ico:'choc',
+   {k:'choc',   t:'巧克力速讀檔案', s:N_C+' 項・10 大類・話術／商訓', ico:'choc',
     u:'https://xsos32-design.github.io/chocolatewiki/'},
    {k:'cpromo', t:'活動比較卡',         s:'檔期異動・上下月比較',       ico:'promo',
     u:'https://xsos32-design.github.io/chocolatepromo/'},
@@ -124,6 +124,27 @@
  +'#xwmenu .xwmi b{display:block;font-size:13.5px;font-weight:600}#xwmenu .xwmi small{display:block;font-size:11px;opacity:.65;margin-top:1px}'
  +'#xwbar{padding-top:calc(6px + env(safe-area-inset-top,0px))!important;padding-left:max(8px,env(safe-area-inset-left,0px))!important;padding-right:max(8px,env(safe-area-inset-right,0px))!important}'
  +'/*r58own*/@media(max-width:520px){#xwbar .xwown{display:none!important}}'
+
+ +'/*r59*/#xwbar{overflow:hidden!important;gap:8px!important;-webkit-mask-image:none!important;mask-image:none!important}'
+ +'#xwbar .xwsite{flex:0 1 auto;min-width:0;display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 10px;border-radius:10px;border:0;background:transparent;color:'+T.gold+';font:700 15px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;cursor:pointer;-webkit-tap-highlight-color:transparent}'
+ +'#xwbar .xwsite:hover,#xwbar .xwsite[aria-expanded=true]{background:rgba(201,164,92,.14)}'
+ +'#xwbar .xwsite .xwsn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}'
+ +'#xwbar .xwsite .xwcar{font-size:11px;opacity:.8;flex:none}'
+ +'#xwbar .xwsite .xwi{flex:none}'
+ +'#xwbar #xwsb{margin-left:auto;position:static!important;box-shadow:none!important;height:36px;flex:none}'
+ +'#xwbar #mb,#xwbar #fsz{flex:none;position:static;display:inline-flex;align-items:center;justify-content:center;gap:5px;height:36px;min-width:44px;margin:0;padding:0 11px;border-radius:999px;border:1px solid '+T.edge+';background:rgba(255,255,255,.03);color:'+T.ink+';font:600 13px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;cursor:pointer;box-sizing:border-box}'
+ +'@media(min-width:901px){#xwbar #mb{display:none!important}}'
+ +'@media(max-width:374px){#xwbar{gap:6px!important}#xwbar #mb{font-size:0;padding:0;width:40px;min-width:40px}#xwbar #mb i{font-size:17px;margin:0}#xwbar .xwsite{padding:0 6px;font-size:14px}#xwbar .xwsite>.xwi{display:none}#xwbar #xwsb{padding:0 10px}#xwbar #fsz{min-width:40px;padding:0 8px}}'
+ +'html.xw1 body #menu{display:none!important}html.xw1{--mnh:0px!important}'
+ +'#xwmenu .xwmg{font-size:11px;letter-spacing:2px;color:'+T.dim+';padding:8px 10px 3px}#xwmenu .xwmg:first-child{padding-top:3px}'
+ +'#xwmenu{overflow:auto;-webkit-overflow-scrolling:touch}'
+ +'#xws .xwmode{display:none;margin:10px 0 0;border:1px solid #504A40;border-radius:12px;overflow:hidden}'
+ +'#xws.xwhasf .xwmode{display:flex}'
+ +'#xws .xwmode button{flex:1;height:40px;border:0;background:transparent;color:#CAC6BE;font:600 14px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;cursor:pointer}'
+ +'#xws .xwmode button.on{background:linear-gradient(180deg,rgba(201,164,92,.34),rgba(201,164,92,.18));color:#F3E9D2}'
+ +'#xws.xwfind .xwseg,#xws.xwfind #xwsr{display:none}'
+ +'#xws .xwfgo{display:none;width:100%;height:48px;margin-top:4px;border-radius:12px;border:1px solid #C9A45C;background:linear-gradient(180deg,rgba(201,164,92,.34),rgba(201,164,92,.18));color:#F3E9D2;font:700 15px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;cursor:pointer}'
+ +'#xws.xwfind .xwfgo{display:block}#xws .xwfgo:disabled{opacity:.45;cursor:default}'
  +'@media print{#xwbar,#xwfoot,#xws,#xwmenu{display:none!important}body{padding-top:0!important}}';
 
  var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>"};
@@ -135,31 +156,28 @@
 
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
-  var h='<button type="button" class="xwsb" id="xwsb" aria-label="全站搜尋：酒、巧克力、活動、品牌">'+ic('search')+'搜尋</button><span class="xwsep"></span>';
-  /*r49dd*/GROUPS.forEach(function(G,gi){
-   if(G.items.length===1){var s0=G.items[0];
-    h+='<a class="xwa'+(s0.k==='cal'?' xcal':'')+(s0.k===CUR?' on':'')+'" href="'+s0.u+'"'+(s0.k===CUR?' aria-current="page"':'')+'>'+ic(s0.ico)+s0.t+'</a>';return;}
-   var cur=null;G.items.forEach(function(s){if(s.k===CUR)cur=s;});
-   h+='<button type="button" class="xwa xwdd'+(cur?' on':'')+'" data-g="'+gi+'" aria-haspopup="true" aria-expanded="false">'
-     +ic(G.items[0].ico)+G.g+(cur?'<small>'+cur.t+'</small>':'')+'<span class="xwcar">▾</span></button>';
-  });
-  h+='<span class="xwown">製作／整理　<b>'+OWNER+'</b>　<i>內部使用</i></span>';
+  /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡'};
+  var CI={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card'}[CUR]||'page';
+  var h='<button type="button" class="xwsite xwdd" id="xwsite" aria-haspopup="true" aria-expanded="false" title="切換網站">'+ic(CI)+'<span class="xwsn">'+(NAMES[CUR]||'小韋工具組')+'</span><span class="xwcar">▾</span></button>'
+   +'<button type="button" class="xwsb" id="xwsb" aria-label="搜尋：酒、巧克力、活動、品牌，或在卡片裡找字">'+ic('search')+'搜尋</button>';
   bar.innerHTML=h;
   document.body.insertBefore(bar,document.body.firstChild);
+  (function(){var MN=document.getElementById('menu'),MB=document.getElementById('mb'),FS=document.getElementById('fsz');
+   if(MN&&MB){bar.insertBefore(MB,bar.firstChild);if(!MB.getAttribute('aria-label'))MB.setAttribute('aria-label','目錄');if(FS)bar.appendChild(FS);document.documentElement.classList.add('xw1');}})();
   var mn=document.createElement('div'); mn.id='xwmenu'; mn.hidden=true; document.body.appendChild(mn);
   var openB=null;
   function closeM(){mn.hidden=true; if(openB){openB.setAttribute('aria-expanded','false');openB=null;}}
   bar.addEventListener('click',function(e){
    var b=e.target.closest?e.target.closest('button.xwdd'):null; if(!b)return;
    e.preventDefault(); if(openB===b){closeM();return;}
-   var G=GROUPS[+b.getAttribute('data-g')];
-   mn.innerHTML=G.items.map(function(s){return '<a class="xwmi'+(s.k===CUR?' on':'')+'" href="'+s.u+'">'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');
+   mn.innerHTML=GROUPS.map(function(G){return '<div class="xwmg">'+G.g+'</div>'+G.items.map(function(s){return '<a class="xwmi'+(s.k===CUR?' on':'')+'" href="'+s.u+'"'+(s.k===CUR?' aria-current="page"':'')+'>'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');}).join('');
    var r=b.getBoundingClientRect(); mn.hidden=false;
+   mn.style.maxHeight=Math.max(200,window.innerHeight-r.bottom-14)+'px';
    var w=mn.offsetWidth; mn.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+'px'; mn.style.top=(r.bottom+6)+'px';
    if(openB)openB.setAttribute('aria-expanded','false'); openB=b; b.setAttribute('aria-expanded','true');
   });
   document.addEventListener('click',function(e){if(!openB)return; if(e.target.closest&&(e.target.closest('#xwmenu')||e.target.closest('button.xwdd')))return; closeM();});
-  window.addEventListener('resize',closeM); bar.addEventListener('scroll',closeM); window.addEventListener('scroll',closeM,{passive:true});
+  window.addEventListener('resize',closeM); bar.addEventListener('scroll',closeM); window.addEventListener('scroll',function(){if(!openB)return;var b=openB.getBoundingClientRect();if(b.bottom<0||b.top>window.innerHeight)closeM();},{passive:true});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
   mn.addEventListener('click',function(e){
    var a=e.target.closest?e.target.closest('a.xwmi'):null; if(!a)return;
@@ -283,12 +301,15 @@
   var o=document.getElementById('xws'); if(o) return o;
   o=document.createElement('div'); o.id='xws'; o.setAttribute('role','dialog'); o.setAttribute('aria-label','全站搜尋');
   o.innerHTML='<div class="xwbx"><div class="xwrow"><input id="xwsq" type="search" enterkeyhint="search" autocomplete="off" placeholder="搜酒、巧克力、活動、品牌、產區…"><button type="button" class="xwx" aria-label="關閉搜尋">關閉</button></div>'
+   +'<div class="xwmode" role="tablist"><button type="button" data-m="all" class="on" role="tab">找商品・品牌・活動</button><button type="button" data-m="find" role="tab">在卡片裡找字</button></div>'
    +'<div class="xwseg">'+CATS.map(function(c,i){return '<button type="button" data-c="'+c[0]+'"'+(i?'':' class="on"')+'>'+c[1]+'<em></em></button>';}).join('')+'</div>'
-   +'<div class="xwhint" id="xwsh"></div><div id="xwsr"></div></div>';
+   +'<div class="xwhint" id="xwsh"></div><button type="button" class="xwfgo" id="xwfgo" disabled>先打字，再按這裡</button><div id="xwsr"></div></div>';
   document.body.appendChild(o);
   var q=o.querySelector('#xwsq');
   q.addEventListener('input',srun);
-  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ var f=o.querySelector('#xwsr a.xwr'); if(f){ e.preventDefault(); f.click(); } } });
+  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ if(SMODE==='find'){ e.preventDefault(); sfind(); return; } var f=o.querySelector('#xwsr a.xwr'); if(f){ e.preventDefault(); f.click(); } } });
+  [].forEach.call(o.querySelectorAll('.xwmode button'),function(b){ b.addEventListener('click',function(){ smode(b.getAttribute('data-m')); q.focus(); }); });
+  o.querySelector('#xwfgo').addEventListener('click',sfind);
   o.querySelector('.xwx').addEventListener('click',sclose);
   o.addEventListener('click',function(e){ if(e.target===o) sclose(); });
   [].forEach.call(o.querySelectorAll('.xwseg button'),function(b){ b.addEventListener('click',function(){
@@ -315,6 +336,8 @@
  }
  function srun(){
   var o=sbuild(), raw=o.querySelector('#xwsq').value, q=norm(raw), R=o.querySelector('#xwsr'), H=o.querySelector('#xwsh');
+  if(SMODE==='find'){ var t0=raw.trim(), fb=o.querySelector('#xwfgo'); fb.disabled=!t0; fb.textContent=t0?'在商品卡裡找「'+t0+'」':'先打字，再按這裡';
+   H.textContent='學習用：在這一頁所有商品卡的內文裡找這個字'+(window.__xwFindEx?'（例如'+window.__xwFindEx+'）':'')+'，只留下有這個字的卡，字會標亮，下方用 ‹ › 一個一個看。'; return; }
   if(!q){ H.textContent=hintTxt(); emptyView(o); return; }
   if(!SIDX){ H.textContent='載入中…'; loadIdx().then(srun).catch(function(){ H.textContent='搜尋資料載入失敗，請確認網路後再試一次。'; }); return; }
   var words=raw.split(/\s+/).map(norm).filter(Boolean), out=[], n=0, cnt={all:0,w:0,c:0,a:0,br:0,g:0};
@@ -343,9 +366,14 @@
     +(x.m?'<span class="'+((w||c)?'xwpm':'xwmd')+'">'+esc(x.m)+'</span>':'')+'</span></a>';
   }).join('');
  }
- function sopen(){ var o=sbuild(); o.classList.add('on'); document.body.classList.add('xws-on'); var q=o.querySelector('#xwsq'); q.focus(); loadIdx().then(function(){ if(!q.value){ o.querySelector('#xwsh').textContent=hintTxt(); } }).catch(function(){}); srun(); }
+ var SMODE='all';
+ function smode(m){ var o=sbuild(); SMODE=(m==='find'&&window.__xwFind)?'find':'all'; o.classList.toggle('xwfind',SMODE==='find');
+  [].forEach.call(o.querySelectorAll('.xwmode button'),function(b){ var on=b.getAttribute('data-m')===SMODE; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); });
+  var q=o.querySelector('#xwsq'); q.placeholder=SMODE==='find'?'要在商品卡裡找的字':'搜酒、巧克力、活動、品牌、產區…'; srun(); }
+ function sfind(){ var q=document.getElementById('xwsq'), t=(q&&q.value||'').trim(); if(!t||!window.__xwFind) return; remember(t); sclose(); window.__xwFind(t); }
+ function sopen(){ var o=sbuild(); o.classList.toggle('xwhasf',!!window.__xwFind); smode('all'); o.classList.add('on'); document.body.classList.add('xws-on'); var q=o.querySelector('#xwsq'); q.focus(); loadIdx().then(function(){ if(!q.value){ o.querySelector('#xwsh').textContent=hintTxt(); } }).catch(function(){}); srun(); }
  function sclose(){ var o=document.getElementById('xws'); if(o) o.classList.remove('on'); document.body.classList.remove('xws-on'); }
- window.__xwSearch=function(t){ sopen(); var q=document.getElementById('xwsq'); q.value=t||''; srun(); };
+ window.__xwSearch=function(t,m){ sopen(); smode(m==='find'?'find':'all'); var q=document.getElementById('xwsq'); q.value=t||''; srun(); };
  document.addEventListener('keydown',function(e){ if(e.key==='Escape') sclose();
   if(e.key==='/' && !e.ctrlKey && !e.metaKey && !/^(INPUT|TEXTAREA|SELECT)$/.test((e.target&&e.target.tagName)||'') && !(e.target&&e.target.isContentEditable)){ e.preventDefault(); sopen(); } });
  document.addEventListener('click',function(e){ var b=e.target.closest?e.target.closest('#xwsb'):null; if(b){ e.preventDefault(); sopen(); } });
@@ -383,7 +411,7 @@
    3) 圖片連結改成頁內放大檢視，不另開分頁 */
 (function(){
  function headH(){ var xw=document.getElementById('xwbar');
-  return (window.innerWidth<=900?64:0)+(xw?xw.offsetHeight:0)+12; }
+  return (window.innerWidth<=900&&!document.documentElement.classList.contains('xw1')?64:0)+(xw?xw.offsetHeight:0)+12; }
  function to(y){ try{ window.scrollTo({top:y,behavior:'instant'}); }catch(e){ window.scrollTo(0,y); } }
  var run=0;
  window.__goCard=function(id){

@@ -117,7 +117,12 @@
  +'#xwbar #xwsb{position:sticky;left:0;z-index:3;box-shadow:10px 0 14px -8px rgba(0,0,0,.85)}'
  +'details.bd[id],article.rg[id],section.tile,section.promo,section[id]{scroll-margin-top:76px}'
  +'body.xws-on{overflow:hidden}'
- +'@media print{#xwbar,#xwfoot,#xws{display:none!important}body{padding-top:0!important}}';
+ +'#xwbar .xwdd{cursor:pointer;font-family:inherit}#xwbar .xwcar{font-size:10px;opacity:.7;margin-left:2px}'
+ +'#xwmenu{position:fixed;z-index:2147483001;min-width:250px;max-width:calc(100vw - 16px);padding:6px;border-radius:14px;background:#17140f;border:1px solid rgba(201,164,92,.45);box-shadow:0 14px 34px rgba(0,0,0,.6)}'
+ +'#xwmenu[hidden]{display:none}#xwmenu .xwmi{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:10px;color:#EDE6D6;text-decoration:none}'
+ +'#xwmenu .xwmi:hover,#xwmenu .xwmi.on{background:rgba(201,164,92,.16);color:#F2D89A}#xwmenu .xwi{width:18px;height:18px;flex:0 0 18px}'
+ +'#xwmenu .xwmi b{display:block;font-size:13.5px;font-weight:600}#xwmenu .xwmi small{display:block;font-size:11px;opacity:.65;margin-top:1px}'
+ +'@media print{#xwbar,#xwfoot,#xws,#xwmenu{display:none!important}body{padding-top:0!important}}';
 
  var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>"};
  function ic(k){return '<svg class="xwi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SVG[k]||'')+'</svg>';}
@@ -129,18 +134,39 @@
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
   var h='<button type="button" class="xwsb" id="xwsb" aria-label="全站搜尋：酒、巧克力、活動、品牌">'+ic('search')+'搜尋</button><span class="xwsep"></span>';
-  GROUPS.forEach(function(G,gi){
-   if(gi) h+='<span class="xwsep"></span>';
-   h+='<span class="xwg"><span class="xwgl">'+G.g+'</span>';
-   G.items.forEach(function(s){
-    h+='<a class="xwa'+(s.k==='cal'?' xcal':'')+(s.k===CUR?' on':'')+'" href="'+s.u+'"'+(s.k===CUR?' aria-current="page"':'')+'>'
-      +ic(s.ico)+s.t+'<small>'+s.s+'</small></a>';
-   });
-   h+='</span>';
+  /*r49dd*/GROUPS.forEach(function(G,gi){
+   if(G.items.length===1){var s0=G.items[0];
+    h+='<a class="xwa'+(s0.k==='cal'?' xcal':'')+(s0.k===CUR?' on':'')+'" href="'+s0.u+'"'+(s0.k===CUR?' aria-current="page"':'')+'>'+ic(s0.ico)+s0.t+'</a>';return;}
+   var cur=null;G.items.forEach(function(s){if(s.k===CUR)cur=s;});
+   h+='<button type="button" class="xwa xwdd'+(cur?' on':'')+'" data-g="'+gi+'" aria-haspopup="true" aria-expanded="false">'
+     +ic(G.items[0].ico)+G.g+(cur?'<small>'+cur.t+'</small>':'')+'<span class="xwcar">▾</span></button>';
   });
   h+='<span class="xwown">製作／整理　<b>'+OWNER+'</b>　<i>內部使用</i></span>';
   bar.innerHTML=h;
   document.body.insertBefore(bar,document.body.firstChild);
+  var mn=document.createElement('div'); mn.id='xwmenu'; mn.hidden=true; document.body.appendChild(mn);
+  var openB=null;
+  function closeM(){mn.hidden=true; if(openB){openB.setAttribute('aria-expanded','false');openB=null;}}
+  bar.addEventListener('click',function(e){
+   var b=e.target.closest?e.target.closest('button.xwdd'):null; if(!b)return;
+   e.preventDefault(); if(openB===b){closeM();return;}
+   var G=GROUPS[+b.getAttribute('data-g')];
+   mn.innerHTML=G.items.map(function(s){return '<a class="xwmi'+(s.k===CUR?' on':'')+'" href="'+s.u+'">'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');
+   var r=b.getBoundingClientRect(); mn.hidden=false;
+   var w=mn.offsetWidth; mn.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+'px'; mn.style.top=(r.bottom+6)+'px';
+   if(openB)openB.setAttribute('aria-expanded','false'); openB=b; b.setAttribute('aria-expanded','true');
+  });
+  document.addEventListener('click',function(e){if(!openB)return; if(e.target.closest&&(e.target.closest('#xwmenu')||e.target.closest('button.xwdd')))return; closeM();});
+  window.addEventListener('resize',closeM); bar.addEventListener('scroll',closeM); window.addEventListener('scroll',closeM,{passive:true});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeM();});
+  mn.addEventListener('click',function(e){
+   var a=e.target.closest?e.target.closest('a.xwmi'):null; if(!a)return;
+   if(/#shelf$/.test(a.getAttribute('href'))){
+    var same=(CUR==='wiki'&&/dutyliquorwiki/.test(a.href))||(CUR==='choc'&&/chocolatewiki/.test(a.href));
+    var d=document.getElementById('dsh');
+    if(same&&d){ e.preventDefault(); closeM(); if(!document.body.classList.contains('shon'))d.click(); window.scrollTo({top:0,behavior:'smooth'}); }
+   }
+  });
   bar.addEventListener('click',function(e){
    var a=e.target.closest?e.target.closest('a.xwa'):null; if(!a)return;
    if(!/#shelf$/.test(a.getAttribute('href')))return;

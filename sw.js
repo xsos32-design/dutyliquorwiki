@@ -1,5 +1,5 @@
 /* 頁面：先用手機裡存好的版本秒開，同時在背景下載新版；新版不同時通知頁面顯示「有新版內容」（r20）。圖片字型：快取優先、背景更新 */
-const V = 'v2026-10-13-3ef072869d-r49';
+const V = 'v2026-10-13-3ef072869d-r50';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=3ef072869d'];
 self.addEventListener('install', e => {

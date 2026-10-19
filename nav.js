@@ -122,6 +122,7 @@
  +'#xwmenu[hidden]{display:none}#xwmenu .xwmi{display:flex;gap:10px;align-items:center;padding:9px 10px;border-radius:10px;color:#EDE6D6;text-decoration:none}'
  +'#xwmenu .xwmi:hover,#xwmenu .xwmi.on{background:rgba(201,164,92,.16);color:#F2D89A}#xwmenu .xwi{width:18px;height:18px;flex:0 0 18px}'
  +'#xwmenu .xwmi b{display:block;font-size:13.5px;font-weight:600}#xwmenu .xwmi small{display:block;font-size:11px;opacity:.65;margin-top:1px}'
+ +'#xwbar{padding-top:calc(6px + env(safe-area-inset-top,0px))!important;padding-left:max(8px,env(safe-area-inset-left,0px))!important;padding-right:max(8px,env(safe-area-inset-right,0px))!important}'
  +'@media print{#xwbar,#xwfoot,#xws,#xwmenu{display:none!important}body{padding-top:0!important}}';
 
  var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>"};
@@ -177,6 +178,38 @@
 
   function h2(){document.documentElement.style.setProperty('--xwh',bar.offsetHeight+'px');}
   h2(); window.addEventListener('resize',h2); setTimeout(h2,300);
+  /*r50sd*/(function(){
+   var ft=document.getElementById('ftop'); if(!ft) return;
+   var st=document.createElement('style'); st.id='xwsdcss';
+   st.textContent='html body #xwsd{position:fixed;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2px;z-index:57;padding:0;margin:0;cursor:pointer;'
+    +'--w:min(calc(100vw - 32px),440px);--l:calc(50% - var(--w)/2);height:60px;bottom:calc(14px + env(safe-area-inset-bottom));left:var(--l);'
+    +'background:#1B1914;border:1px solid rgba(201,164,92,.45);border-right:0;border-radius:20px 0 0 20px;box-shadow:0 14px 30px -14px rgba(0,0,0,.95);'
+    +'color:#E8CD8A;font:600 10.5px/1 "Microsoft JhengHei",system-ui,-apple-system,"PingFang TC","Noto Sans TC",sans-serif;letter-spacing:.5px;transition:opacity .35s ease;-webkit-tap-highlight-color:transparent}'
+    +'html body #xwsd span{display:block;white-space:nowrap}html body #xwsd svg{width:18px;height:18px}'
+    +'html.xwsd5 body #xwsd{width:calc(var(--w)/5)}'
+    +'html.xwsd5 body #fback#fback{left:calc(var(--l) + var(--w)/5)!important;width:calc(var(--w)/5)!important;border-radius:0!important;border-left:1px solid rgba(201,164,92,.2)!important}'
+    +'html.xwsd5 body #pnwrap#pnwrap{left:calc(var(--l) + var(--w)*2/5)!important;width:calc(var(--w)*2/5)!important}'
+    +'html.xwsd5 body #ftop#ftop{left:calc(var(--l) + var(--w)*4/5)!important;width:calc(var(--w)/5)!important}'
+    +'html.xwsd4 body #xwsd{width:calc(var(--w)/4)}'
+    +'html.xwsd4 body #pnwrap#pnwrap{left:calc(var(--l) + var(--w)/4)!important;width:calc(var(--w)/2)!important;border-radius:0!important;border-left:1px solid rgba(201,164,92,.2)!important}'
+    +'html.xwsd4 body #ftop#ftop{left:calc(var(--l) + var(--w)*3/4)!important;width:calc(var(--w)/4)!important}'
+    +'@media print{html body #xwsd{display:none!important}}';
+   document.head.appendChild(st);
+   var b=document.createElement('button'); b.type='button'; b.id='xwsd'; b.setAttribute('aria-label','全站搜尋');
+   b.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg><span>搜尋</span>';
+   document.body.appendChild(b);
+   b.addEventListener('click',function(e){ e.preventDefault(); var t=document.getElementById('xwsb'); if(t) t.click(); });
+   var root=document.documentElement, fb=document.getElementById('fback'), pn=document.getElementById('pnwrap');
+   function sync(){
+    var cf=getComputedStyle(ft), on=cf.display!=='none' && cf.visibility!=='hidden';
+    var five=fb && getComputedStyle(fb).display!=='none';
+    var four=!five && pn && getComputedStyle(pn).display!=='none';
+    root.classList.toggle('xwsd5',on&&!!five); root.classList.toggle('xwsd4',on&&!!four);
+    b.style.display=(on&&(five||four))?'flex':'none';
+    b.style.opacity=cf.opacity;
+   }
+   sync(); setInterval(sync,400); window.addEventListener('scroll',function(){requestAnimationFrame(sync);},{passive:true});
+  })();
 
   var basis = CHOC ? '現場 POP 與包裝標示' : '現場公告與酒標';
   var ft=document.createElement('footer'); ft.id='xwfoot';

@@ -3091,7 +3091,7 @@ function LR(k,v,cls){return v?'<div class="dl'+(cls?' '+cls:'')+'"><span>'+E(k)+
 /* 上方固定列的實際高度 → --xwh，讓抽屜／教材／架上三頁的頂端一致，不再被標題列切掉 */
 (function(){
  function h(){
-  var m=document.getElementById('menu'); if(!m) return;
+  var m=document.getElementById('xwbar')||document.getElementById('menu'); if(!m) return;
   var v=Math.round(m.getBoundingClientRect().height);
   if(v>10) document.documentElement.style.setProperty('--xwh', v+'px');
  }

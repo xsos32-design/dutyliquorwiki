@@ -497,7 +497,11 @@ section.card .r60qn{order:10;flex-basis:100%;width:100%;margin:2px 0 0;font-size
 #shprebody a.r60t{display:inline-flex;align-items:center;gap:6px;margin:3px 0}
 #shprebody .r60ta{width:30px;height:30px;flex:none;border-radius:6px;background:#fff;object-fit:contain}
 </style><style id="r61c">
-.shots .shot.r61kv img{object-fit:cover!important;background:#14120F}
+.shots .shot.r61kv img{object-fit:cover!important;object-position:50% 0!important;width:100%!important;height:100%!important;background:#14120F}
+#plb.r64p{align-items:flex-start!important;overflow-y:auto!important;-webkit-overflow-scrolling:touch;padding:56px 10px 24px!important}
+#plb.r64p .pin{max-height:none!important;max-width:min(96vw,720px)!important}
+#plb.r64p .pp,#plb.r64p .pn{top:auto!important;bottom:calc(14px + env(safe-area-inset-bottom,0px))!important;transform:none!important}
+#plb.r64p img{max-height:none!important;width:100%!important;height:auto!important;border-radius:8px!important}
 .shots .shot.r61kv .lbl{background:linear-gradient(0deg,rgba(14,12,10,.92),rgba(14,12,10,.6))}
 .shots .shot.r61kv .lbl b{color:#F2D89A;font-weight:700;margin-right:4px}
 .r61cap{display:flex;flex-direction:column;align-items:center;gap:6px;margin:6px 0 4px;padding:0 10px;text-align:center}
@@ -4998,20 +5002,21 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
  var n=0;(function tick(){cask();qmark();if(++n<40)setTimeout(tick,n<10?600:2500);})();
  try{new MutationObserver(function(){clearTimeout(window._r60m);window._r60m=setTimeout(function(){cask();qmark();},200);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
 })();</script><script id="r61j">(function(){
- var KV={"choya-075l-3": 74646, "glenmorangie-12y-accord": 74645, "glenmorangie-tayne": 74646, "macallan-12y": 74645, "macallan-18y-2": 74645, "mortlach-12y": 74646}, LBL="AI 生成・細字以實品照為準", LABS={};
+ var KV={"choya-075l-3": 78718, "glenmorangie-12y-accord": 78715, "glenmorangie-tayne": 78716, "macallan-12y": 78714, "macallan-18y-2": 78713, "mortlach-12y": 78717}, LBL="點開往下捲看完整內容", LABS={};
  function add(){[].forEach.call(document.querySelectorAll('section.card:not(.r61k)'),function(c){
   var s=c.querySelector('.shots');if(!s)return;c.classList.add('r61k');if(!KV[c.id])return;
   var d=document.createElement('div');d.className='shot r61kv';
-  var im=document.createElement('img');im.loading='lazy';im.decoding='async';im.src='p/kv_'+c.id+'.webp?v='+KV[c.id];
-  var z=c.querySelector('.meta .zh');im.alt=(z?z.textContent.trim():'')+' 形象照（AI 生成）';
+  var im=document.createElement('img');im.loading='lazy';im.decoding='async';im.src='p/pst_'+c.id+'.webp?v='+KV[c.id];
+  var z=c.querySelector('.meta .zh');im.alt=(z?z.textContent.trim():'')+' 商品海報（圖片 AI 生成）';
   im.onerror=function(){d.parentNode&&d.parentNode.removeChild(d);};
-  var l=document.createElement('span');l.className='lbl';l.innerHTML='<b>形象照</b>'+LBL;
+  var l=document.createElement('span');l.className='lbl';l.innerHTML='<b>商品海報</b>'+LBL;
   var L=LABS[c.id];if(L&&(L.cask||L.flavor)){var m=document.createElement('div');m.className='r61cap';
    m.innerHTML=(L.cask?'<span class="r61ck">'+L.cask+'</span>':'')+(L.flavor?'<span class="r61fl"><i>風味</i>'+L.flavor+'</span>':'');s.parentNode.insertBefore(m,s.nextSibling);}
   d.appendChild(im);d.appendChild(l);s.insertBefore(d,s.firstChild);s.scrollLeft=0;
   try{s.dispatchEvent(new Event('error'));}catch(e){}
  });}
- var n=0;(function tick(){add();if(++n<40)setTimeout(tick,n<10?500:2500);})();
+ function pl(){var b=document.getElementById('plb');if(!b||b.__r64)return;b.__r64=1;var f=function(){var i=b.querySelector('img');var on=!!(i&&/\/pst_/.test(i.getAttribute('src')||''));b.classList.toggle('r64p',on);if(on&&b.__last!==i.src){b.__last=i.src;b.scrollTop=0;}};new MutationObserver(f).observe(b,{attributes:true,subtree:true,attributeFilter:['src','class']});f();}
+ var n=0;(function tick(){pl();add();if(++n<40)setTimeout(tick,n<10?500:2500);})();
  try{new MutationObserver(function(){clearTimeout(window._r61m);window._r61m=setTimeout(add,120);}).observe(document.getElementById('list')||document.body,{childList:true,subtree:true});}catch(e){}
 })();</script></body>
 </html>

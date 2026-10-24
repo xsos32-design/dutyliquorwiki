@@ -163,6 +163,11 @@
  +'html.fsbig body>.xwzz{zoom:1.15}'
  +'html.xwsd2 body #xwsd{width:calc(var(--w)/2)}'
  +'html.xwsd2 body #ftop#ftop{left:calc(var(--l) + var(--w)/2)!important;width:calc(var(--w)/2)!important;border-left:1px solid rgba(201,164,92,.2)!important}'
+ +'/*r79*/#xwbar .xwsite{border:1px solid rgba(232,205,138,.62)!important;border-radius:999px!important;background:linear-gradient(180deg,rgba(201,164,92,.26),rgba(201,164,92,.10))!important;padding:0 12px 0 11px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 2px 8px rgba(0,0,0,.35)!important;box-sizing:border-box}'
+ +'#xwbar .xwsite:hover,#xwbar .xwsite[aria-expanded=true]{background:linear-gradient(180deg,rgba(201,164,92,.40),rgba(201,164,92,.18))!important;border-color:#E8CD8A!important}'
+ +'#xwbar .xwsite:active{transform:scale(.97)}'
+ +'#xwbar .xwsite .xwcar{opacity:1!important;margin-left:2px}'
+ +'@media(max-width:374px){#xwbar .xwsite{padding:0 9px!important}}'
  +'@media print{#xwbar,#xwfoot,#xws,#xwmenu,#xwtocp,#xwtocm{display:none!important}body{padding-top:0!important}html.fsbig body>.xwzz{zoom:1}}';
 
  var SVG={"cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>", "layers": "<path d=\"m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z\"/><path d=\"m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65\"/><path d=\"m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65\"/>"};

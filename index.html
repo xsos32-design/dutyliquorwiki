@@ -4864,7 +4864,7 @@ function kbResume(){
 /* ---------- B 學習首頁 ---------- */
 function tileHTML(t){return '<button type="button" class="r59t'+(t.hi?' hi':'')+'" data-r59="'+t.k+'"><b>'+esc(t.t)+'</b><span>'+esc(t.s)+'</span>'+(t.k==='kb'?'<div class="r59pb"><i></i></div>':'')+'</button>';}
 function tiles(){var L=C.site==='w', T=[], M=[];
- T.push({k:'kb',t:L?'繼續新人教材':'繼續商訓知識庫',s:'',hi:1});
+ T.push({k:'kb',t:L?((KB.title||KB.tab)?'繼續閱讀':'開始閱讀'):'繼續商訓知識庫',s:'',hi:1});
  T.push({k:'quiz',t:'抽考',s:L?'從我的架上的酒出題':'從我的架上的品項出題',hi:1});
  if(L){var nb=num('#r16home a.r24bt',/(\d+)\s*個品牌/);
   T.push({k:'brand',t:'品牌故事',s:nb?nb+' 個品牌的故事與年表':'品牌的故事與年表'});

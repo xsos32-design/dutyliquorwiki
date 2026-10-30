@@ -424,6 +424,26 @@ html.noir:not(#_a):not(#_b) section.card.r49f .tastebar.r49t::after{content:"收
 .r59t span{font-size:12px;line-height:1.45;color:#B9B2A4;overflow-wrap:anywhere}
 .r59t.hi{border-color:rgba(127,209,181,.55);background:linear-gradient(180deg,rgba(127,209,181,.11),rgba(127,209,181,.03)),#1B1813}
 .r59t.hi b{color:#9FE3CB}
+.r59hd{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.r59hd em{font-style:normal;font-size:12px;color:#7FD1B5;letter-spacing:0;margin:8px 2px -4px}
+.r59kg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.r59k{position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:3px;min-height:66px;padding:10px 12px;border-radius:12px;border:1px solid rgba(127,209,181,.38);background:linear-gradient(180deg,rgba(127,209,181,.10),rgba(127,209,181,.02)),#1B1813;color:#EDE6D6;text-align:left;font:inherit;cursor:pointer;width:100%;min-width:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.r59k:active{transform:translateY(1px)}
+.r59k b{font-size:15px;line-height:1.3;color:#9FE3CB;font-weight:700}
+.r59k span{font-size:11.5px;line-height:1.45;color:#B9B2A4}
+.r59k span i{font-style:normal;white-space:nowrap}
+.r59k em{font-style:normal;font-size:11px;line-height:1.2;color:#7FD1B5;opacity:.8;margin-top:2px}
+.r59k.last{border-color:#7FD1B5;box-shadow:inset 0 0 0 1px rgba(127,209,181,.4)}
+.r59k.last em{opacity:1;background:#7FD1B5;color:#10241D;border-radius:9px;padding:3px 7px;font-weight:700}
+.r59r{display:flex;align-items:center;gap:10px;width:100%;padding:10px 12px;border-radius:12px;border:1px solid rgba(201,164,92,.34);background:#1B1813;color:#EDE6D6;font:inherit;text-align:left;cursor:pointer;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+.r59r[hidden]{display:none}
+.r59r .tx{flex:1;min-width:0}
+.r59r small{display:block;font-size:11px;color:#ADA69A;letter-spacing:1px}
+.r59r .tx b{display:block;font-size:14px;color:#F2D89A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.r59r .ar{color:#C9A45C;font-size:20px;line-height:1}
+.r59g>.r59t:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:899px){.r59kg>.r59k:last-child:nth-child(odd){grid-column:1/-1}}
+@media (min-width:900px){.r59kg{grid-template-columns:repeat(3,1fr)}}
 .r59pb{width:100%;height:5px;border-radius:5px;background:rgba(255,255,255,.09);overflow:hidden;margin-top:5px}
 .r59pb i{display:block;height:100%;width:0;background:#7FD1B5;border-radius:5px}
 @media (min-width:901px){.r59g{grid-template-columns:repeat(3,1fr)}}
@@ -1464,7 +1484,7 @@ body.kbon #main{display:none}
 @media print{#kbnavbar{display:none}.kbchap{display:block!important}}
 </style>
 <div id="kbview">
- <h1>新人教材・知識庫</h1>
+ <h1>商訓知識庫</h1>
  <div class="kbtop">昇恆昌營業部訓練教材整理 ── 桶型風味、蘇格蘭威士忌基礎、葡萄酒、調和威士忌品牌</div>
  <div id="kbnavbar"><button type="button" class="kbnav" data-kb="g1">威士忌</button><button type="button" class="kbnav" data-kb="g5">葡萄酒</button><button type="button" class="kbnav" data-kb="g3">其他酒類</button><button type="button" class="kbnav" data-kb="g9">圖解・心智圖</button><button type="button" class="kbnav" data-kb="g4">品牌與原廠講義</button><button type="button" class="kbnav" data-kb="g6">通關・客人問答</button><button type="button" class="kbnav kbmini" data-kb="g7">資料檢查</button></div>
  <div class="kbchap" data-kb="check"><h2>🔎 資料自我檢查</h2><p class="kbdesc">這一頁不是寫死的，是<b>每次打開檔案時當場重新算</b>的。它會把「這張卡自己跟自己矛盾」「欄位空白」「標記對不上」的地方全部列出來，點任何一列可以直接跳到那支酒。<br><b>用法：看到某支酒出現在這裡，就代表那個欄位<u>先不要背、也不要跟客人講死</u>，以現場酒標與電子標為準。</b></p><div id="dchk"><p class="kbnote">計算中…</p></div></div>
@@ -1527,7 +1547,7 @@ body.kbon #main{display:none}
  setTimeout(fitTop,300); setTimeout(fitTop,1200); fitTop();
  var dr=document.getElementById('ddrow');
  if(dr){
-  var kb=document.createElement('span'); kb.className='dchip'; kb.id='dkb'; kb.textContent='📚 新人教材';
+  var kb=document.createElement('span'); kb.className='dchip'; kb.id='dkb'; kb.textContent='📚 商訓知識庫';
   var _df=document.getElementById('dfilt');
   dr.insertBefore(kb, _df?_df.nextSibling:dr.children[1]);
   kb.addEventListener('click',function(){
@@ -4844,7 +4864,7 @@ var n=0;(function tick(){var box=document.getElementById(SITE==='liq'?'dchk':'r4
  },true);
  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&isOpen())close();});
 })();</script><script id="r58dj">(function(){function m(){var e=document.getElementById('menu');if(!e)return;var h=e.getBoundingClientRect().height;if(h>10)document.documentElement.style.setProperty('--mnh',Math.round(h)+'px');}m();window.addEventListener('resize',m);try{var _me=document.getElementById('menu');if(_me)new ResizeObserver(function(){m();}).observe(_me);}catch(e){setTimeout(m,1500);}})();</script><script id="r59j">(function(){
-var C={"site": "w", "home": "#r16home", "hide": ["#r16home a.promo", "#r16home a.r22reg", "#r16home a.r24bt"], "step2": ["t:輕盈好入口", "t:甜潤", "t:果香", "t:煙燻泥煤", "t:雪莉果乾", "t:厚重濃郁", "t:香草奶油"], "moreTxt": "折扣中、得獎、外盒、業績目標、不可 95 折、口感分數、只看某些品牌…", "ex": "「雪莉」「波本桶」「泥煤」"};window.__xwFindEx=C.ex;
+var C={"site": "w", "home": "#r16home", "hide": ["#r16home a.promo", "#r16home a.r22reg", "#r16home a.r24bt"], "step2": ["t:輕盈好入口", "t:甜潤", "t:果香", "t:煙燻泥煤", "t:雪莉果乾", "t:厚重濃郁", "t:香草奶油"], "gsub": {"g1": "蘇格蘭・名詞・木桶・日本台灣・門市問答", "g5": "品種・產區・酒標・侍酒・門市問答", "g3": "白蘭地・高粱・清酒梅酒・烈酒", "g9": "一張圖看懂・心智圖", "g4": "原廠製程・調和威士忌・品牌與產品", "g6": "免稅規定・客人問答實戰"}, "moreTxt": "折扣中、得獎、外盒、業績目標、不可 95 折、口感分數、只看某些品牌…", "ex": "「雪莉」「波本桶」「泥煤」", "gn": {"g1": 5, "g5": 9, "g3": 4, "g9": 2, "g4": 5, "g6": 1, "g7": 1}};window.__xwFindEx=C.ex;
 var $=function(i){return document.getElementById(i);};
 var de=document.documentElement; de.classList.add('r59');
 function cls(e,c,on){if(e)e.classList.toggle(c,!!on);}
@@ -4888,15 +4908,15 @@ function kbResume(){
  var tab=KB.tab, idx=kbFind();
  setTimeout(function(){
   if(tab){var b=document.querySelector('.kbnav[data-kb="'+tab+'"]');if(b&&!b.classList.contains('on'))b.click();}
-  function go(){var s=(idx!=null)?secs()[idx]:null;if(s&&s.offsetParent)jump(s.getBoundingClientRect().top+window.pageYOffset-xwh()-80);}
-  setTimeout(go,450);setTimeout(go,1000);
+  function off(){var o=xwh()+80,bar=document.getElementById('r116bar');
+   if(bar&&bar.offsetParent){var t=parseFloat(getComputedStyle(bar).top)||0;o=Math.max(o,t+bar.offsetHeight+14);}return o;}
+  function go(){var s=(idx!=null)?secs()[idx]:null;if(s&&s.offsetParent)jump(s.getBoundingClientRect().top+window.pageYOffset-off());}
+  setTimeout(go,450);setTimeout(go,1000);setTimeout(go,1800);
  },80);}
 
 /* ---------- B 學習首頁 ---------- */
 function tileHTML(t){return '<button type="button" class="r59t'+(t.hi?' hi':'')+'" data-r59="'+t.k+'"><b>'+esc(t.t)+'</b><span>'+esc(t.s)+'</span>'+(t.k==='kb'?'<div class="r59pb"><i></i></div>':'')+'</button>';}
 function tiles(){var L=C.site==='w', T=[], M=[];
- T.push({k:'kb',t:L?((KB.title||KB.tab)?'繼續閱讀':'開始閱讀'):'繼續商訓知識庫',s:'',hi:1});
- T.push({k:'quiz',t:'抽考',s:L?'從我的架上的酒出題':'從我的架上的品項出題',hi:1});
  if(L){var nb=num('#r16home a.r24bt',/(\d+)\s*個品牌/);
   T.push({k:'brand',t:'品牌故事',s:nb?nb+' 個品牌的故事與年表':'品牌的故事與年表'});
   T.push({k:'reg',t:'產區與桶型',s:'產區地圖・等級・木桶'});
@@ -4909,20 +4929,38 @@ function tiles(){var L=C.site==='w', T=[], M=[];
   M.push({k:'promo',t:'本月巧克力活動',s:'折扣・促銷價・滿額贈'});
  }
  M.push({k:'shelf',t:'我的架上',s:''});
+ M.push({k:'quiz',t:'抽考',s:L?'從我的架上的酒出題':'從我的架上的品項出題',hi:1});
  return {T:T,M:M};}
+function kgroups(){return [].slice.call(document.querySelectorAll('.kbnav')).filter(function(b){return !b.classList.contains('kbmini');}).map(function(b){
+ var k=b.getAttribute('data-kb'),l=b.getAttribute('data-list'),n=l?l.split(',').length:((C.gn||{})[k]||0);
+ return {k:k,t:b.textContent.replace(/\s+/g,' ').trim(),s:(C.gsub||{})[k]||'',n:n};});}
+function kbBlock(){var G=kgroups();
+ return '<div class="r59hd"><div class="r59h">商訓知識庫</div><em class="r59kp"></em></div>'
+ +'<button type="button" class="r59r" data-r59="kb" hidden><div class="tx"><small>回到上次讀的地方</small><b></b><div class="r59pb"><i></i></div></div><span class="ar">›</span></button>'
+ +'<div class="r59kg">'+G.map(function(g){return '<button type="button" class="r59k" data-r59="kbg:'+g.k+'"><b>'+esc(g.t)+'</b>'+(g.s?'<span>'+g.s.split('・').map(function(x){return '<i>'+esc(x)+'</i>';}).join('・<wbr>')+'</span>':'')+'<em data-n="'+(g.n?g.n+' 章':'')+'">'+(g.n?g.n+' 章':'')+'</em></button>';}).join('')+'</div>';}
+function kbOpen(tab){
+ var dk=$('dkb');if(!document.body.classList.contains('kbon')&&dk)dk.click();
+ setTimeout(function(){var b=document.querySelector('.kbnav[data-kb="'+tab+'"]');if(b&&!b.classList.contains('on'))b.click();
+  else{KB.tab=tab;KB.idx=null;KB.title='';kbSave();}
+  function go(){var v=$('kbview');if(v)jump(v.getBoundingClientRect().top+window.pageYOffset-xwh()-8);}
+  setTimeout(go,250);setTimeout(go,700);},80);}
 function paintTiles(){
  var w=document.querySelector('.r59learn');if(!w)return;
- var kb=w.querySelector('[data-r59="kb"]');
- if(kb){var first=document.querySelector('.kbnav');var ft=first?first.textContent.replace(/\s+/g,' ').trim():'';
-  var pct=kbPct();
-  kb.querySelector('span').textContent=KB.title?('上次讀到：'+KB.title+(KB.tab&&tabName(KB.tab)?'（'+tabName(KB.tab)+'）':'')):(KB.tab&&tabName(KB.tab)?'上次看到：'+tabName(KB.tab):('從「'+ft+'」開始'));
+ var kb=document.querySelector('.r59kb [data-r59="kb"]');
+ if(kb){var pct=kbPct(), tn=KB.tab?tabName(KB.tab):'';
+  var lab=KB.title||tn;
+  kb.hidden=!lab;kb.querySelector('b').textContent=lab;kb.querySelector('small').textContent='回到上次讀的地方'+(tn&&KB.title?'・'+tn:'');
   kb.querySelector('.r59pb i').style.width=pct+'%';
-  kb.setAttribute('aria-label',kb.querySelector('b').textContent+'，已看過約 '+pct+'%');}
+  kb.setAttribute('aria-label','回到上次讀的地方：'+lab);
+  var kp=document.querySelector('.r59kp');if(kp)kp.textContent=pct?'已看過約 '+pct+'%':'';
+  [].forEach.call(document.querySelectorAll('.r59k'),function(b){var on=lab&&b.getAttribute('data-r59')==='kbg:'+KB.tab;b.classList.toggle('last',!!on);
+   var em=b.querySelector('em'),n=em.getAttribute('data-n');em.textContent=on?('上次讀到這裡'+(n?'・'+n:'')):n;});}
  var sh=document.querySelector('.r59month [data-r59="shelf"] span');
  if(sh){var n=num('#dsh .n',/(\d+)/);sh.textContent=(n?n+(C.site==='w'?' 支':' 項')+'・':'')+(C.site==='w'?'目標・獎勵':'出清・Push Money');}}
 function act(k){
  var H=C.home;
  if(k==='kb')return kbResume();
+ if(k.indexOf('kbg:')===0)return kbOpen(k.slice(4));
  if(k==='quiz'){var d=$('dsh');if(!document.body.classList.contains('shon')&&d)d.click();
   setTimeout(function(){var q=$('shquiz');if(q){q.click();var bx=$('shquizbox');setTimeout(function(){var t=(bx&&!bx.hidden)?bx:q;jump(t.getBoundingClientRect().top+window.pageYOffset-xwh()-16);},120);}},250);return;}
  if(k==='shelf'){var d2=$('dsh');if(d2&&!document.body.classList.contains('shon'))d2.click();return;}
@@ -4938,12 +4976,14 @@ function home(){
   sub.textContent=(it.length>=4?it[0]+' '+it[1]+'・'+it[2]+' '+it[3]:'')+'・每天學一點';
   st.classList.add('r59hid');st.parentNode.insertBefore(sub,st);}
  var D=tiles();
+ var kbb=document.createElement('div');kbb.className='r59kb';kbb.style.cssText='display:flex;flex-direction:column;gap:10px';
+ kbb.innerHTML=kbBlock();
  var a=document.createElement('div');a.className='r59learn';a.style.cssText='display:flex;flex-direction:column;gap:12px';
- a.innerHTML='<div class="r59h">我的學習</div><div class="r59g">'+D.T.map(tileHTML).join('')+'</div>';
+ a.innerHTML='<div class="r59h">查詢工具</div><div class="r59g">'+D.T.map(tileHTML).join('')+'</div>';
  var m=document.createElement('div');m.className='r59month';m.style.cssText='display:flex;flex-direction:column;gap:12px';
- m.innerHTML='<div class="r59h">本月</div><div class="r59g">'+D.M.map(tileHTML).join('')+'</div>';
+ m.innerHTML='<div class="r59h">本月與練習</div><div class="r59g">'+D.M.map(tileHTML).join('')+'</div>';
  var s=R.querySelector('.srch');
- R.insertBefore(m,s?s.nextSibling:R.firstChild);R.insertBefore(a,m);
+ R.insertBefore(m,s?s.nextSibling:R.firstChild);R.insertBefore(a,m);R.insertBefore(kbb,a);
  C.hide.forEach(function(q){var e=document.querySelector(q);if(e)e.classList.add('r59hid');});
  var h2=R.querySelector(':scope>h2');
  if(h2){h2.classList.add('r59cath');var fb=document.createElement('button');fb.type='button';fb.className='r59fbtn r59fo';fb.innerHTML=FICON+'篩選';h2.appendChild(fb);}
@@ -5248,7 +5288,7 @@ function sheet(){
  });
  sh.innerHTML=h+'</div>';sh.hidden=false;var i=sh.querySelector('input');if(i&&window.innerWidth>720)i.focus();
 }
-document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('#kbview .kbnav'))setTimeout(bar,80);if(e.target.closest&&e.target.closest('#dkb,[data-r59="kb"]'))setTimeout(function(){vars();spy();},400);},true);
+document.addEventListener('click',function(e){if(e.target.closest&&e.target.closest('#kbview .kbnav'))setTimeout(bar,80);if(e.target.closest&&e.target.closest('#dkb,[data-r59="kb"],[data-r59^="kbg"]'))setTimeout(function(){vars();spy();},400);},true);
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){var s=$('r116sheet');if(s)s.hidden=true;}});
 function init(){bar();var v=$('kbview');if(v&&!v._r116){v._r116=1;new MutationObserver(function(){if(!$('r116bar')&&$('kbnavbar'))bar();}).observe(v,{childList:true});}}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(init,300);});else setTimeout(init,300);

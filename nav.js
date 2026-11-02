@@ -10,7 +10,9 @@
  var GROUPS=[
   {g:'活動', items:[
    {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',
-    u:'https://xsos32-design.github.io/promotion/calendar.html'}
+    u:'https://xsos32-design.github.io/promotion/calendar.html'},
+   {k:'owner', t:'負責人折扣圖',     s:'巧克力・選負責人看本月折扣',  ico:'layers',
+    u:'https://xsos32-design.github.io/promotion/calendar.html#r124'}
   ]},
   {g:'酒類', items:[
    {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
@@ -187,7 +189,7 @@
   document.body.insertBefore(bar,document.body.firstChild);
   (function(){var MN=document.getElementById('menu'),MB=document.getElementById('mb'),FS=document.getElementById('fsz');
    if(MN&&MB){bar.insertBefore(MB,bar.firstChild);if(!MB.getAttribute('aria-label'))MB.setAttribute('aria-label','目錄');if(FS)bar.appendChild(FS);document.documentElement.classList.add('xw1');}})();
-  var mn=document.createElement('div'); mn.id='xwmenu'; mn.hidden=true; document.body.appendChild(mn);
+  var mn=document.createElement('div'); mn.id='xwmenu'; mn.hidden=true; document.body.appendChild(mn);/*r156*/mn.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a.xwmi'):null;if(!a)return;closeM();var t=document.getElementById('r124');if(t&&/#r124$/.test(a.getAttribute('href'))){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});try{history.replaceState(null,'','#r124');}catch(_){}}});
   var openB=null;
   function closeM(){mn.hidden=true; if(openB){openB.setAttribute('aria-expanded','false');openB=null;}}
   bar.addEventListener('click',function(e){

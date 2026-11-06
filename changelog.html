@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>更新日誌｜小韋 免稅賣場工具組</title>
+<link rel="icon" href="icon-192.png"><meta name="theme-color" content="#0B0A09">
+<style>
+:root{--bg:#0B0A09;--card:#17140F;--card2:#120F0C;--line:rgba(201,164,92,.22);--line2:rgba(201,164,92,.4);--gold:#C9A45C;--gold2:#E8CD8A;--ink:#F2EBDD;--dim:#BDB6A9;--dim2:#8F887B}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 'Microsoft JhengHei','微軟正黑體',system-ui,-apple-system,'PingFang TC','Noto Sans TC',sans-serif}
+a{color:var(--gold2)}
+header{padding:28px 18px 20px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14110D,#0B0A09)}
+header>*,main{max-width:860px;margin-left:auto;margin-right:auto}
+.eye{display:block;font-size:12px;letter-spacing:.32em;color:var(--gold)}
+h1{margin:4px 0 0;font:600 28px/1.3 'Noto Serif TC',serif;letter-spacing:.06em}
+header p{margin:8px 0 0;color:#DAD3C6;font-size:14px}
+main{padding:14px 16px 80px}
+.tools{position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--bg) 85%,rgba(11,10,9,0));padding:12px 0 10px;display:flex;flex-direction:column;gap:10px}
+.q{width:100%;font:inherit;font-size:16px;color:var(--ink);background:var(--card2);border:1px solid var(--line2);border-radius:8px;padding:10px 14px;outline:none}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chips button{font:inherit;font-size:14px;color:var(--ink);background:transparent;border:1px solid var(--line2);border-radius:6px;padding:5px 14px;cursor:pointer}
+.chips button.on{background:var(--gold);color:#16120C;border-color:var(--gold)}
+.cnt{font-size:13px;color:var(--dim2)}
+.day{margin:22px 0 8px;font:600 15px/1.4 'Noto Serif TC',serif;letter-spacing:.16em;color:var(--gold2);border-bottom:1px solid var(--line);padding-bottom:6px}
+.ent{border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:10px;background:var(--card);padding:12px 16px 12px;margin:10px 0}
+.ent h2{margin:0;font:600 17px/1.45 'Noto Serif TC',serif;color:#F7F0DF;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.ent h2 .v{font:600 12px/1 system-ui;letter-spacing:.08em;color:#16120C;background:var(--gold);border-radius:4px;padding:3px 6px}
+.tags{display:flex;gap:6px;margin:6px 0 2px;flex-wrap:wrap}
+.tags span{font-size:12px;color:var(--gold2);border:1px solid var(--line2);border-radius:999px;padding:0 9px}
+.ent ul{margin:6px 0 0;padding-left:20px}.ent li{margin:3px 0;color:#E3DCCF;font-size:14.5px}
+.foot{margin-top:28px;font-size:12.5px;color:var(--dim2)}
+mark{background:rgba(232,205,138,.35);color:inherit;border-radius:2px}
+</style></head><body>
+<header><span class="eye">CHANGELOG</span><h1>更新日誌</h1><p>酒類速讀檔案、巧克力速讀檔案、活動比較卡每次修改的內容。最新的在最上面。</p></header>
+<main><div class="tools"><input class="q" id="q" type="search" placeholder="搜尋更新內容，例如：麥卡倫、去背、Godiva" aria-label="搜尋更新內容">
+<div class="chips" id="chips"></div><div class="cnt" id="cnt"></div></div>
+<div id="list"></div>
+<p class="foot">日期為上線日期。版本號（r）與網站快取版本相同；看不到最新內容時，請重新整理頁面。</p></main>
+<script id="LOG" type="application/json">[{"v": "r180", "d": "2026-11-06", "t": "全站檢查與更新日誌", "s": ["酒類", "巧克力", "活動"], "i": ["全站逐一檢查：兩站 1,001 張商品卡逐張開啟、知識庫全部章節逐章開啟、四個網站首頁與品牌／產區／選購頁實際載入，沒有錯誤訊息、沒有破圖", "修正：25 張酒類商品卡頂端的品牌名稱顯示成「undefined」（r179 更新海報比例時誤改到品牌色對照表），已還原", "修正：活動比較卡裡「蝶矢五年饗宴」「格蘭菲迪 21 年」兩筆連結對不到商品卡，已改指向正確的卡", "新增：這個「更新日誌」頁面，選單「網站資訊」可以打開，之後每次修改都會記在這裡"]}, {"v": "r179", "d": "2026-11-06", "t": "商品圖全面去背、海報補齊", "s": ["酒類", "巧克力"], "i": ["36 項商品卡換成去背圖（酒類 20、巧克力 16）；格蘭多納單桶 5 支用同系列代表圖，卡上註明非本桶號", "Beringer 納帕卡本內、波摩 19 年改用官網透明背景圖；比利時貝殼巧克力改用品牌型錄圖並新做形象海報", "31 張主圖是方框照片的海報，改成去背商品；15 張畫面裡沒有商品的海報補上商品（Chivas 18 年、Krug 粉紅香檳、Godiva 台灣紀念禮盒等）", "品牌頁、選購頁、搜尋縮圖同步改用去背圖"]}, {"v": "r178", "d": "2026-11-06", "t": "GODIVA 2026 聖誕限定四款", "s": ["巧克力"], "i": ["新增：榛果圓頂巧克力鐵盒（NT$780）、小熊造型 G Cube 16 顆（NT$890）、綜合片裝 Carrés 20 片（NT$1,170）、百年紀念禮盒 15 顆（NT$1,800）", "四款都有商品卡與形象海報（官網查無官方圖，使用門市實拍去背）；巧克力品項共 208 項"]}, {"v": "r177", "d": "2026-11-06", "t": "金門「調酒大師」更正為「釀酒大師」", "s": ["酒類", "活動"], "i": ["依官方新聞稿，門市文宣的「調酒大師 58.6%／750ml」就是「釀酒大師 陳年金門高粱酒」58%／700ml／NT$4,300，兩張卡合併", "舊網址自動轉到釀酒大師卡；活動比較卡的連結一併更新"]}, {"v": "r176", "d": "2026-11-06", "t": "「祥龍騰雲」更正為「龍騰九霄 琉璃藍」", "s": ["酒類", "活動"], "i": ["門市文宣的「祥龍騰雲」就是龍騰九霄琉璃藍，重複卡合併，舊網址自動轉址", "琉璃藍卡補上官方品飲：酒色、前中後段香氣與尾韻"]}, {"v": "r175", "d": "2026-11-06", "t": "補官方高清圖", "s": ["酒類", "巧克力"], "i": ["10 項換成官方或網路高清去背圖（Butlers 三款、Hershey's 蝴蝶餅、Bendicks、OREO 旅行包、KitKat 東京檸檬、釀酒大師、Vint 夏多內、Moulin de Canhaut）", "Ice Breakers Sours 品名更正為「酸味水果無糖薄荷糖」，新做海報；4 張沒有商品的海報補上商品"]}, {"v": "r174", "d": "2026-11-06", "t": "新增麥卡倫 時空旅行－雪莉桶工藝 20 年", "s": ["酒類"], "i": ["TIME : SPACE 200 週年系列第三章，20 年、44.8%，首次用 Valdespino 雪莉酒潤桶；商品卡與海報", "Carta Nautica 20 年／1987 補上釀酒師 Diane Stuart；春宴 The Finale 品名加上「2026」", "春宴 Finale、Carta Nautica 1987、雪莉桶工藝補進品牌頁、產區頁、選購頁（原本這三頁看不到）"]}, {"v": "r173", "d": "2026-11-06", "t": "新增麥卡倫 Carta Nautica 1987", "s": ["酒類"], "i": ["1987 年蒸餾、熟成逾 38 年、45.2%、全球 600 瓶；商品卡與海報（台灣建議售價 NT$428,000）", "Carta Nautica 20 年補上台灣建議售價 NT$25,400、700ml，資料改用公開新聞稿"]}, {"v": "r172", "d": "2026-11-06", "t": "知識庫整理", "s": ["酒類", "巧克力"], "i": ["酒類與巧克力知識庫的章節依分類重新排列，重複章節合併，分類名稱兩站統一", "巧克力站底部列加入「返回」鍵"]}, {"v": "r171", "d": "2026-11-06", "t": "新增麥卡倫 春宴系列最終章 The Finale（紐奧良）", "s": ["酒類"], "i": ["商品卡、去背圖與形象海報"]}, {"v": "r170", "d": "2026-11-06", "t": "橡木桶百科、選單新增「商訓知識庫」", "s": ["酒類", "巧克力", "活動"], "i": ["酒類知識庫新增桶型百科（47 種酒桶的來由與風味）", "上方選單新增「商訓知識庫」分類，四個網站都能直接打開"]}, {"v": "r169", "d": "2026-11-06", "t": "改用官方高清圖", "s": ["酒類", "巧克力"], "i": ["47 項商品卡改用有外盒的官方或高清商品圖去背，相關海報主圖一併更新"]}, {"v": "r168", "d": "2026-11-06", "t": "巧克力品牌資料分開", "s": ["巧克力"], "i": ["Skittles、Celebrations 改用自己的品牌故事與話術（原本顯示 M&M's 的內容）", "過敏原警語依商品顯示；「產地」改顯示實際製造地"]}, {"v": "r167", "d": "2026-11-06", "t": "商品卡與海報改用去背圖", "s": ["酒類", "巧克力"], "i": ["大量商品卡圖改成去背圖，26 張方框主圖海報換成去背商品"]}, {"v": "r166", "d": "2026-11-06", "t": "門市照與活動更新", "s": ["酒類", "活動"], "i": ["獺祭遠心分離、THE NIKKA 換門市實拍；活動加入臻選獻禮 A7、Bowmore 郭元益餅乾滿額贈"]}, {"v": "r165", "d": "2026-11-05", "t": "Skittles 鐵盒門市照", "s": ["巧克力"], "i": ["商品卡與形象海報改用門市實拍"]}, {"v": "r164", "d": "2026-11-05", "t": "「我的架上」自動補新品", "s": ["酒類", "巧克力", "活動"], "i": ["新品自動加入「我的架上」；Skittles 鐵盒加入折扣小卡"]}, {"v": "r163", "d": "2026-11-04", "t": "「我的架上」改版", "s": ["酒類", "巧克力"], "i": ["「我的架上」預設清單改為本月折扣品項＋獎勵"]}, {"v": "r161–r162", "d": "2026-11-04", "t": "折扣小卡", "s": ["活動"], "i": ["折扣小卡可以一鍵複製整張圖；新增黑白列印版"]}, {"v": "r159", "d": "2026-11-02", "t": "品名更正", "s": ["酒類"], "i": ["Bin 8 品名更正為「卡本內希哈」；四站快取版本更新"]}]</script>
+<script>
+(function(){var L=JSON.parse(document.getElementById('LOG').textContent),S=['全部','酒類','巧克力','活動'],cur='全部',q=document.getElementById('q');
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function hl(s,k){s=esc(s);if(!k)return s;var e=esc(k).replace(/[.*+?^${}()|[\]\\]/g,'\\$&');return s.replace(new RegExp(e,'gi'),function(m){return'<mark>'+m+'</mark>'})}
+document.getElementById('chips').innerHTML=S.map(function(s){return'<button type="button" data-s="'+s+'"'+(s===cur?' class="on"':'')+'>'+s+'</button>'}).join('');
+document.getElementById('chips').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;cur=b.getAttribute('data-s');[].forEach.call(this.children,function(x){x.classList.toggle('on',x===b)});draw()});
+q.addEventListener('input',draw);
+function draw(){var k=q.value.trim(),n=0,last='',h='';L.forEach(function(e){if(cur!=='全部'&&e.s.indexOf(cur)<0)return;var all=(e.v+' '+e.t+' '+e.i.join(' ')).toLowerCase();if(k&&all.indexOf(k.toLowerCase())<0)return;n++;
+ if(e.d!==last){last=e.d;var p=e.d.split('-');h+='<div class="day">'+p[0]+' 年 '+(+p[1])+' 月 '+(+p[2])+' 日</div>';}
+ h+='<article class="ent"><h2><span class="v">'+esc(e.v)+'</span>'+hl(e.t,k)+'</h2><div class="tags">'+e.s.map(function(s){return'<span>'+esc(s)+'</span>'}).join('')+'</div><ul>'+e.i.map(function(x){return'<li>'+hl(x,k)+'</li>'}).join('')+'</ul></article>';});
+ document.getElementById('list').innerHTML=h||'<p class="cnt">找不到符合的更新。</p>';document.getElementById('cnt').textContent='共 '+n+' 筆更新';}
+draw();})();
+</script>
+<script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>
+</body></html>

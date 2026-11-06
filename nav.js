@@ -6,7 +6,7 @@
 (function(){
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
 
- var N_W=793, N_C=204;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
+ var N_W=794, N_C=204;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
   {g:'活動', items:[
    {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',

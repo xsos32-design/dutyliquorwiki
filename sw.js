@@ -1,5 +1,5 @@
 /* r56：頁面先開手機存好的版本、背景只在有變時更新；圖片字型快取跨版本保留 */
-const V = 'v2026-10-13-450b458923-r192';
+const V = 'v2026-10-13-450b458923-r193';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=450b458923'];
 self.addEventListener('install', e => {
@@ -43,7 +43,7 @@ self.addEventListener('fetch', e => {
   const font = /(^|\.)fonts\.(googleapis|gstatic)\.com$/.test(u.hostname);
   if (!same && !font) return;
   e.respondWith(caches.open(P + 'rt').then(c => c.match(r).then(m => {
-    const f = fetch(r).then(res => { if (res.ok && res.type !== 'opaque') c.put(r, res.clone()); return res; }).catch(() => m);
+    const f = fetch(r).catch(() => new Promise(ok => setTimeout(ok, 800)).then(() => fetch(r))).then(res => { if (res.ok && res.type !== 'opaque') c.put(r, res.clone()); return res; }).catch(() => m);
     if (m) { e.waitUntil(f.catch(() => {})); return m; }
     return f;
   })));

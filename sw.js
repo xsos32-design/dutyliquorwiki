@@ -1,5 +1,5 @@
 /* r56：頁面先開手機存好的版本、背景只在有變時更新；圖片字型快取跨版本保留 */
-const V = 'v2026-10-13-450b458923-r211';
+const V = 'v2026-10-13-450b458923-r212';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=22c98a042c'];
 self.addEventListener('install', e => {

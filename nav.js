@@ -54,11 +54,11 @@
   var p=location.pathname.toLowerCase();
   if(/changelog\.html$/.test(p)) return 'log';
   if(/rewards\.html$/.test(p)) return 'rwall';
-  if(/chocolatepromo/.test(p)) return /card\.html$/.test(p)?'ccard':'cpromo';
+  if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
   if(/dutyliquorwiki/.test(p)) return 'wiki';
   if(/calendar\.html$/.test(p)) return 'cal';
-  if(/card\.html$/.test(p))    return 'card';
+  if(/card(_\w+)?\.html$/.test(p)) return 'card';
   if(/promotion/.test(p))      return 'promo';
   return '';
  }
@@ -67,6 +67,13 @@
  function xwKBHash(){if(location.hash==='#kb'){var t=0;(function tryo(){if(xwOpenKB()||++t>20)return;setTimeout(tryo,250);})();}}
  window.addEventListener('hashchange',xwKBHash); if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){setTimeout(xwKBHash,300);});else setTimeout(xwKBHash,300);
  var CUR=here(), CHOC=(CUR==='choc'||CUR==='cpromo'||CUR==='ccard');
+ /* r215：同一頁裡切到「我的架上」或「商訓知識庫」時，選單標示與上方名稱跟著換 */
+ function view(){ var b=document.body; if(!b) return CUR;
+  if(CUR==='wiki'||CUR==='choc'){ var c=CUR==='choc';
+   if(b.classList.contains('shon')) return c?'cshelf':'shelf';
+   if(b.classList.contains('kbon')) return c?'kbc':'kbw'; }
+  if(CUR==='cal'&&/^#r124/.test(location.hash)) return 'owner';
+  return CUR; }
 
  /* 2026/10 起酒、巧克力同一套深藍金 */
  var T = {bar:'rgba(17,15,12,.94)',  line:'rgba(201,164,92,.42)',  edge:'rgba(201,164,92,.32)',
@@ -200,12 +207,26 @@
 
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
-  /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡'};
-  var CI={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card'}[CUR]||'page';
-  var h='<button type="button" class="xwsite xwdd" id="xwsite" aria-haspopup="true" aria-expanded="false" title="切換網站">'+ic(CI)+'<span class="xwsn">'+(NAMES[CUR]||'小韋工具組')+'</span><span class="xwcar">▾</span></button>'
+  /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡',
+   shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',rwall:'銷售獎勵圖牆',log:'更新日誌',owner:'負責人折扣圖'};
+  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',rwall:'shelf',log:'log',owner:'layers'};
+  /* 同一站的子頁（品牌、產區、選酒…）：上方名稱用頁名，選單仍標示所屬的站 */
+  var SUBN=(function(p){ p=p.toLowerCase();
+   if(/brands\.html$/.test(p)) return '品牌故事'; if(/regions\.html$/.test(p)) return '產區與桶型';
+   if(/wines\.html$/.test(p)) return '葡萄酒產區'; if(/dutyliquorwiki\/pick\.html$/.test(p)) return '選酒推薦';
+   if(/chocolatewiki\/pick\.html$/.test(p)) return '送禮推薦';
+   if(/promotion\/oct\.html$/.test(p)) return '酒類 10 月比較卡'; if(/promotion\/card_oct\.html$/.test(p)) return '酒類 10 月折扣卡'; if(/chocolatepromo\/card_oct\.html$/.test(p)) return '巧克力 10 月折扣卡'; if(/chocolatepromo\/oct\.html$/.test(p)) return '巧克力 10 月比較卡';
+   return ''; })(location.pathname);
+  if(SUBN) NAMES[CUR+'_sub']=SUBN;
+  var VC=view(), CI=ICO[VC]||'page';
+  var h='<button type="button" class="xwsite xwdd" id="xwsite" aria-haspopup="true" aria-expanded="false" title="切換網站">'+ic(CI)+'<span class="xwsn">'+((VC===CUR&&SUBN)||NAMES[VC]||'小韋工具組')+'</span><span class="xwcar">▾</span></button>'
    +'<button type="button" class="xwsb" id="xwsb" aria-label="搜尋：酒、巧克力、活動、品牌，或在卡片裡找字">'+ic('search')+'搜尋</button>';
   bar.innerHTML=h;
   document.body.insertBefore(bar,document.body.firstChild);
+  (function(){ function upd(){ var v=view(); if(v===VC) return; VC=v; var b=document.getElementById('xwsite'); if(!b) return;
+    var n=b.querySelector('.xwsn'); if(n) n.textContent=(v===CUR&&SUBN)||NAMES[v]||'小韋工具組'; var i=b.querySelector('svg'); if(i){ var t=document.createElement('span'); t.innerHTML=ic(ICO[v]||'page'); var ni=t.firstElementChild; if(ni) i.parentNode.replaceChild(ni,i); } }
+   try{ new MutationObserver(upd).observe(document.body,{attributes:true,attributeFilter:['class']}); }catch(e){}
+   window.addEventListener('hashchange',upd); })();
   (function(){var MN=document.getElementById('menu'),MB=document.getElementById('mb'),FS=document.getElementById('fsz');
    if(MN&&MB){bar.insertBefore(MB,bar.firstChild);if(!MB.getAttribute('aria-label'))MB.setAttribute('aria-label','目錄');if(FS)bar.appendChild(FS);document.documentElement.classList.add('xw1');}})();
   var mn=document.createElement('div'); mn.id='xwmenu'; mn.hidden=true; document.body.appendChild(mn);/*r156*/mn.addEventListener('click',function(e){var a=e.target.closest?e.target.closest('a.xwmi'):null;if(!a)return;closeM();var t=document.getElementById('r124');if(t&&/#r124$/.test(a.getAttribute('href'))){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});try{history.replaceState(null,'','#r124');}catch(_){}}});
@@ -214,7 +235,7 @@
   bar.addEventListener('click',function(e){
    var b=e.target.closest?e.target.closest('button.xwdd'):null; if(!b)return;
    e.preventDefault(); if(openB===b){closeM();return;}
-   mn.innerHTML=GROUPS.map(function(G){return '<div class="xwmg">'+G.g+'</div>'+G.items.map(function(s){return '<a class="xwmi'+(s.k===CUR?' on':'')+'" href="'+s.u+'"'+(s.k===CUR?' aria-current="page"':'')+'>'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');}).join('');
+   var V=view(); mn.innerHTML=GROUPS.map(function(G){return '<div class="xwmg">'+G.g+'</div>'+G.items.map(function(s){return '<a class="xwmi'+(s.k===V?' on':'')+'" href="'+s.u+'"'+(s.k===V?' aria-current="page"':'')+'>'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');}).join('');
    var r=b.getBoundingClientRect(); mn.hidden=false;
    mn.style.maxHeight=Math.max(200,window.innerHeight-r.bottom-14)+'px';
    var w=mn.offsetWidth; mn.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+'px'; mn.style.top=(r.bottom+6)+'px';
@@ -234,6 +255,12 @@
     var same2=(CUR==='wiki'&&/dutyliquorwiki/.test(a.href))||(CUR==='choc'&&/chocolatewiki/.test(a.href));
     if(same2&&xwOpenKB()){ e.preventDefault(); closeM(); }
    }
+   /* 在架上／知識庫畫面按同一站的「速讀檔案」：關掉架上／知識庫回到商品清單（不重新載入） */
+   var mainU=(CUR==='wiki'&&/\/dutyliquorwiki\/$/.test(a.href))||(CUR==='choc'&&/\/chocolatewiki\/$/.test(a.href));
+   if(mainU){ e.preventDefault(); closeM(); var bd=document.body;
+    if(bd.classList.contains('shon')){ var d1=document.getElementById('dsh'); if(d1) d1.click(); }
+    if(bd.classList.contains('kbon')){ var d2=document.getElementById('dkb'); if(d2) d2.click(); }
+    window.scrollTo({top:0,behavior:'smooth'}); }
   });
   bar.addEventListener('click',function(e){
    var a=e.target.closest?e.target.closest('a.xwa'):null; if(!a)return;

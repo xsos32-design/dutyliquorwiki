@@ -6,13 +6,15 @@
 (function(){
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
 
- var N_W=796, N_C=206;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
+ var N_W=797, N_C=206;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
   {g:'活動', items:[
    {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',
     u:'https://xsos32-design.github.io/promotion/calendar.html'},
    {k:'owner', t:'負責人折扣圖',     s:'巧克力・選負責人看本月折扣',  ico:'layers',
-    u:'https://xsos32-design.github.io/promotion/calendar.html#r124'}
+    u:'https://xsos32-design.github.io/promotion/calendar.html#r124'},
+   {k:'rwall', t:'銷售獎勵圖牆',     s:'酒＋巧克力・獎金／贈酒／Push Money', ico:'shelf',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'}
   ]},
   {g:'酒類', items:[
    {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
@@ -50,6 +52,7 @@
  function here(){
   var p=location.pathname.toLowerCase();
   if(/changelog\.html$/.test(p)) return 'log';
+  if(/rewards\.html$/.test(p)) return 'rwall';
   if(/chocolatepromo/.test(p)) return /card\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
   if(/dutyliquorwiki/.test(p)) return 'wiki';

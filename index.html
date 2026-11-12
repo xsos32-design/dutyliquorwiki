@@ -2806,16 +2806,7 @@ body.quizon #shview h1{font-size:19px}
    });
    h+='</div>';
   }
-  if(PRE.rewards&&PRE.rewards.length){
-   h+='<h4>\u{1F4B0} 銷售獎勵</h4><div class="shpl">'+PRE.rewards.map(function(x){
-    return '<div class="shpg">'+(x[4]?'<a data-go="'+x[4]+'"><b>'+esc2(x[1])+'</b></a>':'<b><s title="圖鑑內無此品項">'+esc2(x[1])+'</s></b>')
-     +'<em>'+esc2(x[2])+'　·　'+esc2(x[3])+'</em></div>';}).join('')+'</div>';
-  }
-  if(PRE.push&&PRE.push.length){
-   h+='<h4>\u{1F4B0} Push Money（7-11 禮券）</h4><div class="shpl">'+PRE.push.map(function(g){
-    return '<div class="shpg"><b>'+esc2(g.brand)+'</b><em>'+esc2(g.rule)+(g.scope?'　·　'+esc2(g.scope):'')+'</em><div>'
-     +g.items.map(function(x){return x[3]?'<a data-go="'+x[3]+'">'+esc2(x[1])+'</a>':'<s title="圖鑑內無此品項">'+esc2(x[1])+'</s>';}).join('　')+'</div></div>';}).join('')+'</div>';
-  }
+  if((PRE.rewards&&PRE.rewards.length)||(PRE.push&&PRE.push.length)){h+='<a class="shrwl" href="https://xsos32-design.github.io/dutyliquorwiki/rewards.html"><b>銷售獎勵、Push Money 清單</b><span>已移到「銷售獎勵圖牆」專頁，點這裡看 →</span></a>';}
   /*shm*/if(PRE.disc&&PRE.disc.length){var dn=0;PRE.disc.forEach(function(g){dn+=g.items.length;});h+='<h4>\u{1F3F7}\uFE0F 本月有折扣（'+dn+' 項）</h4><div class="shpl">'+PRE.disc.map(function(g){return '<div class="shpg"><b>'+esc2(g.grp)+'</b><em>'+g.items.length+' 項</em><div>'+g.items.map(function(x){return '<a data-go="'+x[1]+'">'+esc2(x[0])+'</a>';}).join('　')+'</div></div>';}).join('')+'</div>';}h+='<p class="shnote">架上清單＝本月有折扣、銷售目標、銷售獎勵的品項，每個月換檔時會自動換成新清單（你自己加的其他品項也會一起清掉）。'+(PRE.note?esc2(PRE.note):'')+'</p>';h+='<p class="shnote">灰色刪除線＝圖鑑內沒有這支的商品檔，只列規則。</p>';
   return h;
  }
@@ -5539,7 +5530,18 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest||!t.c
 document.addEventListener('keydown',function(e){if(e.key==='Escape'){var z=document.getElementById('kmp-zoom');if(z)z.remove();}});
 window.__kmp={open:open,home:home,paint:paint,get:get,pk:pkOpen};
 })();
-</script><style id="shorg-css">#shstat.sho{display:block;margin:0 0 6px}
+</script><style id="shotfit-css">section.card .shots.r79c{align-items:flex-start!important;transition:height .22s ease}section.card .shots.r79c>.shot{align-self:flex-start!important}</style><script id="shotfit-js">(function(){
+function act(s){var w=s.clientWidth||1,i=Math.round(s.scrollLeft/w),k=s.children;return k[Math.max(0,Math.min(k.length-1,i))];}
+function fit(s){if(!s||!s.classList||!s.classList.contains('r79c'))return;if(s.children.length<2){s.style.removeProperty('height');return;}var a=act(s);if(!a)return;var h=a.offsetHeight;if(h>40)s.style.setProperty('height',h+'px','important');}
+var pend=[],raf=0;function q(s){if(pend.indexOf(s)<0)pend.push(s);if(!raf)raf=requestAnimationFrame(function(){raf=0;var p=pend;pend=[];p.forEach(fit);});}
+document.addEventListener('scroll',function(e){var t=e.target;if(t&&t.classList&&t.classList.contains('r79c'))q(t);},true);
+document.addEventListener('load',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest){var s=t.closest('.shots.r79c');if(s)q(s);}},true);
+window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),q);});
+function all(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),function(s){if(!s._sf){s._sf=1;q(s);}});}
+setInterval(all,1500);setTimeout(all,600);
+})();</script>
+<style id="shrwl-css">.shrwl{display:flex;flex-direction:column;gap:3px;margin:10px 0 14px;padding:11px 14px;border-radius:12px;border:1px solid rgba(201,164,92,.5);background:rgba(201,164,92,.10);color:#E8CD8A;text-decoration:none}.shrwl b{font-size:14px}.shrwl span{font-size:12.5px;color:#D8CDB4}.shrwl:active{background:rgba(201,164,92,.22)}</style>
+<style id="shorg-css">#shstat.sho{display:block;margin:0 0 6px}
 .sho-row{display:flex;align-items:center;gap:6px;margin:0 0 9px;flex-wrap:wrap}
 .sho-l{flex:0 0 auto;font-size:13.5px;color:var(--dim2);letter-spacing:1px;margin-right:2px}
 .sho-c{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:999px;font-size:14px;line-height:1.45;cursor:pointer;
@@ -5690,22 +5692,12 @@ document.addEventListener('click',function(e){var t=e.target;if(!t.closest||!t.c
 },true);
 var qt=null;document.addEventListener('input',function(e){if(!e.target.classList||!e.target.classList.contains('sho-q'))return;st.q=e.target.value.trim();clearTimeout(qt);qt=setTimeout(list,120);});
 function fold(){var v=document.getElementById('shview');if(!v)return;var bt=v.querySelector('.shwrap>.shbtns'),sa=document.getElementById('shstat');if(bt&&sa&&!bt._mv&&bt.compareDocumentPosition(sa)&Node.DOCUMENT_POSITION_PRECEDING){bt._mv=1;sa.parentNode.insertBefore(bt,sa);}
- [['.shpre','本月清單明細','目標・獎勵・折扣原文'],['.shmgr','清單管理','匯出／匯入／清空']].forEach(function(x){var d=v.querySelector('div'+x[0]);if(!d)return;
+ [['.shpre','本月清單明細','目標・折扣原文；銷售獎勵在圖牆'],['.shmgr','清單管理','匯出／匯入／清空']].forEach(function(x){var d=v.querySelector('div'+x[0]);if(!d)return;
   var h=d.querySelector(':scope>h3'),dt=document.createElement('details');dt.className=d.className+' sho-d';var sm=document.createElement('summary');sm.innerHTML=E(x[1])+' <em>'+E(x[2])+'<\/em>';dt.appendChild(sm);
   [].slice.call(d.childNodes).forEach(function(n){if(n!==h)dt.appendChild(n);});d.parentNode.replaceChild(dt,d);});}
 function kick(){var s=document.getElementById('shstat');if(document.body&&document.body.classList.contains('shon')&&window.shelfRender&&s&&!s.classList.contains('sho'))window.shelfRender();}
 [0,400,1200,2500].forEach(function(t){setTimeout(kick,t);});
 })();
 </script>
-<style id="shotfit-css">section.card .shots.r79c{align-items:flex-start!important;transition:height .22s ease}section.card .shots.r79c>.shot{align-self:flex-start!important}</style><script id="shotfit-js">(function(){
-function act(s){var w=s.clientWidth||1,i=Math.round(s.scrollLeft/w),k=s.children;return k[Math.max(0,Math.min(k.length-1,i))];}
-function fit(s){if(!s||!s.classList||!s.classList.contains('r79c'))return;if(s.children.length<2){s.style.removeProperty('height');return;}var a=act(s);if(!a)return;var h=a.offsetHeight;if(h>40)s.style.setProperty('height',h+'px','important');}
-var pend=[],raf=0;function q(s){if(pend.indexOf(s)<0)pend.push(s);if(!raf)raf=requestAnimationFrame(function(){raf=0;var p=pend;pend=[];p.forEach(fit);});}
-document.addEventListener('scroll',function(e){var t=e.target;if(t&&t.classList&&t.classList.contains('r79c'))q(t);},true);
-document.addEventListener('load',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest){var s=t.closest('.shots.r79c');if(s)q(s);}},true);
-window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),q);});
-function all(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),function(s){if(!s._sf){s._sf=1;q(s);}});}
-setInterval(all,1500);setTimeout(all,600);
-})();</script>
 </body>
 </html>

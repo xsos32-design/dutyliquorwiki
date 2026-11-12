@@ -5697,5 +5697,15 @@ function kick(){var s=document.getElementById('shstat');if(document.body&&docume
 [0,400,1200,2500].forEach(function(t){setTimeout(kick,t);});
 })();
 </script>
+<style id="shotfit-css">section.card .shots.r79c{align-items:flex-start!important;transition:height .22s ease}section.card .shots.r79c>.shot{align-self:flex-start!important}</style><script id="shotfit-js">(function(){
+function act(s){var w=s.clientWidth||1,i=Math.round(s.scrollLeft/w),k=s.children;return k[Math.max(0,Math.min(k.length-1,i))];}
+function fit(s){if(!s||!s.classList||!s.classList.contains('r79c'))return;if(s.children.length<2){s.style.removeProperty('height');return;}var a=act(s);if(!a)return;var h=a.offsetHeight;if(h>40)s.style.setProperty('height',h+'px','important');}
+var pend=[],raf=0;function q(s){if(pend.indexOf(s)<0)pend.push(s);if(!raf)raf=requestAnimationFrame(function(){raf=0;var p=pend;pend=[];p.forEach(fit);});}
+document.addEventListener('scroll',function(e){var t=e.target;if(t&&t.classList&&t.classList.contains('r79c'))q(t);},true);
+document.addEventListener('load',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest){var s=t.closest('.shots.r79c');if(s)q(s);}},true);
+window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),q);});
+function all(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),function(s){if(!s._sf){s._sf=1;q(s);}});}
+setInterval(all,1500);setTimeout(all,600);
+})();</script>
 </body>
 </html>

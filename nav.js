@@ -6,6 +6,7 @@
 (function(){
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=1e4242aa';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=9b2fe2c7';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=797, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[

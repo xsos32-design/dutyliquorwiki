@@ -56,6 +56,7 @@
  for(var p0 in PROPS) css+='html.xwon .xq-'+PROPS[p0]+'{'+p0+':var(--xq-'+PROPS[p0]+')!important}';
  ['::before','::after'].forEach(function(pn){ var t=pn==='::before'?'b':'a';
   for(var p1 in PPROPS) css+='html.xwon .xq-'+t+PPROPS[p1]+pn+'{'+p1+':var(--xq-'+t+PPROPS[p1]+')!important}'; });
+ css+='html.xwon .xq-f{overflow-wrap:anywhere;text-wrap:pretty}';
  var sheet=document.createElement('style'); sheet.id='xwthm-rules'; sheet.media='screen'; sheet.textContent='@layer xwthm{'+css+'}';
  var base=document.createElement('style'); base.id='xwthm-base';
  (document.head||de).appendChild(base); (document.head||de).appendChild(sheet);
@@ -89,7 +90,7 @@
    if(fw===pc.fw) fw=po.fw; }
   var o={c:c,fs:fs,fw:fw,bg:parse(cs.backgroundColor),bi:cs.backgroundImage,op:parseFloat(cs.opacity),pos:cs.position,
    bt:parse(cs.borderTopColor),bw:parseFloat(cs.borderTopWidth)||0,tf:cs.webkitTextFillColor||'',clip:cs.webkitBackgroundClip||cs.backgroundClip||'',
-   txt:hasText(el),rep:cs.backgroundRepeat,bot:cs.bottom,ps:[]};
+   txt:hasText(el),rep:cs.backgroundRepeat,bot:cs.bottom,disp:cs.display,ovx:cs.overflowX!=='visible'||cs.textOverflow==='ellipsis',ps:[]};
   if(o.pos==='fixed'){ o.w=el.offsetWidth; o.h=el.offsetHeight; }   /* 只量固定列（量尺寸會逼瀏覽器重排，很慢） */
   ['::before','::after'].forEach(function(pn){ var p=getComputedStyle(el,pn), ct=p.content;
    if(!ct||ct==='none'||ct==='normal') return;
@@ -147,8 +148,9 @@
    }
    /* 字級放大一級、細字加粗（頂端選單列不放大，避免擠掉按鈕） */
    var fs=o.fs, nf=fs<12?Math.max(fs*1.2,13):fs<20?fs*1.12:fs<28?fs*1.06:fs;
-   nf=Math.round(nf*2)/2; if(nf>fs+0.2&&!o.noscale) out['font-size']=nf+'px';
-   if(o.fw<500&&fs<28) out['font-weight']='500';
+   var lv=LV.get(el)||0; if(lv===1) nf=fs<12?fs*1.08:fs*1.05;   /* 第一次放不下：只放大一點點 */
+   nf=Math.round(nf*2)/2; if(nf>fs+0.2&&!o.noscale&&lv<2) out['font-size']=nf+'px';
+   if(o.fw<500&&fs<28&&lv<2) out['font-weight']='500';
    if(o.op>=0.45&&o.op<0.95) out['opacity']='1';
   }
   var pr={};
@@ -166,7 +168,39 @@
  function pageBase(){ var b=parse(getComputedStyle(document.body).backgroundColor), h=parse(getComputedStyle(de).backgroundColor);
   var c=(b&&b[3]>0)?b:(h&&h[3]>0)?h:[255,255,255,1]; return blend(c,[255,255,255,1]); }
  function setBase(){ BASE=(mode===NATIVE)?BASE0:blend(mapBg(BASE0,mode),mode==='light'?[255,255,255,1]:[0,0,0,1]); }
- var ST={enq:0,ms:0,n:0,steps:0,tr:0,tc:0,t0:0,io:0};
+ var ST={enq:0,ms:0,n:0,steps:0,tr:0,tc:0,t0:0,io:0,fit:0,fitms:0};
+ /* ---------- 放大後不可以讓版面跑掉：短標籤放大後如果多出一行，就退回原本字級 ---------- */
+ var LV=new WeakMap(), PRE=new WeakMap(), FIT=[];   /* LV：1＝只放大一點、2＝維持原字級 */
+ function lines(el){ var r=document.createRange(); r.selectNodeContents(el); var rs=r.getClientRects(), tops=[];
+  for(var i=0;i<rs.length;i++){ var q=rs[i]; if(q.width<1||q.height<1) continue; var t=q.top+q.height/2, f=false;
+   for(var j=0;j<tops.length;j++) if(Math.abs(tops[j]-t)<q.height*0.45){ f=true; break; } if(!f) tops.push(t); }
+  return tops.length; }
+ function fitCand(el,o){ if(!o||!o.txt||o.noscale||o.fs>=28||(LV.get(el)||0)>=2||o.disp==='none'||o.disp==='contents') return false;
+  if(/^(INPUT|TEXTAREA|SELECT|OPTION)$/.test(el.tagName)) return false;
+  if(el.getElementsByTagName('*').length>12) return false; var t=el.textContent; if(!(t.length>0&&t.length<=90)) return false;
+  /* 行內文字（連結、粗體）只在短標籤裡檢查；長段落裡的行內字本來就會換行 */
+  if(o.disp==='inline'){ var p=el.parentElement; while(p&&getComputedStyle(p).display==='inline') p=p.parentElement; if(!p||p.textContent.length>90) return false; }
+  return true; }
+ function clipped(el){ return el.scrollWidth>el.clientWidth+1; }
+ function checkFit(){ var L=FIT, t0=Date.now(); FIT=[]; var bad=[];
+  for(var i=0;i<L.length;i++){ var el=L[i]; if(!de.contains(el)) continue; var p=PRE.get(el); if(p==null) continue; var o=O.get(el);
+   var pa=el.parentElement, n1=lines(el);
+   if(n1>p[0]||(o&&o.ovx&&!p[1]&&clipped(el))||(pa&&!p[2]&&clipped(pa))||(pa&&p[3]>0&&lines(pa)>p[3])) bad.push(el);   /* 自己放大後把旁邊的字擠到下一行也算 */ }
+  if(!bad.length){ ST.fitms+=Date.now()-t0; return; }
+  E=new WeakMap();
+  var again=[];
+  function off(el,lv){ if((LV.get(el)||0)>=lv) return; LV.set(el,lv); ST.fit++; compute(el); if(lv<2&&PRE.has(el)) again.push(el);
+   var ds=el.getElementsByTagName('*'); for(var k=0;k<ds.length;k++){ var o=O.get(ds[k]); if(o&&o.disp==='inline'&&(LV.get(ds[k])||0)<lv){ LV.set(ds[k],lv); compute(ds[k]); } } }
+  /* 同一組裡的同款標籤（例如並排的方塊標題）一起退回，大小才會一致 */
+  function sig(el){ var p=el.parentElement; return el.tagName+'.'+stripC(el.getAttribute('class'))+'<'+(p?p.tagName+'.'+stripC(p.getAttribute('class')):''); }
+  bad.forEach(function(el){ var lv=(LV.get(el)||0)+1; off(el,lv); var sg=sig(el), g=el.parentElement;
+   /* 往上找到「有好幾個同款標籤」的那一層（例如方塊格子），整組一起調 */
+   for(var up=0;up<5&&g;up++){ g=g.parentElement; if(!g||g===document.body||g===de||g.getElementsByTagName('*').length>800) return;
+    var cs=g.getElementsByTagName(el.tagName), m=[]; for(var k=0;k<cs.length;k++){ var c=cs[k]; if(c!==el&&O.has(c)&&sig(c)===sg) m.push(c); }
+    if(m.length){ m.forEach(function(c){ off(c,lv); }); return; } } });
+  /* 只放大一點的，下一格畫面再檢查一次 */
+  again.forEach(function(el){ if(FIT.indexOf(el)<0) FIT.push(el); });
+  ST.fitms+=Date.now()-t0; }
  function enqueue(root,deep,reread){
   if(!root||root.nodeType!==1||SKIP.test(root.tagName)) return;
   if(!O.has(root)&&inPending(root)) return;   /* 還沒捲到的區塊：等看得到再一起處理 */
@@ -198,6 +232,7 @@
  }
  var work=[], wi=0, running=false, NB=300;
  function step(){
+  if(FIT.length) checkFit();
   var t0=Date.now();
   if(wi>=work.length){ work=[]; wi=0;
    var seen=new Set();
@@ -206,7 +241,7 @@
     if(!O.has(r)&&j[1]!==2&&inPending(r)) continue;   /* 所在區塊還在等，之後整塊處理 */
     if(j[1]){ var L=[]; if(j[1]===2) pushAll(r,L); else partition(r,L,true); for(var i=0;i<L.length;i++) work.push([L[i],j[2]]); }
     else work.push([r,j[2]]); }
-   if(!work.length){ running=false; window.__xwThemeDone=Date.now(); if(ST.io>0) unveil(); return; }
+   if(!work.length){ if(FIT.length){ raf(step); return; } running=false; window.__xwThemeDone=Date.now(); if(ST.io>0) unveil(); return; }
   }
   CUR=new WeakMap(); E=new WeakMap();
   /* 一批的數量依上一批速度調整；先拿掉要重讀的舊規則 → 一次讀完 → 一次寫入（避免讀寫交錯讓瀏覽器一直重算） */
@@ -214,8 +249,11 @@
   for(var a=wi;a<end;a++){ var w0=work[a]; if(w0[1]) clearAp(w0[0]); }
   var ta=Date.now();
   for(;wi<end;wi++){ var w=work[wi], el=w[0]; if(!de.contains(el)) continue; if(w[1]||!O.has(el)) read(el); batch.push(el); }
+  var pend=[]; for(var b0=0;b0<batch.length;b0++){ var e0=batch[b0]; var o0=O.get(e0); if(fitCand(e0,o0)){ var pp=e0.parentElement, pl=(pp&&pp!==document.body&&pp.getElementsByTagName('*').length<=12&&pp.textContent.length<=120)?lines(pp):-1;
+    PRE.set(e0,[lines(e0),o0.ovx&&clipped(e0),!pp||clipped(pp),pl]); pend.push(e0); } }
   var tb=Date.now();
   for(var b=0;b<batch.length;b++) compute(batch[b]);
+  for(var b1=0;b1<pend.length;b1++){ var ap=AP.get(pend[b1]); if(ap&&ap.f) FIT.push(pend[b1]); }
   ST.tr+=tb-ta; ST.tc+=Date.now()-tb; ST.t0+=ta-t0;
   var dt=Date.now()-t0; ST.ms+=dt; ST.n+=batch.length; ST.steps++;
   NB=Math.max(80,Math.min(3000,Math.round(NB*(dt>0?16/dt:2))));
@@ -262,6 +300,6 @@
   var fz=bar.querySelector('#xwfsz,#fsz'); if(fz&&fz.parentNode===bar) bar.insertBefore(b,fz); else bar.appendChild(b);
   b.addEventListener('click',function(){ switchMode(mode==='light'?'dark':'light'); paintBtn(b); });
   return true; }
- window.__xwTheme={stats:function(){return {tr:ST.tr,tc:ST.tc,tpre:ST.t0,ms:ST.ms,n:ST.n,steps:ST.steps,nb:NB,enq:ST.enq,io:ST.io,q:Q.length,work:work.length,wi:wi,running:running};},get mode(){return mode;},get busy(){return running||Q.length>0||!!timer;},set:function(m){switchMode(m);},info:function(el){var o=O.get(el);return o?JSON.parse(JSON.stringify(o)):null;},re:function(el){E=new WeakMap();compute(el);return [inPhoto(el),str(effOf(el)),AP.get(el)];},native:function(){return NATIVE;},pb:function(el){return PB.get(el)||null;}};
+ window.__xwTheme={stats:function(){return {fit:ST.fit,fitms:ST.fitms,tr:ST.tr,tc:ST.tc,tpre:ST.t0,ms:ST.ms,n:ST.n,steps:ST.steps,nb:NB,enq:ST.enq,io:ST.io,q:Q.length,work:work.length,wi:wi,running:running};},get mode(){return mode;},get busy(){return running||Q.length>0||!!timer;},set:function(m){switchMode(m);},info:function(el){var o=O.get(el);return o?JSON.parse(JSON.stringify(o)):null;},re:function(el){E=new WeakMap();compute(el);return [inPhoto(el),str(effOf(el)),AP.get(el)];},native:function(){return NATIVE;},pb:function(el){return PB.get(el)||null;}};
  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',start); else start();
 })();

@@ -230,7 +230,7 @@
    for(var c=root.firstElementChild;c;c=c.nextElementSibling){ if(!SKIP.test(c.tagName)) partition(c,out,false); } return; }
   watch(root,'all');
  }
- var work=[], wi=0, running=false, NB=300;
+ var work=[], wi=0, running=false, NB=300, LSC=0; addEventListener('scroll',function(){LSC=Date.now();},{passive:true}); addEventListener('touchmove',function(){LSC=Date.now();},{passive:true});   /* r231：手指滑動中每格只做 6ms，停下來才做 16ms */
  function step(){
   if(FIT.length) checkFit();
   var t0=Date.now();
@@ -256,7 +256,7 @@
   for(var b1=0;b1<pend.length;b1++){ var ap=AP.get(pend[b1]); if(ap&&ap.f) FIT.push(pend[b1]); }
   ST.tr+=tb-ta; ST.tc+=Date.now()-tb; ST.t0+=ta-t0;
   var dt=Date.now()-t0; ST.ms+=dt; ST.n+=batch.length; ST.steps++;
-  NB=Math.max(80,Math.min(3000,Math.round(NB*(dt>0?16/dt:2))));
+  var _tg=(Date.now()-LSC<200)?6:16; NB=Math.max(40,Math.min(3000,Math.round(NB*(dt>0?_tg/dt:2))));
   raf(step);
  }
  function start(){

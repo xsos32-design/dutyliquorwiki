@@ -5,7 +5,8 @@
    =========================================================== */
 (function(){
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
- /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=1e4242aa';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
+ /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=9f61fa6f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=9b2fe2c7';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=797, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
@@ -368,7 +369,7 @@
     b.style.display=on?'flex':'none';
     b.style.opacity=cf.opacity;
    }
-   sync(); setInterval(sync,400); window.addEventListener('scroll',function(){requestAnimationFrame(sync);},{passive:true});
+   sync(); setInterval(sync,400); var _sy=0; window.addEventListener('scroll',function(){ if(_sy) return; _sy=setTimeout(function(){ _sy=0; requestAnimationFrame(sync); },150); },{passive:true});
   })();
 
   var basis = CHOC ? '現場 POP 與包裝標示' : '現場公告與酒標';
@@ -437,8 +438,10 @@
    +'<div class="xwhint" id="xwsh"></div><button type="button" class="xwfgo" id="xwfgo" disabled>先打字，再按這裡</button><div id="xwsr"></div></div>';
   document.body.appendChild(o);
   var q=o.querySelector('#xwsq');
-  q.addEventListener('input',srun);
-  q.addEventListener('keydown',function(e){ if(e.key==='Enter'){ if(SMODE==='find'){ e.preventDefault(); sfind(); return; } var f=o.querySelector('#xwsr a.xwr'); if(f){ e.preventDefault(); f.click(); } } });
+  var _st=0;function srunL(){clearTimeout(_st);_st=0;srun();}
+  q.addEventListener('input',function(e){ if(e.isComposing) return; clearTimeout(_st); _st=setTimeout(srunL,90); });
+  q.addEventListener('compositionend',function(){ clearTimeout(_st); _st=setTimeout(srunL,30); });
+  q.addEventListener('keydown',function(e){ if(e.key==='Enter'&&_st){ srunL(); } if(e.key==='Enter'){ if(SMODE==='find'){ e.preventDefault(); sfind(); return; } var f=o.querySelector('#xwsr a.xwr'); if(f){ e.preventDefault(); f.click(); } } });
   [].forEach.call(o.querySelectorAll('.xwmode button'),function(b){ b.addEventListener('click',function(){ smode(b.getAttribute('data-m')); q.focus(); }); });
   o.querySelector('#xwfgo').addEventListener('click',sfind);
   o.querySelector('.xwx').addEventListener('click',sclose);

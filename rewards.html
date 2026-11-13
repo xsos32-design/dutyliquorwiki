@@ -39,6 +39,9 @@ main{padding:8px 12px 90px}
 .list .t .im{width:72px;flex:0 0 72px;padding:4px}.list .t .bd{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 10px}
 .list .t .nm{flex:1 1 220px}.list .t .rw{margin:0}.list .t .full{flex-basis:100%}
 .foot{margin-top:26px;font-size:12px;color:var(--dim2)}
+/*r227 手機版字放大後不重疊*/.tools{background:var(--bg)}.row .pair{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}.row .pair>b{font-size:12px;color:var(--dim2);font-weight:400;min-width:34px}
+@media(max-width:760px){.tools{position:static}}
+.list .t{position:relative;align-items:flex-start;padding-top:32px}.list .t .im{align-self:center}.list .t .nw,.list .t .ch{top:8px}
 @media print{.tools,header p,.foot{display:none}body{background:#fff;color:#000}.t{border-color:#999;background:#fff;break-inside:avoid}.t .nm,.grp{color:#000}.t .im{background:#fff}}
 </style></head><body>
 <header><span class="eye">SALES REWARDS</span><h1>銷售獎勵圖牆</h1><p id="hd"></p></header>
@@ -46,8 +49,8 @@ main{padding:8px 12px 90px}
 <input class="q" id="q" type="search" placeholder="搜尋品名、品牌、品號，例如：帝王、Macallan、Godiva" aria-label="搜尋">
 <div class="row" id="r-s"><b>類別</b></div>
 <div class="row" id="r-k"><b>獎勵</b></div>
-<div class="row"><b>排序</b><select id="sort"><option value="v">每件獎勵 高→低</option><option value="b">品牌</option><option value="p">售價 高→低</option><option value="new">新增優先</option></select>
-<b style="margin-left:6px">分組</b><select id="grp"><option value="b">依品牌</option><option value="k">依獎勵類型</option><option value="">不分組</option></select></div>
+<div class="row"><span class="pair"><b>排序</b><select id="sort"><option value="v">每件獎勵 高→低</option><option value="b">品牌</option><option value="p">售價 高→低</option><option value="new">新增優先</option></select></span>
+<span class="pair"><b>分組</b><select id="grp"><option value="b">依品牌</option><option value="k">依獎勵類型</option><option value="">不分組</option></select></span></div>
 <div class="row" id="r-v"><b>顯示</b></div>
 <div class="cnt" id="cnt"></div></div>
 <div id="out"></div>

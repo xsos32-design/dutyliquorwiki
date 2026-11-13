@@ -110,18 +110,22 @@
  }
  window.__xwGoBack=back;
  var st=D.createElement('style');
- st.textContent='#xwbar #xwback{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;gap:2px;min-width:38px;height:36px;padding:0 10px 0 6px;margin-right:4px;border-radius:999px;border:1px solid rgba(201,164,92,.42);background:#1A1712;color:#FBF1DC;font-weight:600;font-size:13px;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;box-sizing:border-box}'
+ st.textContent='#xwbar #xwback{flex:0 0 auto;position:relative;display:inline-flex;align-items:center;justify-content:center;gap:0;height:36px;min-width:30px;padding:0 5px 0 0;margin:0 9px 0 -4px;border:0!important;border-radius:10px;background:transparent!important;box-shadow:none!important;color:#E8CD8A!important;font:600 14px "Noto Sans TC",-apple-system,"PingFang TC",sans-serif;letter-spacing:.5px;line-height:1;cursor:pointer;-webkit-tap-highlight-color:transparent;box-sizing:border-box}'
+  +'#xwbar #xwback::before{content:"";position:absolute;left:-6px;right:-6px;top:-4px;bottom:-4px}'
+  +'#xwbar #xwback::after{content:"";position:absolute;right:-6px;top:10px;bottom:10px;width:1px;background:rgba(201,164,92,.3);pointer-events:none}'
+  +'#xwback svg{display:block;width:24px;height:24px}#xwback span{font-size:14px;letter-spacing:.5px;margin-left:-1px}'
+  +'#xwbar #xwback:active{background:rgba(201,164,92,.16)!important}@media(hover:hover){#xwbar #xwback:hover{color:#F7E2A8!important}}'
+  +'html[data-xwmode=light] #xwbar #xwback{color:#8A6420!important}html[data-xwmode=light] #xwbar #xwback::after{background:rgba(138,100,32,.28)}'
   +'@media(max-width:420px){#xwbar #mb .xwmbt,#xwbar #xwtoc span{display:none}#xwbar #mb,#xwbar #xwtoc{min-width:40px;width:40px;padding:0;justify-content:center}}'
-  +'html[data-xwmode=light] #xwbar #xwback,html[data-xwmode=light] #xwbar #xwtoc,html[data-xwmode=light] #xwbar #mb{background:#FFF8EA!important;color:#5A4318!important;border-color:#B48A3C!important}'
-  +'#xwback svg{display:block}#xwback span{font-size:13px;letter-spacing:.5px}#xwback:active{background:rgba(201,164,92,.25)}'
-  +'@media(max-width:420px){#xwbar #xwback span{display:none}#xwbar #xwback{padding:0;width:38px}}'
+  +'html[data-xwmode=light] #xwbar #xwtoc,html[data-xwmode=light] #xwbar #mb{background:rgba(255,255,255,.55)!important;color:#5A4318!important;border-color:rgba(150,112,44,.3)!important}'
+  +'@media(max-width:420px){#xwbar #xwback span{display:none}#xwbar #xwback{min-width:28px;padding:0;margin-right:8px}}'
   +'#xwbar #xwsite{min-width:0;flex-shrink:1}#xwbar #xwsite>*{min-width:0}'
   +'#xwbktoast{position:fixed;left:50%;top:70px;transform:translateX(-50%);z-index:2147483647;padding:8px 16px;border-radius:999px;background:#1B1914;border:1px solid rgba(201,164,92,.5);color:#E8CD8A;font:600 14px/1.4 sans-serif;opacity:0;pointer-events:none;transition:opacity .2s}#xwbktoast.on{opacity:1}'
   +'@media print{#xwback{display:none!important}}';
  (D.head||D.documentElement).appendChild(st);
  function put(){var bar=D.getElementById('xwbar');if(!bar)return false;if(D.getElementById('xwback'))return true;
   var b=D.createElement('button');b.type='button';b.id='xwback';b.setAttribute('aria-label','回上一步');b.title='回上一步';
-  b.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><span>返回</span>';
+  b.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5L8 12l6.5 6.5"/></svg><span>返回</span>';
   b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();back();});
   bar.insertBefore(b,bar.firstChild);
   var mb=D.getElementById('mb');if(mb&&!mb.querySelector('.xwmbt')){[].slice.call(mb.childNodes).forEach(function(n){if(n.nodeType===3&&n.nodeValue.trim()){var sp=D.createElement('span');sp.className='xwmbt';sp.textContent=n.nodeValue;mb.replaceChild(sp,n);}});}

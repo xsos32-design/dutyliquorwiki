@@ -286,9 +286,9 @@
 
  /* ---------- 切換按鈕 ---------- */
  base.textContent=
-  '#xwthm{flex:none;display:inline-flex;align-items:center;justify-content:center;height:36px;min-width:40px;padding:0 9px;border-radius:999px;border:1px solid rgba(201,164,92,.55);background:rgba(255,255,255,.04);color:#F4E6C4;cursor:pointer;margin:0;box-sizing:border-box}'
+  '#xwthm{flex:none;display:inline-flex;align-items:center;justify-content:center;height:36px;min-width:40px;padding:0 9px;border-radius:999px;border:1px solid rgba(201,164,92,.32);background:rgba(255,255,255,.03);color:#D8CDB4;cursor:pointer;margin:0;box-sizing:border-box}'
   +'#xwthm svg{width:18px;height:18px}'
-  +'html[data-xwmode=light] #xwthm{background:#FFF8EA;color:#5A4318;border-color:#B48A3C}'
+  +'html[data-xwmode=light] #xwthm{background:rgba(255,255,255,.55);color:#5A4318;border-color:rgba(150,112,44,.3)}'
   +'@media(max-width:440px){#xwbar{gap:5px!important}#xwbar .xwsite>.xwi{display:none}#xwbar .xwsite{padding:0 9px!important}#xwbar .xwtb{padding:0 9px}#xwthm{min-width:34px;padding:0 7px}}'
   +'@media(max-width:400px){#xwbar{gap:4px!important}#xwbar .xwtb{padding:0 7px;gap:3px}#xwbar .xwsite{padding:0 7px!important}#xwthm{min-width:32px;padding:0 6px}}';
  var SUN='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></svg>';

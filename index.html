@@ -5701,26 +5701,31 @@ function kick(){var s=document.getElementById('shstat');if(document.body&&docume
 </script>
 <script id="xwiscard-js">window.__xwIsCard=function(id){if(!window.__xwCardSet){try{var s={};(P.map(function(p){return p.id;})).forEach(function(k){s[k]=1;});window.__xwCardSet=s;}catch(e){return true;}}return !!window.__xwCardSet[id];};</script>
 <script id="xwanchor-js">(function(){
+/* r228：記住畫面頂端元素 A 的位置；每次捲動或版面變動時算「A 實際位置」和「只因捲動該在的位置」差多少，
+   差的就是上面插入／變高造成的位移，用 scrollBy 補回，再重記。程式自己大跳（跳卡、回頂端）不補，只重記。 */
 var A=null,AT=0,SY=0,busy=0,L=null,CI='',CT=0;
 function top0(){var b=document.getElementById('xwbar');var t=b?b.getBoundingClientRect().bottom:0;return Math.max(0,t)+12;}
-function pick(){A=null;L=L||document.getElementById('list');if(!L||!L.offsetParent)return;var b=document.body;if(b.classList.contains('shon')||b.classList.contains('kbon'))return;
+function pick(){A=null;L=L||document.getElementById('list');SY=scrollY;if(!L||!L.offsetParent)return;var b=document.body;if(b.classList.contains('shon')||b.classList.contains('kbon'))return;
  var y=top0(),x=Math.round(innerWidth/2),e=document.elementFromPoint(x,y);
- if(!e||!L.contains(e)){var k=L.children;for(var i=0;i<k.length;i++){var r=k[i].getBoundingClientRect();if(r.height&&r.bottom>y){e=k[i];break;}}}
+ if(!e||!L.contains(e)){e=null;var k=L.children;for(var i=0;i<k.length;i++){var r=k[i].getBoundingClientRect();if(r.height&&r.bottom>y){e=k[i];break;}}}
  if(!e||!L.contains(e))return;
  while(e&&e!==L&&e.offsetHeight<4)e=e.parentElement;if(!e||e===L)return;
- A=e;AT=e.getBoundingClientRect().top;SY=scrollY;
+ A=e;AT=e.getBoundingClientRect().top;
  var c=e;while(c&&c.parentElement!==L)c=c.parentElement;CI=(c&&c.id)||'';CT=c?c.getBoundingClientRect().top:0;}
-function fix(){if(!A||busy)return;
- if(Math.abs(scrollY-SY)>1){pick();return;}/*程式自己捲動（跳卡、搜尋回頂端）就不補*/
- var d;if(A.isConnected&&A.offsetParent)d=A.getBoundingClientRect().top-AT;
- else{var c=CI&&document.getElementById(CI);if(!c||!c.offsetParent){A=null;return;}d=c.getBoundingClientRect().top-CT;A=c;AT=CT;}if(Math.abs(d)<1)return;busy=1;window.scrollBy(0,d);busy=0;AT=A.getBoundingClientRect().top;SY=scrollY;}
-var tm=0;addEventListener('scroll',function(){if(busy||(A&&Math.abs(scrollY-SY)<1))return;pick();},{passive:true});/*自己補的捲動不重選錨點*/addEventListener('hashchange',function(){A=null;setTimeout(pick,50);});
-addEventListener('touchstart',function(){A=null;},{passive:true});
-addEventListener('touchend',function(){setTimeout(pick,60);},{passive:true});
+function lg(m){var g=window.__xwAncDbg;if(g)g.push(Math.round(performance.now())+' '+m);}
+function fix(w){if(busy)return;if(!A){lg('noA '+(w||''));pick();return;}
+ var dy=scrollY-SY;
+ if(Math.abs(dy)>innerHeight*1.5){lg('bigjump '+Math.round(dy)+' '+(w||''));pick();return;}/*程式自己大跳（跳卡、搜尋回頂端）就不補*/
+ var d;if(A.isConnected&&A.offsetParent)d=A.getBoundingClientRect().top-(AT-dy);
+ else{var c=CI&&document.getElementById(CI);if(!c||!c.offsetParent){lg('lost '+(w||''));pick();return;}d=c.getBoundingClientRect().top-(CT-dy);}
+ if(Math.abs(d)>=1){if(Math.abs(d)>100)lg('fix '+Math.round(d)+' '+(w||''));busy=1;window.scrollBy(0,d);busy=0;}
+ pick();}
+addEventListener('scroll',function(){if(!busy)fix('s');},{passive:true});
+addEventListener('hashchange',function(){A=null;setTimeout(pick,50);});
 function hook(){L=document.getElementById('list');if(!L)return setTimeout(hook,200);
- if(window.ResizeObserver){var ro=new ResizeObserver(function(){fix();});ro.observe(L);ro.observe(document.body);}
- new MutationObserver(function(){fix();}).observe(L,{childList:true});
- addEventListener('load',fix,true);}
+ if(window.ResizeObserver){var ro=new ResizeObserver(function(){fix('ro');});ro.observe(L);ro.observe(document.body);}
+ new MutationObserver(function(){fix('mo');}).observe(L,{childList:true});
+ document.addEventListener('load',function(){fix();},true);pick();}
 hook();window.__xwAnc={pick:pick,fix:fix,get:function(){return A;}};
 })();</script></body>
 </html>

@@ -1,6 +1,17 @@
 /* r242 版面美術：首頁圖像化入口＋知識庫章節橫幅與本章重點（兩站共用，由 nav.js 的 xwlook 行載入） */
 (function(){
  if(window.__xwLook) return; window.__xwLook=1;
+ /* r246 子頁固定列：品牌頁、產區頁、更新日誌、獎勵圖牆的 .tools／.jump 原本 top:0，會躲到頂端選單列下面；背景漸層透明會讓下面的字疊上來 */
+ (function(){
+  if(!/\/(brands|regions|changelog|rewards)\.html$/.test(location.pathname)) return;
+  var st=document.createElement('style'); st.id='xwstick-css';
+  st.textContent='body .tools,body .jump{background:var(--bg,#0E0C0A)!important;box-shadow:0 8px 12px -8px rgba(0,0,0,.6)}html[data-xwmode=light] body .tools,html[data-xwmode=light] body .jump{box-shadow:0 8px 12px -10px rgba(0,0,0,.25)}';
+  (document.head||document.documentElement).appendChild(st);
+  function fix(){var x=document.getElementById('xwbar'),r=x?x.getBoundingClientRect():null,t=(r&&r.height&&getComputedStyle(x).position!=='static')?Math.max(0,Math.round(r.bottom)):0;
+   [].forEach.call(document.querySelectorAll('.tools,.jump'),function(e){if(getComputedStyle(e).position==='sticky'&&e.style.top!==t+'px')e.style.top=t+'px';});}
+  function go(){fix();var n=0,iv=setInterval(function(){fix();if(++n>20)clearInterval(iv);},300);addEventListener('resize',fix);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+ })();
  var P=location.pathname, SITE=/chocolatewiki/.test(P)?'c':(/\/dutyliquorwiki\/(index\.html)?$/.test(P)?'w':'');
  if(!SITE) return;
  function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}

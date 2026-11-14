@@ -7,9 +7,10 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=d8c19044';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwbuzz*/(function(){try{window.__xwBuzzV='3852b31f';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=36d24f04';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=e08e2bd6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
- var N_W=797, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
+ var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
   {g:'活動', items:[
    {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',

@@ -1,0 +1,43 @@
+/* r237 商品卡「近期話題 BUZZ」：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
+(function(){
+ if(window.__xwBuzz) return; window.__xwBuzz=1;
+ function go(){
+  var L=document.getElementById('list'); if(!L) return;
+  var base=(document.currentScript&&document.currentScript.src)||'https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js';
+  base=base.replace(/xwbuzz\.js.*$/,'');
+  fetch(base+'buzz.json?v='+(window.__xwBuzzV||'')).then(function(r){return r.json();}).then(function(B){
+   var now=Date.now(), M={};
+   (B.items||[]).forEach(function(it){var t=Date.parse(it.d);if(!t||now-t>365*864e5)return;(it.ids||[]).forEach(function(id){(M[id]=M[id]||[]).push(it);});});
+   function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+   function ago(d){var m=Math.round((now-Date.parse(d))/(30.4*864e5));return m<1?'本月':m+' 個月前';}
+   function card(c){
+    if(!c||!c.id||!M[c.id])return; var body=c.querySelector(':scope > .body'); if(!body)return;
+    if(c.__bz){var ex=body.querySelector(':scope > .bzsec'),f0=body.querySelector(':scope > div.sec:not(.bzsec)');if(ex&&f0&&ex.previousElementSibling!==f0)body.insertBefore(ex,f0.nextSibling);return;}
+    c.__bz=1;
+    var its=M[c.id].slice().sort(function(a,b){return a.d<b.d?1:-1;});
+    var h='<div class="bzhd"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則・一年內</span></div>';
+    its.forEach(function(it){
+     h+='<div class="bzit"><div class="bzm"><span class="bzk">'+esc(it.k)+'</span><span class="bzd">'+esc(it.d.replace(/-/g,'/'))+'・'+ago(it.d)+'</span></div>'+
+      '<b class="bzti">'+esc(it.t)+'</b><p>'+esc(it.body)+'</p>'+
+      (it.note?'<p class="bznote">本店：'+esc(it.note)+'</p>':'')+
+      (it.say?'<p class="bzsay"><span>跟客人這樣說</span>'+esc(it.say)+'</p>':'')+
+      (it.u?'<a class="bzsrc" href="'+esc(it.u)+'" target="_blank" rel="noopener">來源：'+esc(it.src||'新聞')+' ›</a>':'')+'</div>';
+    });
+    var d=document.createElement('div'); d.className='sec bzsec'; d.innerHTML=h;
+    var first=body.querySelector(':scope > div.sec'); if(first&&first.nextSibling) body.insertBefore(d,first.nextSibling); else body.insertBefore(d,body.firstChild);
+   }
+   var st=document.createElement('style'); st.id='xwbuzz-css';
+   st.textContent='.bzsec{border:1px solid rgba(232,140,60,.45)!important;border-radius:14px;padding:12px 14px!important;margin:10px 0!important;background:linear-gradient(160deg,rgba(232,140,60,.10),rgba(232,140,60,.02))}'+
+    '.bzhd{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}.bzt{font-weight:800;font-size:17px;color:#F2A65A}.bze{font-size:11px;letter-spacing:3px;color:#C9884A}.bzn{margin-left:auto;font-size:12px;color:#BDB09A}'+
+    '.bzit{padding:10px 0;border-top:1px dashed rgba(232,140,60,.3)}.bzit:first-of-type{border-top:0}.bzm{display:flex;gap:8px;align-items:center;margin-bottom:4px}'+
+    '.bzk{font-size:12px;font-weight:800;padding:2px 9px;border-radius:999px;background:#E88C3C;color:#1A1410}.bzd{font-size:12px;color:#BDB09A}'+
+    '.bzti{display:block;font-size:15.5px;line-height:1.5;color:#FFE3C2;margin:2px 0 4px}.bzit p{font-size:14px;line-height:1.7;margin:4px 0}'+
+    '.bznote{color:#E8CD8A}.bzsay{background:rgba(201,164,92,.12);border-left:3px solid #C9A45C;padding:6px 10px;border-radius:0 8px 8px 0}.bzsay span{display:block;font-size:12px;font-weight:800;color:#C9A45C}'+
+    '.bzsrc{font-size:12.5px;color:#C9A45C!important}';
+   document.head.appendChild(st);
+   var ids=Object.keys(M),pend=0;function scan(){pend=0;ids.forEach(function(id){card(document.getElementById(id));});}
+   scan(); new MutationObserver(function(){if(!pend){pend=1;setTimeout(scan,300);}}).observe(L,{childList:true,subtree:true});
+  }).catch(function(){});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
+})();

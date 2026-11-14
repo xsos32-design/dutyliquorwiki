@@ -117,9 +117,11 @@
    ch.insertBefore(t,nx);
   });}
  var tm=0;function later(){if(tm)return;tm=setTimeout(function(){tm=0;run();},250);}
- function run(){home();if(document.body.classList.contains('kbon')||document.querySelector('#kbview .kbchap.on'))chapters();}
- function go(){run();var n=0,iv=setInterval(function(){run();if(++n>20)clearInterval(iv);},500);
-  var kv=document.getElementById('kbview');if(kv)new MutationObserver(later).observe(kv,{childList:true,subtree:true});
+ /* r247：首頁做完就不再掃；章節只在知識庫打開時處理（開頁時不跑），避免開頁時一直掃 4 萬個元素 */
+ var HD=0;function homeDone(){return !!document.querySelector('.r59month')&&!document.querySelector('.r59h:not(.xl),.r59k:not(.xl),.r59kg:not(.xl)');}
+ function run(){if(!HD){home();if(homeDone())HD=1;}if(document.body.classList.contains('kbon'))chapters();}
+ function go(){run();var n=0,iv=setInterval(function(){if(HD){clearInterval(iv);return;}run();if(++n>20)clearInterval(iv);},500);
+  var kv=document.getElementById('kbview');if(kv)new MutationObserver(function(){if(document.body.classList.contains('kbon'))later();}).observe(kv,{childList:true,subtree:true});
   new MutationObserver(function(){if(document.body.classList.contains('kbon'))later();}).observe(document.body,{attributes:true,attributeFilter:['class']});}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();

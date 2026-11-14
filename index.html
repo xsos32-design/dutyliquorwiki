@@ -5540,7 +5540,9 @@ var pend=[],raf=0;function q(s){if(pend.indexOf(s)<0)pend.push(s);if(!raf)raf=re
 document.addEventListener('scroll',function(e){var t=e.target;if(t&&t.classList&&t.classList.contains('r79c'))q(t);},true);
 document.addEventListener('load',function(e){var t=e.target;if(t&&t.tagName==='IMG'&&t.closest){var s=t.closest('.shots.r79c');if(s)q(s);}},true);
 window.addEventListener('resize',function(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),q);});
-function all(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),function(s){if(!s._sf){s._sf=1;q(s);}});}
+/* r247：只對畫面附近（上下 800px）的輪播調高度，用 IntersectionObserver，不會每 1.5 秒逼瀏覽器重排全部卡片 */
+var IO=('IntersectionObserver' in window)?new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){q(e.target);}});},{rootMargin:'800px 0px'}):null;
+function all(){[].forEach.call(document.querySelectorAll('section.card .shots.r79c'),function(s){if(!s._sf){s._sf=1;if(IO)IO.observe(s);else q(s);}});}
 setInterval(all,1500);setTimeout(all,600);
 })();</script>
 <style id="shrwl-css">.shrwl{display:flex;flex-direction:column;gap:3px;margin:10px 0 14px;padding:11px 14px;border-radius:12px;border:1px solid rgba(201,164,92,.5);background:rgba(201,164,92,.10);color:#E8CD8A;text-decoration:none}.shrwl b{font-size:14px}.shrwl span{font-size:12.5px;color:#D8CDB4}.shrwl:active{background:rgba(201,164,92,.22)}</style>
@@ -5736,7 +5738,7 @@ function pick(){A=null;L=L||document.getElementById('list');SY=scrollY;if(!L||!L
  A=e;AT=e.getBoundingClientRect().top;
  var c=e;while(c&&c.parentElement!==L)c=c.parentElement;CI=(c&&c.id)||'';CT=c?c.getBoundingClientRect().top:0;}
 function lg(m){var g=window.__xwAncDbg;if(g)g.push(Math.round(performance.now())+' '+m);}
-function fix(w){if(busy)return;if(!A){lg('noA '+(w||''));pick();return;}
+function fix(w){if(busy)return;if(scrollY<2&&!document.querySelector('#list.xwhold')){A=null;SY=scrollY;return;}/*r247 在頁面最上面時，上面沒有東西會插入，不用量位置*/if(!A){lg('noA '+(w||''));pick();return;}
  var dy=scrollY-SY;
  if(Math.abs(dy)>innerHeight*1.5){lg('bigjump '+Math.round(dy)+' '+(w||''));pick();return;}/*程式自己大跳（跳卡、搜尋回頂端）就不補*/
  var d;if(A.isConnected&&A.offsetParent)d=A.getBoundingClientRect().top-(AT-dy);

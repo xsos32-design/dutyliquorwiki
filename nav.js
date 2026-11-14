@@ -7,7 +7,7 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=d8c19044';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwbuzz*/(function(){try{window.__xwBuzzV='26600dd3';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=2ab0698b';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwbuzz*/(function(){try{window.__xwBuzzV='d119f60f';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=55108b0d';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=e08e2bd6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
@@ -16,7 +16,7 @@
    {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',
     u:'https://xsos32-design.github.io/promotion/calendar.html'},
    {k:'owner', t:'負責人折扣圖',     s:'巧克力・選負責人看本月折扣',  ico:'layers',
-    u:'https://xsos32-design.github.io/promotion/calendar.html#r124'},
+    u:'https://xsos32-design.github.io/promotion/owner.html'},
    {k:'rwall', t:'銷售獎勵圖牆',     s:'酒＋巧克力・獎金／贈酒／Push Money', ico:'shelf',
     u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'},
    {k:'buzz',  t:'近期話題商品',     s:'代言・聯名・得獎・國內外一年內', ico:'buzz',
@@ -62,6 +62,7 @@
   if(/changelog\.html$/.test(p)) return 'log';
   if(/rewards\.html$/.test(p)) return 'rwall';
   if(/buzz\.html$/.test(p)) return 'buzz';
+  if(/owner\.html$/.test(p)) return 'owner';
   if(/wines\.html$/.test(p)) return 'wines';
   if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';

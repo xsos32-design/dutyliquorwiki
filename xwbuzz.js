@@ -1,4 +1,4 @@
-/* r237 商品卡「近期話題 BUZZ」（r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
+/* r237 商品卡「近期話題 BUZZ」（r239 加有名在哪、怎麼帶到本店推薦；r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
 (function(){
  if(window.__xwBuzz) return; window.__xwBuzz=1;
  function go(){
@@ -18,9 +18,9 @@
     var h='<div class="bzhd"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則・一年內</span></div>';
     its.forEach(function(it){
      h+='<div class="bzit">'+(it.img?'<a class="bzimg" href="'+base+'buzz.html#bz-'+esc(it.id)+'"><img src="'+base+esc(it.img)+'" alt="" loading="lazy" onerror="this.parentNode.remove()"></a>':'')+'<div class="bzm"><span class="bzk">'+esc(it.k)+'</span><span class="bzr'+(it.region==='國外'?' f':'')+'">'+esc(it.region||'國內')+'</span>'+(it.who?'<span class="bzw">'+esc(it.who)+'</span>':'')+'<span class="bzd">'+esc(it.d.replace(/-/g,'/'))+'・'+ago(it.d)+'</span></div>'+
-      '<b class="bzti">'+esc(it.t)+'</b><p>'+esc(it.body)+'</p>'+
+      '<b class="bzti">'+esc(it.t)+'</b><p>'+esc(it.body)+'</p>'+(it.fame?'<p class="bzfame"><span>有名在哪</span>'+esc(it.fame)+'</p>':'')+
       (it.note?'<p class="bznote">本店：'+esc(it.note)+'</p>':'')+
-      (it.say?'<p class="bzsay"><span>跟客人這樣說</span>'+esc(it.say)+'</p>':'')+
+      (it.say?'<p class="bzsay"><span>跟客人這樣說</span>'+esc(it.say)+'</p>':'')+(it.pitch?'<p class="bzpitch"><span>怎麼帶到本店推薦</span>'+esc(it.pitch)+'</p>':'')+
       '<div class="bzft">'+(it.u?'<a class="bzsrc" href="'+esc(it.u)+'" target="_blank" rel="noopener">來源：'+esc(it.src||'新聞')+' ›</a>':'')+'<a class="bzsrc bzall" href="'+base+'buzz.html#bz-'+esc(it.id)+'">看全部近期話題 ›</a></div></div>';
     });
     var d=document.createElement('div'); d.className='sec bzsec'; d.innerHTML=h;
@@ -36,6 +36,7 @@
     '.bzsrc{font-size:12.5px;color:#C9A45C!important}'+
     '.bzimg{display:block;margin:2px 0 8px;border-radius:10px;overflow:hidden;aspect-ratio:16/9;background:#0E0C0A}.bzimg img{width:100%;height:100%;object-fit:cover;display:block}'+
     '.bzr{font-size:12px;font-weight:800;padding:2px 8px;border-radius:999px;background:#3D7A4A;color:#fff}.bzr.f{background:#2A6F97}.bzw{font-size:12px;padding:1px 8px;border-radius:999px;border:1px solid rgba(232,140,60,.55);color:#F2A65A}'+
+    '.bzfame{color:#E9D7BE}.bzfame span{color:#F2A65A;font-size:12px;font-weight:800;margin-right:5px}.bzpitch{background:rgba(232,140,60,.10);border-left:3px solid #E88C3C;padding:6px 10px;border-radius:0 8px 8px 0}.bzpitch span{display:block;font-size:12px;font-weight:800;color:#F2A65A}'+
     '.bzm{flex-wrap:wrap}.bzft{display:flex;flex-wrap:wrap;gap:4px 14px}';
    document.head.appendChild(st);
    var ids=Object.keys(M),pend=0;function scan(){pend=0;ids.forEach(function(id){card(document.getElementById(id));});}

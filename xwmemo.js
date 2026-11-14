@@ -83,16 +83,16 @@ function xwFI(k,sz){var d=XWFI[k];if(!d)return '';return '<svg viewBox="0 0 24 2
   '.mmfab{display:grid;gap:6px}.mmfab>div{display:grid;grid-template-columns:28px 1fr;gap:8px;align-items:start;font-size:14px;line-height:1.6}.mmfab b{display:inline-flex;width:26px;height:26px;border-radius:7px;align-items:center;justify-content:center;font-size:14px;color:#fff}'+
   '.mmfab b.f{background:#5B8DEF}.mmfab b.a{background:#E0A23A}.mmfab b.b{background:#4FB38A}.mmfab em{font-style:normal;font-size:11.5px;color:#BDB6A9;display:block}'+
   '.mmbt{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.mmbt a{font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid rgba(201,164,92,.5);color:#E8CD8A!important;text-decoration:none!important}'+
-  '#mmhome{display:flex;align-items:center;gap:12px;margin:10px 0 14px;padding:12px 14px;border-radius:14px;border:1px solid rgba(201,164,92,.5);background:linear-gradient(120deg,rgba(201,164,92,.18),rgba(201,164,92,.04));text-decoration:none!important;color:inherit!important}'+
+  '#mmhome{display:flex;align-items:center;gap:12px;margin:0;padding:12px 14px;border-radius:14px;border:1px solid rgba(201,164,92,.5);background:linear-gradient(120deg,rgba(201,164,92,.18),rgba(201,164,92,.04));text-decoration:none!important;color:inherit!important}'+
   '#mmhome .ico{flex:0 0 44px;height:44px;border-radius:12px;background:#C9A45C;display:flex;align-items:center;justify-content:center;color:#16120C}#mmhome b{display:block;font-size:16px;color:#E8CD8A}#mmhome span{font-size:13px;color:#BDB6A9}#mmhome .go{margin-left:auto;font-size:22px;color:#C9A45C}';
  var st=document.createElement('style');st.id='xwmemo-css';st.textContent=css;document.head.appendChild(st);
- function home(){var h=document.getElementById('r16home');if(!h||document.getElementById('mmhome'))return;var pr={};try{pr=JSON.parse(localStorage.getItem('xw_memo')||'{}');}catch(e){}
+ function home(){var mo=document.querySelector('.r59month');if(!mo||document.getElementById('mmhome'))return;var pr={};try{pr=JSON.parse(localStorage.getItem('xw_memo')||'{}');}catch(e){}
   var ks=Object.keys(pr),got=0,ng=0,dn=0,now=Date.now();ks.forEach(function(k){var r=pr[k];if(r[0]>=3)got++;if(r[0]===0)ng++;if(r[1]<=now)dn++;});
   var a=document.createElement('a');a.id='mmhome';a.href=base+'memo.html#quiz-'+SITE;
   a.innerHTML='<div class="ico"><svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="13" height="16" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/><path d="M7 11h5M7 15h3"/></svg></div><div><b>看圖記憶練習（FAB）</b><span>'+(ks.length?('已記住 '+got+' 支・待加強 '+ng+' 支・今天該複習 '+dn+' 支'):'每天 10 張，看圖猜品名＋記憶口訣，答錯的會一直回來')+'</span></div><span class="go">›</span>';
-  h.insertBefore(a,h.firstChild);}
+  var hh=mo.querySelector('.r59h');mo.insertBefore(a,hh?hh.nextSibling:mo.firstChild);}
  function scan(){(window.P||[]).length&&document.querySelectorAll('#list section.card[id]').forEach(place);home();}
  var pend=0;function go(){if(!SITE)return;scan();var L=document.getElementById('list')||document.body;new MutationObserver(function(){if(!pend){pend=1;setTimeout(function(){pend=0;scan();},350);}}).observe(L,{childList:true,subtree:true});
-  new MutationObserver(function(){if(!document.getElementById('mmhome'))home();}).observe(document.body,{childList:true});}
+  new MutationObserver(function(){if(!document.getElementById('mmhome'))home();}).observe(document.body,{childList:true,subtree:true});var n=0,iv=setInterval(function(){home();if(document.getElementById('mmhome')||++n>40)clearInterval(iv);},400);}
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
 })();

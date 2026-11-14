@@ -11,9 +11,12 @@
  if(/\/card(_\w+)?\.html$/.test(location.pathname)) return;   /* 折扣小卡是列印版面，不處理 */
  var mode='dark'; try{ var v=localStorage.getItem(K); if(v==='light'||v==='dark') mode=v; }catch(e){}
  de.setAttribute('data-xwmode',mode);
+ /* r242 活動頁原本是白底卡片：深色模式也要翻成深色 */
+ var FORCE=/\/(promotion|chocolatepromo)\/(index\.html|oct\.html|calendar\.html|owner\.html)?$/.test(location.pathname)||de.hasAttribute('data-xwforce');
+ if(FORCE) de.setAttribute('data-xwforce','1');
  /* 淺色模式：開頁時先遮一下（最多 0.8 秒），避免先閃一下深色畫面 */
  var veil=document.createElement('style'); veil.textContent='html.xwveil body{visibility:hidden!important}';
- if(mode==='light'){ (document.head||de).appendChild(veil); de.classList.add('xwveil'); setTimeout(unveil,800); }
+ if(mode==='light'||FORCE){ (document.head||de).appendChild(veil); de.classList.add('xwveil'); setTimeout(unveil,800); }
  function unveil(){ de.classList.remove('xwveil'); }
 
  /* ---------- 顏色工具 ---------- */
@@ -45,6 +48,9 @@
  function mapFg(c,to){ if(!c) return c; var h=toHsl(c),l=h[2];
   if(to==='light'){ if(l<=0.45) return c; return fromHsl(h[0],Math.min(1,h[1]*1.05),Math.max(0.1,1.02-l),c[3]); }
   if(l>=0.55) return c; return fromHsl(h[0],h[1],Math.min(0.92,1.02-l),c[3]); }
+ /* 框線：深色模式時很淺的灰框改成暗金細線，不要白線 */
+ function mapBd(c,to){ if(!c) return c; var h=toHsl(c);
+  if(to==='dark'&&h[2]>=0.7&&h[1]<0.5) return [201,164,92,Math.min(c[3],0.28)]; return mapFg(c,to); }
  function mapGrad(s,to,fn){ return s.replace(/rgba?\([^)]+\)/g,function(x){ var c=parse(x); return c?str(fn(c,to)):x; }); }
 
  /* ---------- 覆寫方式：固定幾條規則＋每個元素自己的 CSS 變數 ----------
@@ -98,6 +104,7 @@
    var q={pn:pn,c:pcol,bg:parse(p.backgroundColor),bi:p.backgroundImage,bt:parse(p.borderTopColor),bw:parseFloat(p.borderTopWidth)||0,txt:/^["'].*\S.*["']$/.test(ct)};
    if((q.bg&&q.bg[3]>0)||(q.bi&&q.bi!=='none')||(q.txt&&q.c)||q.bw>0) o.ps.push(q); });
   o.chrome=!!el.closest('#xwbar,#xwmenu');
+  o.keep=!!el.closest('.namecard,.nc,[data-xwkeep]');
   o.noscale=o.chrome||!!el.closest('.namecard,.nc,#cal-grid,.cal-grid,[data-xwns]');
   /* 照片橫幅：不重複的 url 背景，且有深色底色或漸層遮罩（只有裝飾圖、沒有深底的不算） */
   function darkGrad(g){ if(!/gradient/.test(g||'')) return false; var cs2=(g.match(/rgba?\([^)]+\)/g)||[]).map(parse), mx=0;
@@ -118,12 +125,13 @@
   var o=O.get(el), par=effOf(el.parentElement); if(!o){ E.set(el,par); return par; }
   var bg=o.bg, r;
   if(o.photo) r=(bg&&bg[3]>0)?blend(bg,[24,20,16,1]):[24,20,16,1];
-  else { if(mode!==NATIVE&&bg&&bg[3]>0&&!inPhoto(el)) bg=mapBg(bg,mode); r=(bg&&bg[3]>0)?blend(bg,par):par; }
+  else { if(bg&&bg[3]>0&&flipOf(el,o)) bg=mapBg(bg,mode); r=(bg&&bg[3]>0)?blend(bg,par):par; }
   E.set(el,r); return r; }
+ function flipOf(el,o){ if(inPhoto(el)) return false; if(mode!==NATIVE) return true; return FORCE&&mode==='dark'&&!(o&&o.keep); }
  function inPhoto(el){ for(var p=el;p&&p.nodeType===1;p=p.parentElement){ var o=O.get(p); if(o&&o.photo) return true; } return false; }
  function compute(el){
   var o=O.get(el); if(!o||!de.contains(el)) return;
-  var out={}, flip=mode!==NATIVE&&!inPhoto(el);
+  var out={}, flip=flipOf(el,o);
   if(flip){
    if(o.bg&&o.bg[3]>0){ var nb=mapBg(o.bg,mode); if(!same(nb,o.bg)) out['background-color']=str(nb); }
    if(o.bi&&o.bi!=='none'){
@@ -133,7 +141,7 @@
     if(/gradient/.test(bi)) bi=mapGrad(bi,mode,/text/.test(o.clip)?mapFg:mapBg);
     if(bi!==o.bi) out['background-image']=bi;
    }
-   if(o.bt&&o.bt[3]>0&&o.bw>0) out['border-color']=str(mapFg(o.bt,mode));
+   if(o.bt&&o.bt[3]>0&&o.bw>0) out['border-color']=str(mapBd(o.bt,mode));
   }
   /* 底部固定列：改成不透明，不再透出下面的字 */
   if(o.pos==='fixed'&&parseFloat(o.bot)<=12&&o.h<160&&o.w>200&&o.bg&&o.bg[3]>0&&o.bg[3]<0.92){
@@ -157,7 +165,7 @@
   o.ps.forEach(function(q){ var po={};
    if(flip){ if(q.bg&&q.bg[3]>0) po['background-color']=str(mapBg(q.bg,mode));
     if(q.bi&&/gradient/.test(q.bi)) po['background-image']=mapGrad(q.bi,mode,mapBg);
-    if(q.bt&&q.bt[3]>0&&q.bw>0) po['border-color']=str(mapFg(q.bt,mode)); }
+    if(q.bt&&q.bt[3]>0&&q.bw>0) po['border-color']=str(mapBd(q.bt,mode)); }
    if(q.txt&&q.c&&q.c[3]>0){ var pn=fix(flip?mapFg(q.c,mode):q.c,effOf(el),5); if(!same(pn,q.c)) po['color']=str(pn); }
    for(var z in po){ pr[q.pn]=po; break; } });
   apply(el,out,pr);

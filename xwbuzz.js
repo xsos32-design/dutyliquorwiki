@@ -1,4 +1,4 @@
-/* r242 可收合：預設只列標題（小圖＋標題），點一下展開全文，記住選擇 xw_bz_open。r237 商品卡「近期話題 BUZZ」（r239 加有名在哪、怎麼帶到本店推薦；r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
+/* r248 每則加「為什麼提到這款」（hit＝直接點名或同系列對應、auto／預設＝同品牌）與「被稱讚的地方」praise，點名本款的排前面；修正與 xwmemo 互搶位置造成的閃爍。r242 可收合：預設只列標題（小圖＋標題），點一下展開全文，記住選擇 xw_bz_open。r237 商品卡「近期話題 BUZZ」（r239 加有名在哪、怎麼帶到本店推薦；r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
 (function(){
  if(window.__xwBuzz) return; window.__xwBuzz=1;
  function go(){
@@ -12,20 +12,23 @@
    function ago(d){var m=Math.round((now-Date.parse(d))/(30.4*864e5));return m<1?'本月':m+' 個月前';}
    function card(c){
     if(!c||!c.id||!M[c.id])return; var body=c.querySelector(':scope > .body'); if(!body)return;
-    if(c.__bz){var ex=body.querySelector(':scope > .bzsec'),f0=body.querySelector(':scope > div.sec:not(.bzsec)');if(ex&&f0&&ex.previousElementSibling!==f0)body.insertBefore(ex,f0.nextSibling);return;}
+    if(c.__bz){var ex=body.querySelector(':scope > .bzsec'),f0=body.querySelector(':scope > div.sec:not(.bzsec):not(.mmsec)');if(ex&&f0&&ex.previousElementSibling!==f0&&(c.__bzm=(c.__bzm||0)+1)<=3)body.insertBefore(ex,f0.nextSibling);return;}
     c.__bz=1;
-    var its=M[c.id].slice().sort(function(a,b){return a.d<b.d?1:-1;});
-    var h='<button type="button" class="bzhd" aria-expanded="false"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則・一年內</span><span class="bztg"></span></button>';
+    function hit(it){return !!(it.hit&&it.hit[c.id]);}
+    var its=M[c.id].slice().sort(function(a,b){var x=hit(b)-hit(a);return x||(a.d<b.d?1:-1);}),nh=its.filter(hit).length;
+    var h='<button type="button" class="bzhd" aria-expanded="false"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則'+(nh?'・'+nh+' 則點名本款':'・一年內')+'</span><span class="bztg"></span></button>';
     its.forEach(function(it){
      h+='<div class="bzit">'+(it.img?'<a class="bzimg" href="'+base+'buzz.html#bz-'+esc(it.id)+'"><img src="'+base+esc(it.img)+'" alt="" loading="lazy" onerror="this.parentNode.remove()"></a>':'')+'<div class="bzm"><span class="bzk">'+esc(it.k)+'</span><span class="bzr'+(it.region==='國外'?' f':'')+'">'+esc(it.region||'國內')+'</span>'+(it.who?'<span class="bzw">'+esc(it.who)+'</span>':'')+'<span class="bzd">'+esc(it.d.replace(/-/g,'/'))+'・'+ago(it.d)+'</span></div>'+
-      '<b class="bzti">'+esc(it.t)+'</b><p>'+esc(it.body)+'</p>'+(it.fame?'<p class="bzfame"><span>有名在哪</span>'+esc(it.fame)+'</p>':'')+
+      '<b class="bzti">'+esc(it.t)+'</b>'+WHY(it)+'<p>'+esc(it.body)+'</p>'+(it.praise?'<p class="bzpraise"><span>被稱讚的地方</span>'+esc(it.praise)+'</p>':'')+(it.fame?'<p class="bzfame"><span>有名在哪</span>'+esc(it.fame)+'</p>':'')+
       (it.note?'<p class="bznote">本店：'+esc(it.note)+'</p>':'')+
       (it.say?'<p class="bzsay"><span>跟客人這樣說</span>'+esc(it.say)+'</p>':'')+(it.pitch?'<p class="bzpitch"><span>怎麼帶到本店推薦</span>'+esc(it.pitch)+'</p>':'')+
       '<div class="bzft">'+(it.u?'<a class="bzsrc" href="'+esc(it.u)+'" target="_blank" rel="noopener">來源：'+esc(it.src||'新聞')+' ›</a>':'')+'<a class="bzsrc bzall" href="'+base+'buzz.html#bz-'+esc(it.id)+'">看全部近期話題 ›</a></div></div>';
     });
     if(its.length>3)h+='<button type="button" class="bzmore">還有 '+(its.length-3)+' 則，點開看全部 ▾</button>';
+    function WHY(it){var h=hit(it),t=h?it.hit[c.id]:(it.auto?it.auto+(it.subj?'（話題主角：'+it.subj+'）':''):'本款沒有被直接點名；話題主角是'+(it.subj||'同品牌其他酒款')+'，因為同品牌才列在這裡，可以借話題帶到本款。');
+     return '<p class="bzwhy'+(h?' on':'')+'"><b class="bzwi"><span>'+(h?'點名本款':'同品牌話題')+'</span>'+esc(t)+'</b></p>';}
     var d=document.createElement('div'); d.className='sec bzsec'+(OPEN()?'':' bzc'); d.innerHTML=h; paint(d);
-    var first=body.querySelector(':scope > div.sec'); if(first&&first.nextSibling) body.insertBefore(d,first.nextSibling); else body.insertBefore(d,body.firstChild);
+    var first=body.querySelector(':scope > div.sec:not(.mmsec)'); if(first&&first.nextSibling) body.insertBefore(d,first.nextSibling); else body.insertBefore(d,body.firstChild);
    }
    function OPEN(){try{return localStorage.getItem('xw_bz_open')==='1';}catch(e){return false;}}
    function paint(d){var c=d.classList.contains('bzc'),b=d.querySelector('.bztg'),hd=d.querySelector('.bzhd');if(b)b.textContent=c?'展開全文 ▾':'收起 ▴';if(hd)hd.setAttribute('aria-expanded',c?'false':'true');}
@@ -54,7 +57,9 @@
     '.bzc .bzm,.bzc .bzti{grid-column:2;min-width:0}.bzc .bzm{margin:0}.bzc .bzm .bzw,.bzc .bzm .bzd{display:none}'+
     '.bzc .bzti{font-size:14.5px;margin:2px 0 0;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}'+
     '.bzt,.bze,.bzn{white-space:nowrap}.bzc .bzit:nth-of-type(n+4){display:none}.bzmore{display:none}.bzc .bzmore{all:unset;box-sizing:border-box;display:block;width:100%;text-align:center;margin-top:6px;padding:8px;border-radius:10px;border:1px dashed rgba(232,140,60,.5);font-size:13.5px;color:#F2A65A;cursor:pointer}'+
-    '.bzc .bzit>p,.bzc .bzft{display:none!important}.bzc .bzit:not(:has(.bzimg)){grid-template-columns:1fr}.bzc .bzit:not(:has(.bzimg)) .bzm,.bzc .bzit:not(:has(.bzimg)) .bzti{grid-column:1}';
+    '.bzwhy{font-size:14px;line-height:1.7;margin:6px 0!important;padding:7px 10px;border-radius:8px;background:rgba(255,255,255,.04);border:1px solid rgba(232,140,60,.25);color:#E9D7BE}.bzwhy span{display:inline-block;font-size:12px;font-weight:800;padding:1px 8px;border-radius:999px;margin-right:6px;background:#5A4A36;color:#F2E6D2}.bzwhy.on{background:rgba(232,140,60,.14);border-color:rgba(232,140,60,.6);color:#FFE9CF}.bzwhy.on span{background:#E88C3C;color:#1A1410}'+
+    '.bzpraise{color:#E9D7BE}.bzpraise span{color:#F2A65A;font-size:12px;font-weight:800;margin-right:5px}'+
+    '.bzc .bzit>p:not(.bzwhy),.bzc .bzft{display:none!important}.bzwi{font-weight:inherit;display:block}.bzc .bzwhy{grid-column:1/-1;margin:8px 0 0!important;font-size:13.5px}.bzc .bzwi{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}button.bzhd{flex-wrap:wrap;row-gap:4px}.bzc .bzit:not(:has(.bzimg)){grid-template-columns:1fr}.bzc .bzit:not(:has(.bzimg)) .bzm,.bzc .bzit:not(:has(.bzimg)) .bzti{grid-column:1}';
    document.head.appendChild(st);
    var ids=Object.keys(M),pend=0;function scan(){pend=0;ids.forEach(function(id){card(document.getElementById(id));});}
    scan(); new MutationObserver(function(){if(!pend){pend=1;setTimeout(scan,300);}}).observe(L,{childList:true,subtree:true});

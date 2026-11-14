@@ -72,9 +72,9 @@ function xwFI(k,sz){var d=XWFI[k];if(!d)return '';return '<svg viewBox="0 0 24 2
   h+='<div class="mmbt"><a href="'+base+'memo.html#card='+encodeURIComponent(c.id)+'">存成記憶卡</a><a href="'+base+'memo.html#brand='+encodeURIComponent(p.brand||'')+'&s='+SITE+'">同品牌對照</a><a href="'+base+'memo.html#quiz-'+SITE+'">看圖練習</a></div>';
   var d=document.createElement('div');d.className='sec mmsec';d.innerHTML=h;return d;}
  function place(c){var body=c.querySelector(':scope > .body');if(!body)return;var ex=body.querySelector(':scope > .mmsec');
-  var anchor=body.querySelector(':scope > .bzsec')||body.querySelector(':scope > div.sec:not(.mmsec)');
+  var anchor=body.querySelector(':scope > .bzsec')||body.querySelector(':scope > div.sec:not(.mmsec):not(.bzsec)');
   if(!ex){if(c.__mm)return;c.__mm=1;ex=block(c);if(!ex)return;}
-  if(anchor&&ex.previousElementSibling!==anchor)body.insertBefore(ex,anchor.nextSibling);else if(!anchor&&!ex.parentNode)body.insertBefore(ex,body.firstChild);}
+  if(anchor&&ex.previousElementSibling!==anchor&&(c.__mmm=(c.__mmm||0)+1)<=3)body.insertBefore(ex,anchor.nextSibling);else if(!anchor&&!ex.parentNode)body.insertBefore(ex,body.firstChild);}
  var css='.mmsec{border:1px solid rgba(201,164,92,.45)!important;border-radius:14px;padding:12px 14px!important;margin:10px 0!important;background:linear-gradient(160deg,rgba(201,164,92,.10),rgba(201,164,92,.02))}'+
   '.mmhd{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}.mmt{font-weight:800;font-size:17px;color:#E8CD8A}.mme{font-size:11px;letter-spacing:3px;color:#C9A45C}'+
   '.mmmn{font-size:16px;font-weight:800;color:#E8CD8A;background:rgba(201,164,92,.12);border-left:4px solid #C9A45C;padding:6px 10px;border-radius:0 9px 9px 0;margin:4px 0 8px;line-height:1.5}.mmmn small{display:block;font-size:11.5px;color:#BDB6A9;font-weight:400}'+

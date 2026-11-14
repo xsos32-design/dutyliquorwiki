@@ -1,0 +1,207 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>看圖記憶練習｜小韋 免稅賣場工具組</title><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#0B0A09">
+<style>
+:root{--bg:#0B0A09;--card:#17140F;--card2:#120F0C;--line:rgba(201,164,92,.22);--line2:rgba(201,164,92,.45);--gold:#C9A45C;--gold2:#E8CD8A;--ink:#F2EBDD;--dim:#BDB6A9;--dim2:#8F887B;--ok:#4FB38A;--ng:#E0574A;--F:#5B8DEF;--A:#E0A23A;--B:#4FB38A}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 'Microsoft JhengHei','微軟正黑體',system-ui,-apple-system,'PingFang TC','Noto Sans TC',sans-serif}
+a{color:inherit;text-decoration:none}button{font:inherit;color:inherit}
+header{padding:24px 16px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14110D,#0B0A09)}
+header>*,main{max-width:980px;margin-left:auto;margin-right:auto}
+.eye{display:block;font-size:12px;letter-spacing:.32em;color:var(--gold)}
+h1{margin:4px 0 0;font:600 25px/1.3 'Noto Serif TC',serif;letter-spacing:.05em}
+header p{margin:6px 0 0;color:#DAD3C6;font-size:13.5px}
+main{padding:10px 12px 90px}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.tabs button{flex:0 0 auto;border:1px solid var(--line2);background:transparent;border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--gold);color:#16120C;border-color:var(--gold);font-weight:700}
+.row{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin:6px 0}.row>b{font-size:12.5px;color:var(--dim2);font-weight:400;min-width:34px}
+.row button,.row select{border:1px solid var(--line2);background:var(--card2);border-radius:7px;padding:5px 11px;font-size:13.5px;cursor:pointer;max-width:100%}
+.row button.on{background:var(--gold);color:#16120C;border-color:var(--gold)}
+.stat{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0}
+.stat div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;text-align:center}
+.stat b{display:block;font-size:22px;color:var(--gold2)}.stat span{font-size:12px;color:var(--dim)}
+.big{display:block;width:100%;border:0;border-radius:12px;padding:13px;background:linear-gradient(180deg,#D8B36A,#B88E3E);color:#16120C;font-size:17px;font-weight:800;cursor:pointer;margin:8px 0}
+.ghost{border:1px solid var(--line2);background:transparent;border-radius:10px;padding:10px 14px;cursor:pointer}
+.q{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px}
+.qh{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim)}
+.qt{font-size:17px;font-weight:800;margin:6px 0 10px;color:var(--gold2)}
+.qimg{height:240px;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 50% 85%,rgba(201,164,92,.16),transparent 70%);border-radius:12px}
+.qimg img{max-height:230px;max-width:90%;object-fit:contain}
+.ch{display:grid;gap:8px;margin-top:10px}
+.ch button{text-align:left;border:1px solid var(--line2);background:var(--card2);border-radius:10px;padding:11px 12px;font-size:15px;cursor:pointer;line-height:1.45}
+.ch button.ok{border-color:var(--ok);background:rgba(79,179,138,.18)}.ch button.ng{border-color:var(--ng);background:rgba(224,87,74,.16)}
+.chi{grid-template-columns:1fr 1fr}.chi button{display:flex;align-items:center;justify-content:center;height:150px;padding:6px}.chi img{max-height:138px;max-width:100%;object-fit:contain}
+.mn{font-size:16px;font-weight:800;color:var(--gold2);background:rgba(201,164,92,.12);border-left:4px solid var(--gold);padding:7px 11px;border-radius:0 9px 9px 0;margin:8px 0}
+.mn small{display:block;font-size:11.5px;color:var(--dim);font-weight:400}
+.ic{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.ic span{display:inline-flex;align-items:center;gap:4px;font-size:12.5px;padding:3px 9px 3px 5px;border-radius:999px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12)}
+.ic span i{display:inline-flex;width:24px;height:24px;border-radius:50%;align-items:center;justify-content:center;color:#16120C}
+.fab{display:grid;gap:6px;margin-top:8px}
+.fab div{display:grid;grid-template-columns:30px 1fr;gap:8px;align-items:start;font-size:14px;line-height:1.6}
+.fab b{display:inline-flex;width:28px;height:28px;border-radius:8px;align-items:center;justify-content:center;font-size:15px;color:#fff}
+.fab .F b{background:var(--F)}.fab .A b{background:var(--A)}.fab .B b{background:var(--B)}
+.fab em{font-style:normal;font-size:11.5px;color:var(--dim);display:block}
+.rev{display:grid;grid-template-columns:140px 1fr;gap:12px;margin-top:12px;padding-top:12px;border-top:1px dashed var(--line2)}
+.rev img{width:140px;height:170px;object-fit:contain}
+.rn{font-size:16px;font-weight:800}.rp{font-size:13px;color:var(--dim)}
+.act{display:flex;gap:8px;margin-top:12px}.act button{flex:1}
+.grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));margin-top:10px}
+.t{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;display:flex;flex-direction:column;gap:4px}
+.t .im{height:150px;display:flex;align-items:center;justify-content:center}.t .im img{max-height:145px;max-width:100%;object-fit:contain}
+.t .n{font-weight:800;font-size:14.5px;line-height:1.4}
+.chips{display:flex;flex-wrap:wrap;gap:4px}.chips span{font-size:12px;padding:1px 7px;border-radius:6px;background:rgba(201,164,92,.14);color:var(--gold2)}
+.chips span.d{background:rgba(224,162,58,.25);color:#FFD08A;font-weight:700}
+.diff{background:var(--card);border:1px solid var(--line2);border-radius:12px;padding:10px 12px;margin-top:10px;font-size:13.5px}
+.lg{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px;margin-top:10px}
+.lg div{display:flex;align-items:center;gap:8px;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px}
+.lg i{display:inline-flex;width:36px;height:36px;border-radius:50%;align-items:center;justify-content:center;color:#16120C;flex:0 0 36px}
+.srch{width:100%;font-size:16px;color:var(--ink);background:var(--card2);border:1px solid var(--line2);border-radius:8px;padding:9px 12px}
+.sr{display:grid;gap:6px;margin-top:8px;max-height:320px;overflow:auto}.sr button{display:flex;gap:8px;align-items:center;text-align:left;border:1px solid var(--line);background:var(--card2);border-radius:8px;padding:6px;cursor:pointer}
+.sr img{width:40px;height:48px;object-fit:contain}
+#cv{width:100%;max-width:420px;display:block;margin:10px auto;border-radius:12px;border:1px solid var(--line2)}
+.note{font-size:12.5px;color:var(--dim2);margin-top:8px}
+@media(max-width:420px){.qimg{height:200px}.qimg img{max-height:190px}.rev{grid-template-columns:100px 1fr}.rev img{width:100px;height:130px}.stat b{font-size:19px}}
+</style></head><body>
+<header><span class="eye">MEMORY・FAB</span><h1>看圖記憶練習</h1>
+<p>用商品圖、風味圖示、記憶口訣和 FAB（F 特色・A 優點・B 好處）把商品記起來。練習、同品牌對照、做成記憶卡存到相簿，三種方法一起用最快記住。</p></header>
+<main><div class="tabs" id="tabs"><button data-t="q">看圖練習</button><button data-t="cmp">同品牌對照</button><button data-t="mk">做記憶卡</button><button data-t="lg">風味圖示表</button></div>
+<div id="out"><p class="note">載入中…</p></div></main>
+<script>window.__MEMOV='5aad2a68';/* r241 風味圖示（記憶用）：key＝風味標籤，[顏色, SVG 內容(24x24 線條)] */
+var XWFI={
+'甜潤':['#E6A85C','<path d="M12 3c3.2 4.3 6 7.4 6 11a6 6 0 0 1-12 0c0-3.6 2.8-6.7 6-11z"/><path d="M9.5 14.5a2.5 2.5 0 0 0 2.5 2.5"/>'],
+'果香':['#D9614C','<path d="M12 7c-4-2-8 1-7 6 .7 4 3.5 8 7 7 3.5 1 6.3-3 7-7 1-5-3-8-7-6z"/><path d="M12 7c0-2 1-3.5 3-4"/>'],
+'雪莉果乾':['#9A4B6E','<circle cx="9" cy="9" r="2.6"/><circle cx="15" cy="9" r="2.6"/><circle cx="12" cy="13.5" r="2.6"/><circle cx="8" cy="15" r="2.4"/><circle cx="16" cy="15" r="2.4"/><circle cx="12" cy="19" r="2.2"/><path d="M12 6V3"/>'],
+'辛香料':['#C77B3A','<path d="M12 3l1.8 5.2L19 6l-2.2 5L22 12l-5.2 1.8L19 18l-5.2-2.2L12 21l-1.8-5.2L5 18l2.2-5L2 12l5.2-1.8L5 6l5.2 2.2z"/><circle cx="12" cy="12" r="1.6"/>'],
+'香草奶油':['#E8D08A','<path d="M6 20c3-6 7-11 12-16"/><path d="M8 18c1.5.3 3 0 4-1"/><path d="M14 4c1 2 1 3.5 0 5"/><path d="M17 7c-2 .3-3.5 0-4.5-1"/>'],
+'厚重濃郁':['#8C5A2B','<path d="M6 4h12M6 20h12"/><path d="M6 4c-1.5 5-1.5 11 0 16M18 4c1.5 5 1.5 11 0 16"/><path d="M5 9h14M5 15h14"/>'],
+'輕盈好入口':['#9CC7C1','<path d="M20 4C11 4 6 10 5 20"/><path d="M20 4c0 8-5 13-12 13"/><path d="M9 14l3-3M11 11h3"/>'],
+'溫和低酒感':['#8FB98A','<path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19L14 10"/>'],
+'柑橘清爽':['#F0A93A','<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="5"/><path d="M12 7v10M7 12h10M8.5 8.5l7 7M15.5 8.5l-7 7"/>'],
+'花香':['#D987B2','<circle cx="12" cy="12" r="2.2"/><path d="M12 9.8c-1.8-3.5 1.8-5.8 0-6.8-1.8 1 1.8 3.3 0 6.8z"/><circle cx="12" cy="6.3" r="2.6"/><circle cx="17.3" cy="10.3" r="2.6"/><circle cx="15.3" cy="16.6" r="2.6"/><circle cx="8.7" cy="16.6" r="2.6"/><circle cx="6.7" cy="10.3" r="2.6"/>'],
+'巧克力咖啡':['#7A4A2E','<ellipse cx="12" cy="12" rx="6" ry="8.5" transform="rotate(30 12 12)"/><path d="M9 6.5c3 3 3 8 6 11"/>'],
+'煙燻泥煤':['#8E8E8E','<path d="M8 20c-2-2 0-4 0-6s-2-3-1-6"/><path d="M12 20c-2-3 1-5 0-8s-1-4 1-7"/><path d="M16 20c-2-2 0-4 0-6s-1-3 0-5"/>'],
+'無煙燻':['#7FA07F','<path d="M10 20c-2-3 1-5 0-8s-1-4 1-7"/><path d="M15 20c-2-2 0-4 0-6"/><path d="M4 4l16 16"/>'],
+'熱帶水果':['#E9C23A','<ellipse cx="12" cy="15" rx="5" ry="6"/><path d="M9 12l6 6M15 12l-6 6M9 15h6"/><path d="M12 9V4M12 7l-3-3M12 7l3-3"/>'],
+'堅果':['#B07A44','<path d="M6 10h12c0 6-3 10-6 10s-6-4-6-10z"/><path d="M5 10c0-3 3-5 7-5s7 2 7 5z"/><path d="M12 5V3"/>'],
+'高酒感':['#E0563A','<path d="M12 3c1 4 5 5.5 5 10a5 5 0 0 1-10 0c0-2.5 1.5-4 2.5-5 .5 2 1.5 3 2.5 3 0-3-1-5 0-8z"/>'],
+'木質檀香':['#9C6B3E','<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="2"/>'],
+'海鹽礦石':['#4F9BC8','<path d="M3 9c3-3 6 3 9 0s6 3 9 0"/><path d="M3 14c3-3 6 3 9 0s6 3 9 0"/><path d="M3 19c3-3 6 3 9 0s6 3 9 0"/>'],
+'麥芽穀物':['#D2B061','<path d="M12 21V6"/><path d="M12 9c-3-1-4-3-4-5 3 0 4 2 4 5zM12 9c3-1 4-3 4-5-3 0-4 2-4 5zM12 14c-3-1-4-3-4-5 3 0 4 2 4 5zM12 14c3-1 4-3 4-5-3 0-4 2-4 5z"/>'],
+'莓果':['#C2405A','<circle cx="9" cy="13" r="3.5"/><circle cx="15" cy="13" r="3.5"/><circle cx="12" cy="17.5" r="3.5"/><path d="M12 9.5V5M12 6l3-2"/>'],
+'牛奶':['#EDE6D6','<path d="M9 3h6v3l2 3v12H7V9l2-3z"/><path d="M7 13h10"/>'],
+'黑巧':['#5B3A26','<rect x="4" y="6" width="16" height="12" rx="1.5"/><path d="M4 12h16M9.3 6v12M14.7 6v12"/>'],
+'白巧':['#F3EBD8','<rect x="4" y="6" width="16" height="12" rx="1.5"/><path d="M4 12h16M12 6v12"/>'],
+'榛果':['#A8703D','<path d="M6 11h12c0 5.5-3 9-6 9s-6-3.5-6-9z"/><path d="M5 11c0-3 3-5 7-5s7 2 7 5z"/>'],
+'杏仁':['#C9955E','<path d="M12 3c4 4 5 9 3 14-1.5 3-4.5 3-6 0-2-5-1-10 3-14z"/><path d="M12 6v11"/>'],
+'開心果':['#9BBB59','<path d="M12 4c4 0 6 4 6 8s-2 8-6 8-6-4-6-8 2-8 6-8z"/><path d="M12 4c-2 5-2 11 0 16"/>'],
+'草莓':['#D9435A','<path d="M12 8c5 0 7 2 7 4 0 4-4 8-7 8s-7-4-7-8c0-2 2-4 7-4z"/><path d="M9 4l3 4 3-4M12 8V3"/><path d="M10 13h.01M14 13h.01M12 16h.01"/>'],
+'抹茶':['#6E9A3E','<path d="M5 9h14l-1.5 9a2 2 0 0 1-2 1.7h-7a2 2 0 0 1-2-1.7z"/><path d="M8 5c0 1 1 1 1 2M12 4c0 1 1 1 1 2"/>'],
+'焦糖':['#C4782A','<rect x="7" y="7" width="10" height="10" rx="2"/><path d="M7 9L3 6M17 15l4 3M3 6v4M21 18v-4"/>'],
+'海鹽':['#4F9BC8','<path d="M3 11c3-3 6 3 9 0s6 3 9 0"/><path d="M3 17c3-3 6 3 9 0s6 3 9 0"/><path d="M12 4l1 2-1 2-1-2z"/>'],
+'酒心':['#A7643A','<path d="M10 3h4v5c2 1 3 3 3 5v7H7v-7c0-2 1-4 3-5z"/><path d="M7 14h10"/>'],
+'薄荷':['#4FB38A','<path d="M12 21V9"/><path d="M12 12c-5 0-7-4-7-8 4 0 7 3 7 8zM12 12c5 0 7-4 7-8-4 0-7 3-7 8z"/>'],
+'咖啡':['#6B4226','<ellipse cx="12" cy="12" rx="6" ry="8.5" transform="rotate(30 12 12)"/><path d="M9 6.5c3 3 3 8 6 11"/>'],
+'餅乾':['#D2A15E','<circle cx="12" cy="12" r="8"/><path d="M9 9h.01M14 8h.01M15 13h.01M10 14h.01M12 17h.01"/>'],
+'威化':['#D8B57A','<rect x="4" y="7" width="16" height="10" rx="1"/><path d="M4 12h16M8 7v10M12 7v10M16 7v10"/>'],
+'軟糖':['#E8749C','<path d="M7 9c0-3 2-5 5-5s5 2 5 5v6c0 3-2 5-5 5s-5-2-5-5z"/><path d="M10 10h.01M14 10h.01"/>'],
+'糖果':['#E8749C','<circle cx="12" cy="12" r="4"/><path d="M8 12L3 9v6zM16 12l5-3v6z"/>'],
+'椰子':['#9C7A55','<circle cx="12" cy="13" r="7"/><path d="M9 11h.01M12 10h.01M15 11h.01"/>'],
+'柑橘':['#F0A93A','<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="5"/><path d="M12 7v10M7 12h10"/>'],
+'蜂蜜':['#E9B53A','<path d="M8 4h8l4 7-4 7H8l-4-7z"/><path d="M12 8l2.5 1.5v3L12 14l-2.5-1.5v-3z"/>'],
+'松露':['#6E4A32','<circle cx="12" cy="13" r="7"/><path d="M8 11c1.5-1 3-1 4 0s2.5 1 4 0M8 15c1.5-1 3-1 4 0s2.5 1 4 0"/>'],
+'紅酒桶果香':['#8E2F45','<path d="M7 3h10l-1 7a4 4 0 0 1-8 0z"/><path d="M12 14v6M8 21h8"/>']
+};
+function xwFI(k,sz){var d=XWFI[k];if(!d)return '';return '<svg viewBox="0 0 24 24" width="'+(sz||18)+'" height="'+(sz||18)+'" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+d[1]+'</svg>';}
+</script>
+<script>
+(function(){
+var DATA=[],BY={},LS='xw_memo',st={tab:'q',s:'w',sc:'all',br:'',ct:''};
+try{var sv=JSON.parse(localStorage.getItem('xw_memo_ui')||'{}');for(var k in sv)st[k]=sv[k];}catch(e){}
+var PR={};try{PR=JSON.parse(localStorage.getItem(LS)||'{}')||{};}catch(e){}
+function save(){try{localStorage.setItem(LS,JSON.stringify(PR));localStorage.setItem('xw_memo_ui',JSON.stringify({s:st.s,sc:st.sc,br:st.br,ct:st.ct}));}catch(e){}}
+function E(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+function shelf(){var o={};['xw_shelf_v1','xw_shelf_choc_v1'].forEach(function(k){try{var v=JSON.parse(localStorage.getItem(k)||'{}');if(Array.isArray(v))v.forEach(function(i){o[i]=1;});else if(v&&typeof v==='object'){Object.keys(v).forEach(function(i){var x=v[i];if(Array.isArray(x))x.forEach(function(j){if(typeof j==='string')o[j]=1;});else o[i]=1;});}}catch(e){}});return o;}
+var DAY=864e5,IV=[0,1,3,7,21,60];
+function due(i){var r=PR[i];return !r||r[1]<=Date.now();}
+function price(x){return x.p?('NT$'+Number(x.p).toLocaleString()):'價格以現場為準';}
+function short(n){return n.length>26?n.slice(0,25)+'…':n;}
+function icons(t,big){return '<div class="ic">'+(t||[]).map(function(k){var d=XWFI[k];if(!d)return '';return '<span><i style="background:'+d[0]+'">'+xwFI(k,big?16:15)+'</i>'+E(k)+'</span>';}).join('')+'</div>';}
+function fab(x){return '<div class="fab">'+(x.F?'<div class="F"><b>F</b><span><em>是什麼（特色）</em>'+E(x.F)+'</span></div>':'')+((x.A&&x.A.length)?'<div class="A"><b>A</b><span><em>為什麼好（優點）</em>'+x.A.map(E).join('<br>')+'</span></div>':'')+(x.B?'<div class="B"><b>B</b><span><em>客人得到什麼（好處）</em>'+E(x.B)+'</span></div>':'')+'</div>';}
+function mn(x){return '<div class="mn"><small>記憶口訣</small>'+E(x.m)+'</div>';}
+function card(x){return '<div class="rev"><img src="'+E(x.g)+'" alt=""><div><div class="rn">'+E(x.n)+'</div><div class="rp">'+E(x.b)+'・'+E(x.a)+'・'+price(x)+'</div>'+mn(x)+icons(x.t)+'</div></div>'+fab(x)+
+ '<div class="act"><a class="ghost" style="flex:1;text-align:center" href="'+(x.s==='c'?'../chocolatewiki/':'./')+'#'+E(x.i)+'">看商品卡 ›</a><button class="ghost" data-mk="'+E(x.i)+'">存成記憶卡</button></div>';}
+function pool(){var sh=st.sc==='shelf'?shelf():null;return DATA.filter(function(x){if(x.s!==st.s)return false;if(st.br&&x.b!==st.br)return false;if(st.ct&&x.c!==st.ct)return false;if(sh&&!sh[x.i])return false;if(st.sc==='wrong'&&!(PR[x.i]&&PR[x.i][0]===0))return false;return true;});}
+function opts(list,key){var c={};list.forEach(function(x){c[x[key]]=(c[x[key]]||0)+1;});return Object.keys(c).sort(function(a,b){return c[b]-c[a];});}
+function shuffle(a){for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+var SES=null;
+function settings(){
+ var all=DATA.filter(function(x){return x.s===st.s;});var br=opts(all,'b'),ct=opts(all,'c');
+ var P=pool(),learned=P.filter(function(x){return PR[x.i]&&PR[x.i][0]>=3;}).length,dn=P.filter(function(x){return due(x.i);}).length,ng=P.filter(function(x){return PR[x.i]&&PR[x.i][0]===0;}).length;
+ return '<div class="row"><b>類別</b><button data-s="w" class="'+(st.s==='w'?'on':'')+'">酒類</button><button data-s="c" class="'+(st.s==='c'?'on':'')+'">巧克力</button></div>'+
+ '<div class="row"><b>範圍</b><button data-sc="all" class="'+(st.sc==='all'?'on':'')+'">全部</button><button data-sc="shelf" class="'+(st.sc==='shelf'?'on':'')+'">我的架上</button><button data-sc="wrong" class="'+(st.sc==='wrong'?'on':'')+'">只練答錯的</button></div>'+
+ '<div class="row"><b>品牌</b><select id="sbr"><option value="">全部品牌</option>'+br.map(function(b){return '<option'+(b===st.br?' selected':'')+'>'+E(b)+'</option>';}).join('')+'</select><select id="sct"><option value="">全部類型</option>'+ct.map(function(b){return '<option'+(b===st.ct?' selected':'')+'>'+E(b)+'</option>';}).join('')+'</select></div>'+
+ '<div class="stat"><div><b>'+P.length+'</b><span>這個範圍</span></div><div><b>'+dn+'</b><span>今天該複習</span></div><div><b>'+learned+'</b><span>已記住</span></div><div><b>'+ng+'</b><span>答錯待加強</span></div></div>';}
+function qPage(){var h=settings();
+ if(!SES){h+='<button class="big" id="go">開始練習 10 張</button><p class="note">看圖選品名、看口訣選圖，答對的隔 1、3、7、21 天再出現，答錯的會一直回來，直到記住為止。進度只存在這支手機。</p>';return h;}
+ if(SES.i>=SES.list.length){var ok=SES.ok;h+='<div class="q"><div class="qt">這輪完成：答對 '+ok+' ／ '+SES.list.length+'</div><p>'+(ok===SES.list.length?'全對！':'答錯的會在下一輪優先出現。')+'</p><button class="big" id="go">再來 10 張</button></div>';return h;}
+ var x=SES.list[SES.i],mode=SES.mode[SES.i];
+ var others=SES.pool.filter(function(y){return y.i!==x.i;});var same=others.filter(function(y){return y.b===x.b;});var cand=shuffle(same.length>=3?same:others.filter(function(y){return y.c===x.c;})).slice(0,3);if(cand.length<3)cand=cand.concat(shuffle(others).slice(0,3-cand.length));
+ var ch=shuffle([x].concat(cand));SES.cur={x:x,ch:ch};
+ h+='<div class="q"><div class="qh"><span>第 '+(SES.i+1)+' ／ '+SES.list.length+' 張</span><span>'+(mode?'看口訣選圖':'看圖選品名')+'</span></div>';
+ if(!mode){h+='<div class="qimg"><img src="'+E(x.g)+'" alt=""></div><div class="qt">這是哪一支？</div><div class="ch">'+ch.map(function(y,k){return '<button data-a="'+k+'">'+E(y.n)+'</button>';}).join('')+'</div>';}
+ else{h+='<div class="qt">哪一張是：'+E(x.n)+'？</div>'+mn(x)+'<div class="ch chi">'+ch.map(function(y,k){return '<button data-a="'+k+'"><img src="'+E(y.g)+'" alt=""></button>';}).join('')+'</div>';}
+ h+='<div id="ans"></div></div>';return h;}
+function answer(k){if(!SES||SES.done)return;SES.done=1;var c=SES.cur,ok=c.ch[k].i===c.x.i;var bs=document.querySelectorAll('.ch button');bs.forEach(function(b,j){if(c.ch[j].i===c.x.i)b.classList.add('ok');else if(j===k)b.classList.add('ng');});
+ var r=PR[c.x.i]||[0,0];if(ok){r[0]=Math.min(5,r[0]+1);SES.ok++;}else r[0]=0;r[1]=Date.now()+IV[r[0]]*DAY;PR[c.x.i]=r;save();
+ document.getElementById('ans').innerHTML='<div class="mn" style="background:'+(ok?'rgba(79,179,138,.15)':'rgba(224,87,74,.14)')+';border-color:'+(ok?'var(--ok)':'var(--ng)')+'">'+(ok?'答對！':'答錯了，記一下：')+'</div>'+card(c.x)+'<button class="big" id="nx">下一張</button>';}
+function start(){var P=pool();if(!P.length){alert0('這個範圍沒有商品');return;}var d=P.filter(function(x){return due(x.i);});d.sort(function(a,b){var ra=PR[a.i],rb=PR[b.i];return (ra?ra[0]+1:0.5)-(rb?rb[0]+1:0.5)||Math.random()-.5;});
+ var list=d.slice(0,10);if(list.length<10)list=list.concat(shuffle(P.filter(function(x){return list.indexOf(x)<0;})).slice(0,10-list.length));
+ SES={list:shuffle(list),i:0,ok:0,pool:DATA.filter(function(x){return x.s===st.s;}),mode:list.map(function(){return Math.random()<.35?1:0;})};}
+function alert0(t){var a=document.getElementById('out');a.insertAdjacentHTML('afterbegin','<p class="note">'+E(t)+'</p>');}
+function cmpPage(){var all=DATA.filter(function(x){return x.s===st.s;});var br=opts(all,'b');if(!st.br||br.indexOf(st.br)<0)st.br=br[0];
+ var L=all.filter(function(x){return x.b===st.br;});
+ function age(x){var m=/(\d{1,2})\s*年/.exec(x.n);return m?+m[1]:0;}
+ L.sort(function(a,b){return age(a)-age(b)||(a.p||0)-(b.p||0);});
+ var keys=['k','a'],dif={};keys.forEach(function(k){var s={};L.forEach(function(x){s[x[k]]=1;});dif[k]=Object.keys(s).length>1;});
+ var h='<div class="row"><b>類別</b><button data-s="w" class="'+(st.s==='w'?'on':'')+'">酒類</button><button data-s="c" class="'+(st.s==='c'?'on':'')+'">巧克力</button></div><div class="row"><b>品牌</b><select id="sbr2">'+br.map(function(b){return '<option'+(b===st.br?' selected':'')+'>'+E(b)+'</option>';}).join('')+'</select></div>';
+ h+='<div class="diff">'+E(st.br)+' 本店 '+L.length+' 支，依年份／價格由低到高排；<b style="color:#FFD08A">橘色</b>＝同品牌裡會不一樣、最該記的地方。</div><div class="grid">'+L.map(function(x){var a=age(x);return '<a class="t" href="'+(x.s==='c'?'../chocolatewiki/':'./')+'#'+E(x.i)+'"><div class="im"><img loading="lazy" src="'+E(x.g)+'" alt=""></div><div class="n">'+E(x.n)+'</div><div class="chips">'+(a?'<span class="d">'+a+' 年</span>':'')+(x.k?'<span class="'+(dif.k?'d':'')+'">'+E(x.k)+'</span>':'')+(x.a?'<span class="'+(dif.a?'d':'')+'">'+E(x.a)+'</span>':'')+'<span>'+price(x)+'</span></div>'+icons((x.t||[]).slice(0,3))+'</a>';}).join('')+'</div>';return h;}
+function mkPage(){return '<input class="srch" id="ms" placeholder="輸入品名找商品（例：麥卡倫 12、GODIVA 金裝）" autocomplete="off"><div class="sr" id="msr"></div><canvas id="cv" width="1080" height="1350" hidden></canvas><div id="mkb"></div><p class="note">記憶卡會存成圖片（1080×1350），可以存到手機相簿，用相簿翻著背。</p>';}
+function lgPage(){return '<p class="note">商品卡、記憶卡上的風味都用這些小圖示，先把圖示和味道連起來。</p><div class="lg">'+Object.keys(XWFI).map(function(k){var d=XWFI[k];return '<div><i style="background:'+d[0]+'">'+xwFI(k,22)+'</i><span>'+E(k)+'</span></div>';}).join('')+'</div>';}
+function draw(){var tb=document.getElementById('tabs');tb.querySelectorAll('button').forEach(function(b){b.classList.toggle('on',b.dataset.t===st.tab);});
+ var o=document.getElementById('out');o.innerHTML=st.tab==='q'?qPage():st.tab==='cmp'?cmpPage():st.tab==='mk'?mkPage():lgPage();save();
+ if(st.tab==='mk'&&st.mk)makeCard(st.mk);}
+function wrap(ctx,t,x,y,w,lh,max){var line='',n=0;for(var i=0;i<t.length;i++){var ch=t[i];var tt=line+ch;if(ctx.measureText(tt).width>w&&line){ctx.fillText(line,x,y);y+=lh;line=ch;if(++n>=max-1){var rest=t.slice(i);while(ctx.measureText(rest+'…').width>w&&rest.length)rest=rest.slice(0,-1);ctx.fillText(rest+(rest.length<t.length-i?'…':''),x,y);return y+lh;}}else line=tt;}if(line){ctx.fillText(line,x,y);y+=lh;}return y;}
+function svgImg(k,col){var d=XWFI[k];var s='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="none" stroke="#16120C" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">'+d[1]+'</svg>';var im=new Image();im.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(s);return im;}
+function makeCard(id){var x=BY[id];if(!x)return;st.mk=id;var cv=document.getElementById('cv');if(!cv)return;cv.hidden=false;var c=cv.getContext('2d');
+ var g=c.createLinearGradient(0,0,0,1350);g.addColorStop(0,'#1A1610');g.addColorStop(1,'#0B0A09');c.fillStyle=g;c.fillRect(0,0,1080,1350);c.strokeStyle='#C9A45C';c.lineWidth=4;c.strokeRect(24,24,1032,1302);
+ var F='"Microsoft JhengHei","PingFang TC","Noto Sans TC","Noto Sans CJK TC",sans-serif';
+ c.fillStyle='#C9A45C';c.font='600 26px '+F;c.fillText('看圖記憶卡  MEMO CARD',60,82);
+ var im=new Image();im.crossOrigin='anonymous';im.onload=function(){var h=520,w=im.width*h/im.height;if(w>440){w=440;h=im.height*w/im.width;}var rg=c.createRadialGradient(290,640,10,290,640,300);rg.addColorStop(0,'rgba(201,164,92,.25)');rg.addColorStop(1,'rgba(201,164,92,0)');c.fillStyle=rg;c.fillRect(40,120,500,560);c.drawImage(im,290-w/2,650-h,w,h);rest();};im.onerror=rest;im.src=x.g;
+ function rest(){c.fillStyle='#F2EBDD';c.font='800 44px '+F;var y=wrap(c,x.n,560,170,470,56,4);c.fillStyle='#BDB6A9';c.font='28px '+F;y=wrap(c,x.b+'・'+x.a,560,y+6,470,38,2);c.fillStyle='#E8CD8A';c.font='800 34px '+F;c.fillText(price(x),560,y+40);
+  var ty=y+90;(x.t||[]).slice(0,4).forEach(function(k,j){var d=XWFI[k];if(!d)return;var yy=ty+j*72;c.fillStyle=d[0];c.beginPath();c.arc(592,yy,30,0,7);c.fill();var si=svgImg(k);si.onload=function(){c.drawImage(si,568,yy-24,48,48);};c.fillStyle='#F2EBDD';c.font='30px '+F;c.fillText(k,640,yy+11);});
+  c.fillStyle='rgba(201,164,92,.14)';c.fillRect(60,700,960,96);c.fillStyle='#C9A45C';c.fillRect(60,700,8,96);c.fillStyle='#BDB6A9';c.font='24px '+F;c.fillText('記憶口訣',86,736);c.fillStyle='#E8CD8A';c.font='800 36px '+F;wrap(c,x.m,86,780,920,40,1);
+  var yy=850;[['F','#5B8DEF','是什麼',x.F],['A','#E0A23A','為什麼好',(x.A||[]).join('；')],['B','#4FB38A','客人得到',x.B]].forEach(function(r){if(!r[3])return;c.fillStyle=r[1];c.fillRect(60,yy-30,48,48);c.fillStyle='#fff';c.font='800 32px '+F;c.fillText(r[0],72,yy+6);c.fillStyle='#BDB6A9';c.font='22px '+F;c.fillText(r[2],124,yy-8);c.fillStyle='#F2EBDD';c.font='28px '+F;yy=wrap(c,r[3],124,yy+28,890,38,r[0]==='A'?3:2)+18;});
+  c.fillStyle='#8F887B';c.font='22px '+F;c.fillText('小韋 免稅賣場工具組・資料以商品卡與現場標示為準',60,1300);
+  setTimeout(function(){var b=document.getElementById('mkb');if(b)b.innerHTML='<div class="act"><button class="big" id="dl">下載圖片</button>'+(navigator.share?'<button class="ghost" id="sh">分享／存到相簿</button>':'')+'</div><div class="act"><a class="ghost" style="flex:1;text-align:center" href="'+(x.s==='c'?'../chocolatewiki/':'./')+'#'+E(x.i)+'">看商品卡 ›</a></div>';},400);}}
+function blob(cb){document.getElementById('cv').toBlob(cb,'image/png');}
+document.addEventListener('click',function(e){var t=e.target.closest('button,[data-t]');if(!t)return;
+ if(t.dataset.t){st.tab=t.dataset.t;if(st.tab!=='mk')st.mk='';draw();return;}
+ if(t.dataset.s){st.s=t.dataset.s;st.br='';st.ct='';SES=null;draw();return;}
+ if(t.dataset.sc){st.sc=t.dataset.sc;SES=null;draw();return;}
+ if(t.id==='go'){start();draw();return;}if(t.id==='nx'){SES.i++;SES.done=0;draw();window.scrollTo(0,document.getElementById('out').offsetTop-60);return;}
+ if(t.dataset.a!=null){answer(+t.dataset.a);return;}
+ if(t.dataset.mk){st.tab='mk';st.mk=t.dataset.mk;draw();window.scrollTo(0,0);return;}
+ if(t.dataset.pick){st.mk=t.dataset.pick;document.getElementById('msr').innerHTML='';makeCard(st.mk);return;}
+ if(t.id==='dl'){blob(function(b){var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='記憶卡_'+st.mk+'.png';document.body.appendChild(a);a.click();a.remove();});return;}
+ if(t.id==='sh'){blob(function(b){var f=new File([b],'memo_'+st.mk+'.png',{type:'image/png'});if(navigator.canShare&&navigator.canShare({files:[f]}))navigator.share({files:[f]}).catch(function(){});});return;}
+});
+document.addEventListener('change',function(e){if(e.target.id==='sbr'||e.target.id==='sbr2'){st.br=e.target.value;SES=null;draw();}if(e.target.id==='sct'){st.ct=e.target.value;SES=null;draw();}});
+document.addEventListener('input',function(e){if(e.target.id!=='ms')return;var q=e.target.value.trim().toLowerCase();var r=document.getElementById('msr');if(!q){r.innerHTML='';return;}
+ var L=DATA.filter(function(x){return (x.n+' '+x.e+' '+x.b).toLowerCase().indexOf(q)>=0||(window.XS&&XS.match&&XS.match(q,x.n+' '+x.e+' '+x.b));}).slice(0,30);
+ r.innerHTML=L.map(function(x){return '<button data-pick="'+E(x.i)+'"><img src="'+E(x.g)+'" alt=""><span>'+E(x.n)+'</span></button>';}).join('')||'<p class="note">找不到</p>';});
+function hash(){var h=decodeURIComponent(location.hash.slice(1));var m;if((m=/^card=(.+)$/.exec(h))){st.tab='mk';st.mk=m[1];if(BY[m[1]])st.s=BY[m[1]].s;}else if((m=/^brand=(.+?)(?:&s=([wc]))?$/.exec(h))){st.tab='cmp';st.br=m[1];if(m[2])st.s=m[2];}else if(h==='quiz-c'){st.tab='q';st.s='c';}else if(h==='quiz-w'){st.tab='q';st.s='w';}}
+fetch('memo.json?v='+(window.__MEMOV||'')).then(function(r){return r.json();}).then(function(d){DATA=d.items;DATA.forEach(function(x){BY[x.i]=x;});hash();draw();}).catch(function(){document.getElementById('out').innerHTML='<p class="note">資料載入失敗，請重新整理。</p>';});
+window.addEventListener('hashchange',function(){hash();SES=null;draw();});
+})();
+</script>
+<script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>
+</body></html>

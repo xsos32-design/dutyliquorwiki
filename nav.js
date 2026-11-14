@@ -42,6 +42,8 @@
   {g:'商訓知識庫', items:[
    {k:'kbw', t:'酒類商訓知識庫',   s:'桶型百科・威士忌・葡萄酒・品牌講義', ico:'book',
     u:'https://xsos32-design.github.io/dutyliquorwiki/#kb'},
+   {k:'wines', t:'葡萄酒產區分類', s:'歐洲・美洲・澳紐・地圖與酒款小圖', ico:'book',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/wines.html'},
    {k:'kbc', t:'巧克力商訓知識庫', s:'可可・製程・品牌商訓',             ico:'book',
     u:'https://xsos32-design.github.io/chocolatewiki/#kb'}
   ]},
@@ -56,6 +58,7 @@
   var p=location.pathname.toLowerCase();
   if(/changelog\.html$/.test(p)) return 'log';
   if(/rewards\.html$/.test(p)) return 'rwall';
+  if(/wines\.html$/.test(p)) return 'wines';
   if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
   if(/dutyliquorwiki/.test(p)) return 'wiki';
@@ -210,8 +213,8 @@
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
   /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡',
-   shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',rwall:'銷售獎勵圖牆',log:'更新日誌',owner:'負責人折扣圖'};
-  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',rwall:'shelf',log:'log',owner:'layers'};
+   shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',wines:'葡萄酒產區分類',rwall:'銷售獎勵圖牆',log:'更新日誌',owner:'負責人折扣圖'};
+  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',wines:'book',rwall:'shelf',log:'log',owner:'layers'};
   /* 同一站的子頁（品牌、產區、選酒…）：上方名稱用頁名，選單仍標示所屬的站 */
   var SUBN=(function(p){ p=p.toLowerCase();
    if(/brands\.html$/.test(p)) return '品牌故事'; if(/regions\.html$/.test(p)) return '產區與桶型';

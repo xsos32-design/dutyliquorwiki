@@ -7,7 +7,7 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=d8c19044';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwbuzz*/(function(){try{window.__xwBuzzV='3852b31f';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=36d24f04';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwbuzz*/(function(){try{window.__xwBuzzV='26600dd3';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=2ab0698b';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=e08e2bd6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
@@ -18,7 +18,9 @@
    {k:'owner', t:'負責人折扣圖',     s:'巧克力・選負責人看本月折扣',  ico:'layers',
     u:'https://xsos32-design.github.io/promotion/calendar.html#r124'},
    {k:'rwall', t:'銷售獎勵圖牆',     s:'酒＋巧克力・獎金／贈酒／Push Money', ico:'shelf',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'}
+    u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'},
+   {k:'buzz',  t:'近期話題商品',     s:'代言・聯名・得獎・國內外一年內', ico:'buzz',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/buzz.html'}
   ]},
   {g:'酒類', items:[
    {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
@@ -59,6 +61,7 @@
   var p=location.pathname.toLowerCase();
   if(/changelog\.html$/.test(p)) return 'log';
   if(/rewards\.html$/.test(p)) return 'rwall';
+  if(/buzz\.html$/.test(p)) return 'buzz';
   if(/wines\.html$/.test(p)) return 'wines';
   if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';
@@ -204,7 +207,7 @@
  +'@media(max-width:374px){#xwbar .xwsite{padding:0 9px!important}}'
  +'@media print{#xwbar,#xwfoot,#xws,#xwmenu,#xwtocp,#xwtocm{display:none!important}body{padding-top:0!important}html.fsbig body>.xwzz{zoom:1}}';
 
- var SVG={"log": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "book": "<path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z\"/><path d=\"M9 7h7M9 11h5\"/>", "cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>", "layers": "<path d=\"m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z\"/><path d=\"m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65\"/><path d=\"m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65\"/>"};
+ var SVG={"buzz": "<path d=\"m3 11 15-6v14L3 13z\"/><path d=\"M18 9.5a3 3 0 0 1 0 5\"/><path d=\"M7 13.5V18a2 2 0 0 0 4 0v-3\"/>", "log": "<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/>", "book": "<path d=\"M4 19.5A2.5 2.5 0 0 1 6.5 17H20\"/><path d=\"M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z\"/><path d=\"M9 7h7M9 11h5\"/>", "cal": "<rect x=\"3\" y=\"5\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M16 3v4M8 3v4M3 10h18\"/>", "wiki": "<path d=\"M10 2h4v4l2 3v12a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1V9l2-3z\"/><path d=\"M8 13h8\"/>", "promo": "<path d=\"M21 12a9 9 0 0 1-15.5 6.2L3 16\"/><path d=\"M3 12a9 9 0 0 1 15.5-6.2L21 8\"/><path d=\"M21 3v5h-5M3 21v-5h5\"/>", "card": "<path d=\"M12.6 2.6 21.4 11.4a2 2 0 0 1 0 2.8l-7.2 7.2a2 2 0 0 1-2.8 0L2.6 12.6A2 2 0 0 1 2 11.2V4a2 2 0 0 1 2-2h7.2a2 2 0 0 1 1.4.6z\"/><circle cx=\"7.5\" cy=\"7.5\" r=\"1.5\"/>", "shelf": "<path d=\"M3 9 4.5 4h15L21 9\"/><path d=\"M4 9v11h16V9\"/><path d=\"M3 9h18M9 20v-6h6v6\"/>", "choc": "<rect x=\"5\" y=\"3\" width=\"14\" height=\"18\" rx=\"2\"/><path d=\"M5 9h14M5 15h14M12 3v18\"/>", "search": "<circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"m20 20-3.5-3.5\"/>", "map": "<path d=\"M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z\"/><path d=\"M9 4v14M15 6v14\"/>", "page": "<path d=\"M6 2h9l5 5v15H6z\"/><path d=\"M14 2v6h6\"/>", "layers": "<path d=\"m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z\"/><path d=\"m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65\"/><path d=\"m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65\"/>"};
  function ic(k){return '<svg class="xwi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+(SVG[k]||'')+'</svg>';}
  function build(){
   if(document.getElementById('xwbar')) return;
@@ -214,8 +217,8 @@
   var bar=document.createElement('nav'); bar.id='xwbar';
   bar.setAttribute('aria-label','工具組導覽');
   /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡',
-   shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',wines:'葡萄酒產區分類',rwall:'銷售獎勵圖牆',log:'更新日誌',owner:'負責人折扣圖'};
-  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',wines:'book',rwall:'shelf',log:'log',owner:'layers'};
+   shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',wines:'葡萄酒產區分類',rwall:'銷售獎勵圖牆',buzz:'近期話題商品',log:'更新日誌',owner:'負責人折扣圖'};
+  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',wines:'book',rwall:'shelf',buzz:'buzz',log:'log',owner:'layers'};
   /* 同一站的子頁（品牌、產區、選酒…）：上方名稱用頁名，選單仍標示所屬的站 */
   var SUBN=(function(p){ p=p.toLowerCase();
    if(/brands\.html$/.test(p)) return '品牌故事'; if(/regions\.html$/.test(p)) return '產區與桶型';

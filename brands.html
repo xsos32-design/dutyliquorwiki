@@ -252,7 +252,7 @@ window.addEventListener('hashchange',hash);hash();run();
  function later(){setTimeout(function(){(window.requestIdleCallback||setTimeout)(start,{timeout:4000});},1800);}
  if(document.readyState==='complete')later();else window.addEventListener('load',later);
 })();
-</script><script id="bace-js">(function(){var U='bace_w.json?v=a5b7a82c',D=null,q=[],busy=0;
+</script><script id="bace-js">(function(){var U='bace_w.json?v=284b960d',D=null,q=[],busy=0;
 function get(cb){if(D)return cb(D);q.push(cb);if(busy)return;busy=1;fetch(U).then(function(r){return r.json()}).then(function(j){D=j;var a=q;q=[];a.forEach(function(f){f(D)})}).catch(function(){busy=0;q=[]})}
 function put(d){if(d.__ba||!d.open)return;var b=D&&D.b[d.id];if(!D){get(function(){put(d)});return}d.__ba=1;if(!b)return;
 var s=document.createElement('section');s.className='bacebp';s.innerHTML='<h3>品牌王牌卡 <i>BRAND ACE</i></h3>'+b[1].replace(/href="#/g,'href="./#').replace(/<a href="brands\.html#[^"]*">[^<]*<\/a>/,'');

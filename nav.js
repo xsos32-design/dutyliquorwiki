@@ -7,10 +7,11 @@
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=2394f625';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=80c42afd';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=f4275cb3';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=153fb83f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+/*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=f4275cb3';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwbuzz*/(function(){try{window.__xwBuzzV='54fabb28';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=acabff7f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=e08e2bd6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=11a326ea';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=5326162f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
@@ -51,6 +52,8 @@
     u:'https://xsos32-design.github.io/dutyliquorwiki/wines.html'},
    {k:'kbc', t:'巧克力商訓知識庫', s:'可可・製程・品牌商訓',             ico:'book',
     u:'https://xsos32-design.github.io/chocolatewiki/#kb'},
+   {k:'why', t:'為什麼百科', s:'加烈酒・雪莉・泥煤・調溫…50 個為什麼', ico:'book',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/why.html'},
    {k:'memo', t:'看圖記憶練習', s:'FAB・記憶口訣・同品牌對照・存記憶卡', ico:'memo',
     u:'https://xsos32-design.github.io/dutyliquorwiki/memo.html'}
   ]},
@@ -68,6 +71,7 @@
   if(/buzz\.html$/.test(p)) return 'buzz';
   if(/owner\.html$/.test(p)) return 'owner';
   if(/memo\.html$/.test(p)) return 'memo';
+  if(/why\.html$/.test(p)) return 'why';
   if(/wines\.html$/.test(p)) return 'wines';
   if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';

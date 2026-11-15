@@ -3,7 +3,7 @@
  if(window.__xwLook) return; window.__xwLook=1;
  /* r246 子頁固定列：品牌頁、產區頁、更新日誌、獎勵圖牆的 .tools／.jump 原本 top:0，會躲到頂端選單列下面；背景漸層透明會讓下面的字疊上來 */
  (function(){
-  if(!/\/(brands|regions|changelog|rewards)\.html$/.test(location.pathname)) return;
+  if(!/\/(brands|regions|changelog|rewards|why)\.html$/.test(location.pathname)) return;
   var st=document.createElement('style'); st.id='xwstick-css';
   st.textContent='body .tools,body .jump{background:var(--bg,#0E0C0A)!important;box-shadow:0 8px 12px -8px rgba(0,0,0,.6)}html[data-xwmode=light] body .tools,html[data-xwmode=light] body .jump{box-shadow:0 8px 12px -10px rgba(0,0,0,.25)}';
   (document.head||document.documentElement).appendChild(st);
@@ -46,10 +46,11 @@
  +'html:not(#_xa):not(#_xb) .r59k.xl.last em{background:#C9A45C!important;color:#16120C!important;margin-left:12px;padding:3px 8px!important}'
  +'html:not(#_xa):not(#_xb) .r59kg.xl>.r59k:last-child:nth-child(odd){grid-column:1/-1}'
  +'html:not(#_xa):not(#_xb) .r59kg.xl>.r59k:last-child:nth-child(odd) .xl-kim{aspect-ratio:16/5}'
- /* 工具卡：左邊金色圖示 */
+ /* 工具卡：左邊圖示（r249 改用 AI 生成圖示 img/why/ico_*.webp） */
  +'html:not(#_xa):not(#_xb) .r59t.xl{flex-direction:row!important;align-items:center!important;justify-content:flex-start!important;gap:11px!important}'
  +'html:not(#_xa):not(#_xb) .r59t.xl .xl-ti{flex:0 0 40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;color:#E8CD8A;border:1px solid rgba(201,164,92,.45);background:radial-gradient(circle at 30% 25%,rgba(201,164,92,.28),rgba(201,164,92,.06))}'
  +'html:not(#_xa):not(#_xb) .r59t.xl.hi .xl-ti{color:#9FE3CB;border-color:rgba(127,209,181,.5);background:radial-gradient(circle at 30% 25%,rgba(127,209,181,.25),rgba(127,209,181,.05))}'
+ +'html:not(#_xa):not(#_xb) .r59t.xl .xl-ti.xl-ai{flex:0 0 48px;height:48px;border-radius:12px;background-size:cover!important;background-position:center!important;background-repeat:no-repeat!important;border:1px solid rgba(201,164,92,.5);box-shadow:0 2px 8px rgba(0,0,0,.35)}'
  +'html:not(#_xa):not(#_xb) .r59t.xl .xl-tt{display:flex;flex-direction:column;gap:3px;min-width:0}'
  +'html:not(#_xa):not(#_xb) #mmhome{margin:0!important}'
  /* 知識庫章節橫幅 */
@@ -76,11 +77,11 @@
   $$('.r59h:not(.xl)').forEach(function(h){var t=h.textContent.trim(),e=EN[t];h.classList.add('xl');if(e)h.innerHTML=esc(t)+'<i>'+e+'</i>';});
   $$('.r59kg:not(.xl)').forEach(function(g){g.classList.add('xl');});
   $$('.r59k:not(.xl)').forEach(function(b){var k=(b.getAttribute('data-r59')||'').replace('kbg:','');if(!k)return;b.classList.add('xl');
-   var im=document.createElement('img');im.className='xl-kim';im.alt='';im.loading='lazy';im.decoding='async';im.src='img/kbmap/wide/g_'+k+'.webp';
+   var im=document.createElement('img');im.className='xl-kim';im.alt='';im.loading='lazy';im.decoding='async';im.src='img/kbmap/wide2/g_'+k+'.webp';
    im.onerror=function(){im.remove();};b.insertBefore(im,b.firstChild);});
   $$('.r59t:not(.xl)').forEach(function(t){var k=t.getAttribute('data-r59');if(!ICO[k])return;t.classList.add('xl');
    var w=document.createElement('div');w.className='xl-tt';while(t.firstChild)w.appendChild(t.firstChild);
-   var i=document.createElement('i');i.className='xl-ti';i.setAttribute('aria-hidden','true');i.innerHTML=ICO[k];t.appendChild(i);t.appendChild(w);});
+   var i=document.createElement('i');i.className='xl-ti';i.setAttribute('aria-hidden','true');i.style.backgroundImage='url(https://xsos32-design.github.io/dutyliquorwiki/img/why/ico_'+k+'.webp)';i.classList.add('xl-ai');t.appendChild(i);t.appendChild(w);});
  }
  /* ---------- 知識庫章節 ---------- */
  function info(id){var c=document.querySelector('#kbview .kmp-card[data-c="'+id+'"]');if(!c)return null;
@@ -88,7 +89,7 @@
   var p=c.querySelector('.kmp-tx>p');var lr=p?p.textContent.replace(/^看完會/,'').trim():'';
   return {en:(c.querySelector('.kmp-tx>em')||{}).textContent||'',lr:lr,mt:((c.querySelector('.kmp-tx>small')||{}).textContent||'').trim(),
    st:(no?'第 '+no.textContent.trim()+' 步・':'')+(sb?sb.textContent.trim():'')+'・第 '+(cards.indexOf(c)+1)+'／'+cards.length+' 章'};}
- var SRC={"w": {"scotch": "w_grains", "terms": "still", "cask": "w_staves", "wjt": "w_j_yama", "wbase": "w_terroir", "wgrape": "w_g_cabs", "wlaw": "w_bdx", "wworld": "ph_cognacvine", "winesp": "w_bdx", "weu": "w_bgn", "wam": "w_usa", "wau": "w_aus", "wtaste": "w_swirl", "bcog": "w_cogv", "bchn": "w_sorg", "bsake": "w_sake", "bspi": "w_cocktails", "wqa": "w_q_highball", "wsell": "w_pairing", "duty": "pour", "mbrand": "ph_glenfiddich", "mprod": "ob2_macallan-12y-dc", "mproc": "still_system", "blend": "w_blender", "sheets": "ph_glendronach", "pics": "ph_islay", "mind": "w_iris", "memop": "ob2_macallan-12y-dc"}, "c": {"t-basic": "snap2", "cbean": "pod2", "cmake": "roast", "ctype": "dmw", "ctaste": "w_c_wheel", "t-talk": "ob_c2732706011650", "k-scene": "ob_c2732706011990", "k-cfaq": "w_c_bloom", "k-best": "truffle", "k-story": "dubai", "k-mnemo": "w_c_tablet", "memoc": "ob_c2732706011650", "t-rule": "ob_c2732706012000", "t-allergen": "w_c_liq", "cbrand": "w_c_praline", "venchi": "ob_c2732895000940"}};
+ var SRC={"w": {"scotch": "scotch", "terms": "terms", "cask": "cask", "whyw": "fortified", "wjt": "wjt", "wbase": "wbase", "wgrape": "wgrape", "wlaw": "wlaw", "wworld": "wworld", "winesp": "w_bdx", "weu": "weu", "wam": "wam", "wau": "wau", "wtaste": "wtaste", "bcog": "bcog", "bchn": "bchn", "bsake": "bsake", "bspi": "bspi", "wqa": "wqa", "wsell": "wsell", "duty": "duty", "mbrand": "mbrand", "mprod": "mprod", "mproc": "mproc", "blend": "blend", "sheets": "sheets", "pics": "pics", "mind": "mind", "memop": "ob2_macallan-12y-dc"}, "c": {"t-basic": "t-basic", "cbean": "cbean", "cmake": "cmake", "ctype": "ctype", "ctaste": "ctaste", "whyc": "cmake", "t-talk": "t-talk", "k-scene": "k-scene", "k-cfaq": "k-cfaq", "k-best": "k-best", "k-story": "k-story", "k-mnemo": "k-mnemo", "memoc": "ob_c2732706011650", "t-rule": "t-rule", "t-allergen": "t-allergen", "cbrand": "cbrand", "venchi": "venchi"}};
  function bars(){var m=0;['xwbar','kbnavbar','r116bar'].forEach(function(i){var e=document.getElementById(i);if(!e)return;var p=getComputedStyle(e).position;if(p!=='sticky'&&p!=='fixed')return;var r=e.getBoundingClientRect();if(r.top<170&&r.bottom>m&&r.height<260)m=r.bottom;});return m;}
  function chapters(){
   $$('#kbview .kbchap[data-kb]').forEach(function(ch){var id=ch.getAttribute('data-kb');if(id==='kbmap'||id==='check')return;
@@ -97,7 +98,7 @@
     var sb=(SRC[SITE]||{})[id],dup=false;if(sb){$$('img',ch).slice(0,4).forEach(function(x){if(!x.closest('.xl-ch')&&(x.getAttribute('src')||'').indexOf(sb)>=0)dup=true;});}
     var h2t=h2.textContent.toLowerCase();if(d.en&&h2t.indexOf(d.en.toLowerCase())>=0)d.en='';
     if(dup)b.classList.add('noimg');
-    b.innerHTML=(dup?'':'<img src="img/kbmap/wide/'+esc(id)+'.webp" alt="" loading="lazy" decoding="async"><span class="xl-chs"></span>')+'<div class="xl-cht"><span class="xl-st">'+esc(d.st)+'</span>'
+    b.innerHTML=(dup?'':'<img src="img/kbmap/wide2/'+esc(id)+'.webp" alt="" loading="lazy" decoding="async"><span class="xl-chs"></span>')+'<div class="xl-cht"><span class="xl-st">'+esc(d.st)+'</span>'
      +(d.en?'<span class="xl-en">'+esc(d.en)+'</span>':'')+(d.lr?'<p class="xl-lr"><b>看完會</b>'+esc(d.lr)+'</p>':'')+(d.mt?'<small class="xl-mt">'+esc(d.mt)+'</small>':'')+'</div>';
     var im=b.querySelector('img');if(im)im.onerror=function(){im.remove();b.querySelector('.xl-chs').remove();b.querySelector('.xl-cht').style.marginTop='12px';};
     h2.parentNode.insertBefore(b,h2.nextSibling);}}

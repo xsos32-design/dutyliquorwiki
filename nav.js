@@ -11,9 +11,9 @@
  /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=fbdf30fd';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=e29610ce';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwwine*/(function(){try{if(!/\/dutyliquorwiki\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwine.js?v=5f5b6ca6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
-/*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=f4275cb3';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwbuzz*/(function(){try{window.__xwBuzzV='54fabb28';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=acabff7f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=40abb434';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=f4275cb3';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=5326162f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */

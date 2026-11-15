@@ -12,7 +12,7 @@
    function ago(d){var m=Math.round((now-Date.parse(d))/(30.4*864e5));return m<1?'本月':m+' 個月前';}
    function card(c){
     if(!c||!c.id||!M[c.id])return; var body=c.querySelector(':scope > .body'); if(!body)return;
-    if(c.__bz){var ex=body.querySelector(':scope > .bzsec'),f0=body.querySelector(':scope > div.sec:not(.bzsec):not(.mmsec)');if(ex&&f0&&ex.previousElementSibling!==f0&&(c.__bzm=(c.__bzm||0)+1)<=3)body.insertBefore(ex,f0.nextSibling);return;}
+    if(c.__bz){if(body.hasAttribute('data-xtab'))return;var ex=body.querySelector(':scope > .bzsec'),f0=body.querySelector(':scope > div.sec:not(.bzsec):not(.mmsec)');if(ex&&f0&&ex.previousElementSibling!==f0&&(c.__bzm=(c.__bzm||0)+1)<=3)body.insertBefore(ex,f0.nextSibling);return;}
     c.__bz=1;
     function hit(it){return !!(it.hit&&it.hit[c.id]);}
     var its=M[c.id].slice().sort(function(a,b){var x=hit(b)-hit(a);return x||(a.d<b.d?1:-1);}),nh=its.filter(hit).length;

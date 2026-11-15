@@ -9,64 +9,39 @@
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=2394f625';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=fbdf30fd';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+/*xwtabs*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js?v=dbe05373';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=37c42dd0';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwwine*/(function(){try{if(!/\/dutyliquorwiki\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwine.js?v=5f5b6ca6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwbuzz*/(function(){try{window.__xwBuzzV='54fabb28';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=acabff7f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=40abb434';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=f4275cb3';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=e3e84090';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwbuzz*/(function(){try{window.__xwBuzzV='f3b185ae';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=a74c9a13';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=7c832461';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=5326162f';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=796, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
-  {g:'活動', items:[
-   {k:'cal',   t:'活動月曆',         s:'酒＋巧克力・幾號到幾號',   ico:'cal',
-    u:'https://xsos32-design.github.io/promotion/calendar.html'},
-   {k:'owner', t:'負責人折扣圖',     s:'巧克力・選負責人看本月折扣',  ico:'layers',
-    u:'https://xsos32-design.github.io/promotion/owner.html'},
-   {k:'rwall', t:'銷售獎勵圖牆',     s:'酒＋巧克力・獎金／贈酒／Push Money', ico:'shelf',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'},
-   {k:'buzz',  t:'近期話題商品',     s:'代言・聯名・得獎・國內外一年內', ico:'buzz',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/buzz.html'}
+  {g:'查商品', items:[
+   {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki', u:'https://xsos32-design.github.io/dutyliquorwiki/'},
+   {k:'choc',  t:'巧克力速讀檔案', s:N_C+' 項・10 大類・話術／商訓', ico:'choc', u:'https://xsos32-design.github.io/chocolatewiki/'},
+   {k:'shelf', t:'我的架上', s:'本月目標・獎勵・抽考', ico:'shelf', two:[['酒','shelf','https://xsos32-design.github.io/dutyliquorwiki/#shelf'],['巧克力','cshelf','https://xsos32-design.github.io/chocolatewiki/#shelf']]}
   ]},
-  {g:'酒類', items:[
-   {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/'},
-   {k:'promo', t:'活動比較卡',       s:'檔期異動・上下月比較',     ico:'promo',
-    u:'https://xsos32-design.github.io/promotion/'},
-   {k:'card',  t:'折扣小卡',         s:'現場快查・折扣一覽',       ico:'card',
-    u:'https://xsos32-design.github.io/promotion/card.html'},
-   {k:'shelf', t:'我的架上',         s:'本月目標・獎勵・抽考',     ico:'shelf',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/#shelf'}
+  {g:'本月活動', items:[
+   {k:'cal',   t:'活動月曆', s:'酒＋巧克力・幾號到幾號', ico:'cal', u:'https://xsos32-design.github.io/promotion/calendar.html'},
+   {k:'promo', t:'活動比較卡', s:'檔期異動・上下月比較', ico:'promo', two:[['酒','promo','https://xsos32-design.github.io/promotion/'],['巧克力','cpromo','https://xsos32-design.github.io/chocolatepromo/']]},
+   {k:'card',  t:'折扣小卡', s:'現場快查・折扣一覽', ico:'card', two:[['酒','card','https://xsos32-design.github.io/promotion/card.html'],['巧克力','ccard','https://xsos32-design.github.io/chocolatepromo/card.html']]},
+   {k:'owner', t:'負責人折扣圖', s:'巧克力・選負責人看本月折扣', ico:'layers', u:'https://xsos32-design.github.io/promotion/owner.html'},
+   {k:'rwall', t:'銷售獎勵圖牆', s:'酒＋巧克力・獎金／贈酒／Push Money', ico:'shelf', u:'https://xsos32-design.github.io/dutyliquorwiki/rewards.html'},
+   {k:'buzz',  t:'近期話題商品', s:'代言・聯名・得獎・國內外一年內', ico:'buzz', u:'https://xsos32-design.github.io/dutyliquorwiki/buzz.html'}
   ]},
-  {g:'巧克力', items:[
-   {k:'choc',   t:'巧克力速讀檔案', s:N_C+' 項・10 大類・話術／商訓', ico:'choc',
-    u:'https://xsos32-design.github.io/chocolatewiki/'},
-   {k:'cpromo', t:'活動比較卡',         s:'檔期異動・上下月比較',       ico:'promo',
-    u:'https://xsos32-design.github.io/chocolatepromo/'},
-   {k:'ccard',  t:'折扣小卡',           s:'現場快查・折扣一覽',         ico:'card',
-    u:'https://xsos32-design.github.io/chocolatepromo/card.html'},
-   {k:'cshelf', t:'我的架上',           s:'出清目標・Push Money・抽考', ico:'shelf',
-    u:'https://xsos32-design.github.io/chocolatewiki/#shelf'}
-  ]},
-  {g:'商訓知識庫', items:[
-   {k:'kbw', t:'酒類商訓知識庫',   s:'桶型百科・威士忌・葡萄酒・品牌講義', ico:'book',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/#kb'},
-   {k:'wines', t:'葡萄酒產區分類', s:'歐洲・美洲・澳紐・地圖與酒款小圖', ico:'book',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/wines.html'},
-   {k:'kbc', t:'巧克力商訓知識庫', s:'可可・製程・品牌商訓',             ico:'book',
-    u:'https://xsos32-design.github.io/chocolatewiki/#kb'},
-   {k:'wkit', t:'葡萄酒・香檳速成', s:'三個問題推得準・預算・場景・話術', ico:'book',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/winekit.html'},
-   {k:'why', t:'為什麼百科', s:'加烈酒・雪莉・泥煤・調溫…50 個為什麼', ico:'book',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/why.html'},
-   {k:'memo', t:'看圖記憶練習', s:'FAB・記憶口訣・同品牌對照・存記憶卡', ico:'memo',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/memo.html'}
+  {g:'學習', items:[
+   {k:'kbw', t:'商訓知識庫', s:'新手地圖・桶型・產區・品牌講義', ico:'book', two:[['酒','kbw','https://xsos32-design.github.io/dutyliquorwiki/#kb'],['巧克力','kbc','https://xsos32-design.github.io/chocolatewiki/#kb']]},
+   {k:'why', t:'為什麼百科', s:'加烈酒・雪莉・泥煤・調溫…50 個為什麼', ico:'book', u:'https://xsos32-design.github.io/dutyliquorwiki/why.html'},
+   {k:'wkit', t:'葡萄酒・香檳速成', s:'三個問題推得準・預算・場景・話術', ico:'book', u:'https://xsos32-design.github.io/dutyliquorwiki/winekit.html'},
+   {k:'wines', t:'葡萄酒產區分類', s:'歐洲・美洲・澳紐・地圖與酒款小圖', ico:'book', u:'https://xsos32-design.github.io/dutyliquorwiki/wines.html'},
+   {k:'memo', t:'看圖記憶練習', s:'FAB・記憶口訣・同品牌對照・存記憶卡', ico:'memo', u:'https://xsos32-design.github.io/dutyliquorwiki/memo.html'}
   ]},
   {g:'網站資訊', items:[
-   {k:'log', t:'更新日誌', s:'每次修改了什麼・最新在最上面', ico:'log',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/changelog.html'},
-   {k:'chk', t:'網站檢查', s:'手機打不開・一直轉圈・白畫面時用', ico:'log',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/check.html'}
+   {k:'log', t:'更新日誌', s:'每次修改了什麼・最新在最上面', ico:'log', u:'https://xsos32-design.github.io/dutyliquorwiki/changelog.html'},
+   {k:'chk', t:'網站檢查', s:'手機打不開・一直轉圈・白畫面時用', ico:'log', u:'https://xsos32-design.github.io/dutyliquorwiki/check.html'}
   ]}
  ];
  var OWNER='小韋';
@@ -161,7 +136,7 @@
  +'#xws .xwtg{display:inline-block;font-size:11px;font-weight:700;padding:2px 7px;border-radius:999px;margin-right:6px;vertical-align:1px;font-style:normal}'
  +'#xws .xwtg.w{background:rgba(201,164,92,.2);color:#E8CD8A;border:1px solid rgba(201,164,92,.5)}'
  +'#xws .xwtg.c{background:rgba(233,180,138,.14);color:#E9B48A;border:1px solid rgba(233,180,138,.45)}'
- +'#xws .xwpm{color:#7FD1B5!important;font-weight:700}'
+ +'#xws .xwpm{color:#7FD1B5!important;font-weight:700}'+'/*r259m*/#xwmenu .xwm2{display:flex;gap:10px;align-items:center;padding:7px 8px 7px 10px;border-radius:10px;color:#EDE6D6}#xwmenu .xwm2.on{background:rgba(201,164,92,.10)}#xwmenu .xwm2>span:not(.xwm2b){flex:1;min-width:0}#xwmenu .xwm2 b{display:block;font-size:13.5px;font-weight:600}#xwmenu .xwm2 small{display:block;font-size:11px;opacity:.65;margin-top:1px}#xwmenu .xwm2b{display:flex;gap:6px;flex:none}#xwmenu .xwmi.xwmi2{display:inline-flex;padding:7px 11px;border:1px solid rgba(201,164,92,.45);border-radius:999px;font-size:13px;font-weight:700;color:#E8CD8A;white-space:nowrap}#xwmenu .xwmi.xwmi2.on{background:#C9A45C;color:#17120B;border-color:#C9A45C}'+'#xws .xwr .xwone{color:#D9CBAE;font-size:12.5px;line-height:1.45;margin-top:2px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}'
  +'#xws .xwmd{color:#CFC4AE!important}'
  +'#xws .xwseg{flex-wrap:wrap}#xws .xwseg em{font-style:normal;opacity:.7;font-size:11.5px;margin-left:2px}'
  +'#xws .xwtg.a{background:rgba(127,209,181,.14);color:#7FD1B5;border:1px solid rgba(127,209,181,.45)}'
@@ -263,7 +238,7 @@
   bar.addEventListener('click',function(e){
    var b=e.target.closest?e.target.closest('button.xwdd'):null; if(!b)return;
    e.preventDefault(); if(openB===b){closeM();return;}
-   var V=view(); mn.innerHTML=GROUPS.map(function(G){return '<div class="xwmg">'+G.g+'</div>'+G.items.map(function(s){return '<a class="xwmi'+(s.k===V?' on':'')+'" href="'+s.u+'"'+(s.k===V?' aria-current="page"':'')+'>'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');}).join('');
+   var V=view(); mn.innerHTML=GROUPS.map(function(G){return '<div class="xwmg">'+G.g+'</div>'+G.items.map(function(s){if(s.two){var on2=s.two.some(function(x){return x[1]===V;});return '<div class="xwm2'+(on2?' on':'')+'">'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span><span class="xwm2b">'+s.two.map(function(x){return '<a class="xwmi xwmi2'+(x[1]===V?' on':'')+'" href="'+x[2]+'"'+(x[1]===V?' aria-current="page"':'')+'>'+x[0]+'</a>';}).join('')+'</span></div>';}return '<a class="xwmi'+(s.k===V?' on':'')+'" href="'+s.u+'"'+(s.k===V?' aria-current="page"':'')+'>'+ic(s.ico)+'<span><b>'+s.t+'</b><small>'+s.s+'</small></span></a>';}).join('');}).join('');
    var r=b.getBoundingClientRect(); mn.hidden=false;
    mn.style.maxHeight=Math.max(200,window.innerHeight-r.bottom-14)+'px';
    var w=mn.offsetWidth; mn.style.left=Math.max(8,Math.min(r.left,window.innerWidth-w-8))+'px'; mn.style.top=(r.bottom+6)+'px';
@@ -500,12 +475,12 @@
    H.textContent='學習用：在這一頁所有商品卡的內文裡找這個字'+(window.__xwFindEx?'（例如'+window.__xwFindEx+'）':'')+'，只留下有這個字的卡，字會標亮，下方用 ‹ › 一個一個看。'; return; }
   if(!q){ H.textContent=hintTxt(); emptyView(o); return; }
   if(!SIDX){ H.textContent='載入中…'; loadIdx().then(srun).catch(function(){ H.textContent='搜尋資料載入失敗，請確認網路後再試一次。'; }); return; }
-  var words=raw.split(/\s+/).map(norm).filter(Boolean), out=[], n=0, cnt={all:0,w:0,c:0,a:0,br:0,g:0};
+  var words=raw.split(/\s+/).map(norm).filter(Boolean), out=[], n=0, cnt={all:0,w:0,c:0,a:0,br:0,g:0};/*r259sr*/var TK=[];words.forEach(function(w){(w.match(/[0-9]+|[a-z]+|[^0-9a-z]+/g)||[]).forEach(function(t){TK.push(t);});});
   for(var i=0;i<SIDX.length;i++){ var x=SIDX[i];
    if(!XS.match(raw,x.k)) continue;
    cnt.all++; cnt[(x.s==='b'||x.s==='r')?'br':x.s]++;
    if(!inCat(x)) continue;
-   var kn=x.kn, sc=(kn===q||norm(x.n)===q||(x.e&&norm(x.e)===q))?0:(kn.indexOf(q)===0?1:(kn.indexOf(words[0]||q)>=0?2:(x.k.indexOf(q)>=0?3:4)));
+   var kn=x.kn, sc=(kn===q||norm(x.n)===q||(x.e&&norm(x.e)===q))?0:(kn.indexOf(q)===0?1:((TK.length&&TK.every(function(t){return kn.indexOf(t)>=0;}))?2:(kn.indexOf(words[0]||q)>=0?3:(x.k.indexOf(q)>=0?4:5))));
    n++; out.push([sc*10+(TYPO[x.s]||0),x]); }
   [].forEach.call(o.querySelectorAll('.xwseg button'),function(b){ var c=b.getAttribute('data-c'), e=b.querySelector('em'); if(e) e.textContent=cnt[c]?' '+cnt[c]:''; });
   if(!cnt.all&&!srun.fz){ if(!SVOC){SVOC={};SIDX.forEach(function(x){String(x.e||'').toLowerCase().split(/[^a-z]+/).forEach(function(w){if(w.length>=4)SVOC[w]=(SVOC[w]||0)+1;});});}
@@ -521,11 +496,12 @@
    var w=x.s==='w', c=x.s==='c';
    var u=x.u||((w?'https://xsos32-design.github.io/dutyliquorwiki/#':'https://xsos32-design.github.io/chocolatewiki/#')+encodeURIComponent(x.i));
    var gl={a:'card',b:(/^c:/.test(x.i)?'choc':'wiki'),r:'map',g:'page'}[x.s];
-   var line2=(w||c)?[x.c,x.p?'NT$'+Number(x.p).toLocaleString():''].filter(Boolean).join('・'):[x.e,x.c].filter(Boolean).join('・');
+   var line2=(w||c)?[x.c,x.a,x.p?'NT$'+Number(x.p).toLocaleString():''].filter(Boolean).join('・'):[x.e,x.c].filter(Boolean).join('・');
    return '<a class="xwr t'+x.s+'" href="'+esc(u)+'" data-id="'+esc(x.i)+'" data-s="'+x.s+'">'
     +(x.g?'<span class="xwph" style="background-image:url(\''+esc(x.g)+'\')"></span>':'<span class="xwph no">'+(gl?ic(gl):'')+'</span>')
     +'<span><b><i class="xwtg '+x.s+'">'+TYPN[x.s]+'</i>'+esc(x.n)+'</b>'
     +'<span>'+esc(line2)+'</span>'
+    +(x.o?'<span class="xwone">'+esc(x.o)+'</span>':'')
     +(x.m?'<span class="'+((w||c)?'xwpm':'xwmd')+'">'+esc(x.m)+'</span>':'')+'</span></a>';
   }).join('');
  }

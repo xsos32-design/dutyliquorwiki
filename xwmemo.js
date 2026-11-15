@@ -71,7 +71,7 @@ function xwFI(k,sz){var d=XWFI[k];if(!d)return '';return '<svg viewBox="0 0 24 2
   h+='<div class="mmfab">'+(x.F?'<div><b class="f">F</b><span><em>是什麼</em>'+E(cut(x.F,64))+'</span></div>':'')+(x.A.length?'<div><b class="a">A</b><span><em>為什麼好</em>'+x.A.map(function(a){return E(cut(a,46));}).join('<br>')+'</span></div>':'')+(x.B?'<div><b class="b">B</b><span><em>客人得到</em>'+E(cut(x.B,70))+'</span></div>':'')+'</div>';
   h+='<div class="mmbt"><a href="'+base+'memo.html#card='+encodeURIComponent(c.id)+'">存成記憶卡</a><a href="'+base+'memo.html#brand='+encodeURIComponent(p.brand||'')+'&s='+SITE+'">同品牌對照</a><a href="'+base+'memo.html#quiz-'+SITE+'">看圖練習</a></div>';
   var d=document.createElement('div');d.className='sec mmsec';d.innerHTML=h;return d;}
- function place(c){var body=c.querySelector(':scope > .body');if(!body)return;var ex=body.querySelector(':scope > .mmsec');
+ function place(c){var body=c.querySelector(':scope > .body');if(!body)return;var ex=body.querySelector(':scope > .mmsec');if(ex&&body.hasAttribute('data-xtab'))return;
   var anchor=body.querySelector(':scope > .bzsec')||body.querySelector(':scope > div.sec:not(.mmsec):not(.bzsec)');
   if(!ex){if(c.__mm)return;c.__mm=1;ex=block(c);if(!ex)return;}
   if(anchor&&ex.previousElementSibling!==anchor&&(c.__mmm=(c.__mmm||0)+1)<=3)body.insertBefore(ex,anchor.nextSibling);else if(!anchor&&!ex.parentNode)body.insertBefore(ex,body.firstChild);}

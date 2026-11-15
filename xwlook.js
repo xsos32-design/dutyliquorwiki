@@ -12,6 +12,8 @@
   function go(){fix();var n=0,iv=setInterval(function(){fix();if(++n>20)clearInterval(iv);},300);addEventListener('resize',fix);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',go);else go();
  })();
+ /* r259 子頁頁首的「‹ 回○○速讀檔案」和頂端列的返回鍵重複：有頂端列時藏起來（站名按鈕也能回速讀檔案） */
+ (function(){var st=document.createElement('style');st.id='xwnoback-css';st.textContent='body:has(#xwbar) header>a.back{display:none!important}';(document.head||document.documentElement).appendChild(st);})();
  var P=location.pathname, SITE=/chocolatewiki/.test(P)?'c':(/\/dutyliquorwiki\/(index\.html)?$/.test(P)?'w':'');
  if(!SITE) return;
  function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}

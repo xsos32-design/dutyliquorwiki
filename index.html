@@ -4736,6 +4736,7 @@ function fixText(root){
 function head(e){var h=e.querySelector(':scope>summary h3,:scope>summary,:scope>h3,:scope>.tbhead b');return h?h.textContent.replace(/\s+/g,''):'';}
 function rank(e){
  var c=e.className||'',t=head(e);
+ if(window.__xwRank){var _xr=window.__xwRank(e);if(_xr!=null)return _xr;}
  if(/\bwarn\b/.test(c))return 90;
  if(/\bbsrc\b/.test(c))return 95;
  if(/\btalkbox\b/.test(c))return 10;

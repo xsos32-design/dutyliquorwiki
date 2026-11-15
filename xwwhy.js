@@ -18,7 +18,7 @@
  var RE=new RegExp(parts.join('|'),'gi'), RES=new RegExp(parts.join('|'),'g');
  var NEG=T.n||{},NEGB=T.b||{};
  function look(word){var lw=word.toLowerCase();for(var i=0;i<terms.length;i++){var t=terms[i][0];if(t===word)return terms[i];if(lat.test(t)&&t.length>4&&t.toLowerCase()===lw)return terms[i];}return null;}
- var SKIP='A,BUTTON,INPUT,TEXTAREA,SELECT,SCRIPT,STYLE,H1,H2,SUMMARY,LABEL,CODE,SVG,CANVAS';
+ var SKIP='A,BUTTON,INPUT,TEXTAREA,SELECT,SCRIPT,STYLE,H1,H2,H3,H4,SUMMARY,LABEL,CODE,SVG,CANVAS';
  var SKIPC=/(^|\s)(bzsec|mmsec|xwwl|shots|r79c|kbnav|kmp-|xwwhy|nm|ttl|cardhd|lbl|tagrow|chip|btn)(\s|$)/;
  function okNode(n,root){for(var e=n.parentNode;e&&e!==root;e=e.parentNode){if(SKIP.indexOf(e.nodeName)>=0)return false;if(e.className&&typeof e.className==='string'&&SKIPC.test(e.className))return false;if(e.isContentEditable)return false;}return true;}
  function link(root,max){

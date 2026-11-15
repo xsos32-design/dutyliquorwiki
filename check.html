@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0B0A09">
+<title>網站檢查・手機打不開時用</title>
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#0B0A09;color:#EDE6D6;font:16px/1.6 "Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif;padding:0 0 60px}
+.wrap{max-width:720px;margin:0 auto;padding:16px}
+h1{font-size:22px;color:#F2D89A;margin:8px 0 4px}
+h2{font-size:17px;color:#F2D89A;margin:22px 0 8px;border-bottom:1px solid rgba(201,164,92,.35);padding-bottom:4px}
+p.s{color:#BDB3A0;margin:0 0 12px;font-size:14px}
+.box{background:#17140F;border:1px solid rgba(201,164,92,.35);border-radius:12px;padding:12px 14px;margin:10px 0}
+.ok{color:#9BD89B}.bad{color:#FF9C8A}.warn{color:#F2C46A}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td{padding:5px 4px;border-bottom:1px solid rgba(255,255,255,.07);vertical-align:top}
+td:first-child{color:#BDB3A0;width:38%}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+button,a.b{appearance:none;border:1px solid rgba(201,164,92,.55);background:#1F1A12;color:#F2D89A;border-radius:10px;padding:10px 14px;font:600 15px/1.2 inherit;font-family:inherit;text-decoration:none;cursor:pointer}
+button.main{background:#C9A45C;color:#1A140A;border-color:#C9A45C}
+#adv li{margin:4px 0}
+pre{white-space:pre-wrap;word-break:break-all;font-size:12px;color:#BDB3A0;background:#100E0B;border-radius:8px;padding:8px;max-height:220px;overflow:auto}
+small{color:#9E9582}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>網站檢查</h1>
+<p class="s">手機打不開、一直轉圈、白畫面、版面怪怪的時候，打開這一頁。檢查完把整頁截圖傳給小韋，或按「複製檢查結果」貼給小韋。</p>
+
+<div class="box" id="adv"><b>檢查中…</b></div>
+
+<div class="btns">
+<button class="main" id="bfix" type="button">清除本站暫存並重新開啟</button>
+<button id="bcopy" type="button">複製檢查結果</button>
+</div>
+<p class="s">「清除本站暫存」只會清掉這四個網站存在手機裡的舊版本（不會動到手機其他資料、我的架上清單與設定），清完會重新下載最新版。</p>
+
+<h2>直接開啟</h2>
+<div class="btns">
+<a class="b" href="./?fresh=1">酒類速讀檔案</a>
+<a class="b" href="../chocolatewiki/?fresh=1">巧克力速讀檔案</a>
+<a class="b" href="../promotion/?fresh=1">酒類活動</a>
+<a class="b" href="../chocolatepromo/?fresh=1">巧克力活動</a>
+</div>
+
+<h2>連線測試</h2>
+<div class="box"><table id="net"><tr><td>測試中…</td><td></td></tr></table></div>
+
+<h2>這支手機</h2>
+<div class="box"><table id="dev"></table></div>
+
+<h2>最近的錯誤紀錄</h2>
+<div class="box" id="errs"><small>沒有紀錄</small></div>
+
+<h2>本站暫存</h2>
+<div class="box"><table id="sw"><tr><td>讀取中…</td><td></td></tr></table></div>
+<p class="s"><small>網址 dutyliquorwiki/check.html・版本 r252</small></p>
+</div>
+<script>
+(function(){
+var R=[];function log(k,v){R.push(k+'：'+v);}
+function $(i){return document.getElementById(i);}
+function row(t,k,v,c){var tr=document.createElement('tr');var a=document.createElement('td');a.textContent=k;var b=document.createElement('td');b.textContent=v;if(c)b.className=c;tr.appendChild(a);tr.appendChild(b);t.appendChild(tr);log(k,v);}
+var ua=navigator.userAgent||'';
+function m(r){var x=ua.match(r);return x?x[1]:'';}
+var andv=m(/Android\s([\d.]+)/), chv=m(/Chrome\/([\d.]+)/), chm=parseInt(chv,10)||0;
+var app='';
+if(/\bLine\//i.test(ua))app='LINE 內建瀏覽器';
+else if(/FBAN|FBAV|FB_IAB/.test(ua))app='Facebook／Messenger 內建瀏覽器';
+else if(/Instagram/.test(ua))app='Instagram 內建瀏覽器';
+else if(/SamsungBrowser\/([\d.]+)/.test(ua))app='Samsung 網際網路 '+m(/SamsungBrowser\/([\d.]+)/);
+else if(/EdgA\//.test(ua))app='Edge';
+else if(/Firefox\//.test(ua))app='Firefox '+m(/Firefox\/([\d.]+)/);
+else if(/OPR\//.test(ua))app='Opera';
+else if(/MiuiBrowser/.test(ua))app='小米瀏覽器';
+else if(/HeyTapBrowser|OppoBrowser/.test(ua))app='OPPO 瀏覽器';
+else if(/; wv\)/.test(ua))app='App 內建網頁（WebView）';
+else if(/CriOS/.test(ua))app='iPhone Chrome';
+else if(/iPhone|iPad/.test(ua))app='iPhone Safari';
+else if(chm)app='Chrome';
+var standalone=(window.matchMedia&&matchMedia('(display-mode: standalone)').matches)||navigator.standalone;
+var T=$('dev');
+row(T,'系統',andv?'Android '+andv:(/iPhone|iPad/.test(ua)?'iOS '+m(/OS ([\d_]+)/).replace(/_/g,'.'):(navigator.platform||'')));
+row(T,'瀏覽器',(app||'其他')+(chv?'（核心 Chrome '+chv+'）':''));
+row(T,'開啟方式',standalone?'主畫面 App':'瀏覽器分頁');
+row(T,'螢幕',screen.width+'×'+screen.height+'，視窗 '+innerWidth+'×'+innerHeight+'，倍率 '+(window.devicePixelRatio||1));
+if(navigator.deviceMemory)row(T,'記憶體（約）',navigator.deviceMemory+' GB',navigator.deviceMemory<=2?'warn':'');
+if(navigator.hardwareConcurrency)row(T,'處理器核心',navigator.hardwareConcurrency);
+var cn=navigator.connection;if(cn)row(T,'網路',(cn.effectiveType||'')+(cn.downlink?'，約 '+cn.downlink+' Mbps':'')+(cn.saveData?'，省流量模式開著':''),cn.saveData?'warn':'');
+var lsok=false;try{localStorage.setItem('xw_chk','1');localStorage.removeItem('xw_chk');lsok=true;}catch(e){}
+row(T,'手機儲存（設定、我的架上）',lsok?'正常':'不能用（設定不會被記住）',lsok?'ok':'warn');
+var F=[['IntersectionObserver',!!window.IntersectionObserver],['ResizeObserver',!!window.ResizeObserver],['fetch',!!window.fetch],['Service Worker','serviceWorker' in navigator],['CSS @layer','CSSLayerBlockRule' in window]];
+var miss=F.filter(function(f){return !f[1];}).map(function(f){return f[0];});
+row(T,'瀏覽器功能',miss.length?'缺少：'+miss.join('、'):'都支援',miss.length?'bad':'ok');
+row(T,'UA',ua);
+
+// 錯誤紀錄
+var E=[];try{E=JSON.parse(localStorage.getItem('xw_errlog')||'[]');}catch(e){}
+if(E.length){var pre=document.createElement('pre');pre.textContent=E.slice(-15).reverse().map(function(x){var d=new Date(x.t);return (d.getMonth()+1)+'/'+d.getDate()+' '+('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2)+'  '+x.p+'\n  '+x.m;}).join('\n');$('errs').innerHTML='';$('errs').appendChild(pre);log('錯誤紀錄',pre.textContent);}
+
+// 暫存
+var S=$('sw');
+function swInfo(){
+ var out=[];
+ var p1=('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)?navigator.serviceWorker.getRegistrations().then(function(rs){S.innerHTML='';row(S,'離線版本',rs.length?rs.length+' 個網站有存':'沒有');rs.forEach(function(r){var w=r.active||r.waiting||r.installing;row(S,'・'+r.scope.replace(location.origin,''),w?(w.state==='activated'?'使用中':w.state):'—');});}).catch(function(e){S.innerHTML='';row(S,'離線版本','讀取失敗 '+e,'warn');}):Promise.resolve(row(S,'離線版本','此瀏覽器不支援'));
+ return p1.then(function(){
+  if(window.caches&&caches.keys)return caches.keys().then(function(k){row(S,'暫存資料夾',k.length+' 個'+(k.length?'（'+k.map(function(x){return x.split('|').pop();}).filter(function(v,i,a){return a.indexOf(v)===i;}).join('、')+'）':''));});
+ }).then(function(){
+  if(navigator.storage&&navigator.storage.estimate)return navigator.storage.estimate().then(function(e){row(S,'使用空間','約 '+Math.round((e.usage||0)/1048576)+' MB／可用 '+Math.round((e.quota||0)/1048576)+' MB',(e.quota&&e.quota-e.usage<60*1048576)?'bad':'');});
+ }).catch(function(){});
+}
+swInfo();
+
+// 連線測試：抓四站首頁與共用程式（不經暫存）
+var N=$('net'),NT=[];
+var L=[['酒類首頁','./'],['巧克力首頁','../chocolatewiki/'],['酒類活動','../promotion/'],['巧克力活動','../chocolatepromo/'],['共用選單 nav.js','./nav.js'],['版本檔 sw.js','./sw.js']];
+function test(i){
+ if(i>=L.length){showAdv();return;}
+ var t0=Date.now(),it=L[i];
+ var ctl=window.AbortController?new AbortController():null;var to=setTimeout(function(){if(ctl)ctl.abort();},45000);
+ fetch(it[1]+(it[1].indexOf('?')>0?'&':'?')+'chk='+t0,{cache:'no-store',signal:ctl?ctl.signal:undefined}).then(function(r){
+  var tf=Date.now()-t0;
+  return r.text().then(function(tx){clearTimeout(to);var tt=Date.now()-t0;var kb=Math.round(tx.length/1024);NT.push({n:it[0],ok:r.ok,tt:tt});if(i===0)N.innerHTML='';
+   var v=(r.ok?'正常':'錯誤 '+r.status)+'，'+(tt/1000).toFixed(1)+' 秒（開始回應 '+(tf/1000).toFixed(1)+' 秒），'+(kb>1024?(kb/1024).toFixed(1)+' MB 文字':kb+' KB');
+   row(N,it[0],v,!r.ok?'bad':(tt>15000?'warn':'ok'));});
+ }).catch(function(e){clearTimeout(to);if(i===0)N.innerHTML='';NT.push({n:it[0],ok:false,tt:Date.now()-t0});row(N,it[0],'連不上（'+(e&&e.name==='AbortError'?'超過 45 秒':(e&&e.message||e))+'）','bad');}).then(function(){test(i+1);});
+}
+test(0);
+
+function showAdv(){
+ var A=[];
+ var bad=NT.filter(function(x){return !x.ok;}),slow=NT.filter(function(x){return x.ok&&x.tt>15000;});
+ if(app&&/內建/.test(app))A.push(['warn','你現在是用「'+app+'」開的。請按右上角「⋮」或「…」選「用 Chrome 開啟／在瀏覽器開啟」，App 內建網頁常常打不開大型網頁。']);
+ if(chm&&chm<99)A.push(['bad','瀏覽器核心太舊（Chrome '+chm+'）。請到 Play 商店更新「Chrome」和「Android System WebView」，更新後再開。']);
+ if(miss.length)A.push(['bad','瀏覽器缺少網站需要的功能（'+miss.join('、')+'），請更新瀏覽器或改用 Chrome。']);
+ if(bad.length)A.push(['bad','有 '+bad.length+' 項連不上：'+bad.map(function(x){return x.n;}).join('、')+'。請確認網路（Wi-Fi／行動數據），或換一個網路再試；公司網路有時會擋 github.io。']);
+ if(slow.length)A.push(['warn','網路很慢（'+slow.map(function(x){return x.n;}).join('、')+' 超過 15 秒）。酒類首頁約 3 MB，第一次打開要等比較久；開過一次之後手機會存起來，第二次就快了。']);
+ if(navigator.deviceMemory&&navigator.deviceMemory<=2)A.push(['warn','這支手機記憶體較小，請先關掉其他 App 和瀏覽器分頁再開。']);
+ if(!lsok)A.push(['warn','瀏覽器不能存設定（無痕模式或 App 內建網頁）。網站能看，但我的架上、字體大小等設定不會被記住。']);
+ if(E.length)A.push(['warn','有錯誤紀錄（下方），請截圖傳給小韋。']);
+ if(!A.length)A.push(['ok','這支手機檢查都正常。如果還是打不開，先按上面金色按鈕「清除本站暫存並重新開啟」；還是不行，請把這一頁截圖傳給小韋，並說明是哪一頁、畫面怎樣（白畫面／一直轉圈／閃退／出現錯誤字）。']);
+ else A.push(['','都處理後還是不行：按「清除本站暫存並重新開啟」，再把這一頁截圖傳給小韋。']);
+ var h='<b>檢查結果</b><ul style="margin:6px 0 0;padding-left:20px">';
+ A.forEach(function(a){h+='<li class="'+a[0]+'">'+a[1].replace(/</g,'&lt;')+'</li>';log('建議',a[1]);});
+ $('adv').innerHTML=h+'</ul>';
+}
+
+$('bcopy').onclick=function(){var t='網站檢查 '+new Date().toLocaleString()+'\n'+R.join('\n');
+ function fb(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');alertBox('已複製');}catch(e){alertBox('請長按選取文字複製');}ta.remove();}
+ if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(function(){alertBox('已複製，貼到 LINE 給小韋即可');},fb);else fb();};
+function alertBox(s){var b=$('bcopy');var o=b.textContent;b.textContent=s;setTimeout(function(){b.textContent=o;},2500);}
+
+$('bfix').onclick=function(){
+ var b=this;b.disabled=true;b.textContent='清除中…';
+ var p=[];
+ if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)p.push(navigator.serviceWorker.getRegistrations().then(function(rs){return Promise.all(rs.map(function(r){return r.unregister();}));}));
+ if(window.caches&&caches.keys)p.push(caches.keys().then(function(k){return Promise.all(k.map(function(x){return caches.delete(x);}));}));
+ Promise.all(p).catch(function(){}).then(function(){b.textContent='已清除，正在重新開啟…';try{localStorage.removeItem('xw_errlog');}catch(e){}setTimeout(function(){location.href='./?fresh='+Date.now();},600);});
+};
+})();
+</script>
+</body>
+</html>

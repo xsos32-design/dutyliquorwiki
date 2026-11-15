@@ -5,6 +5,7 @@
    =========================================================== */
 (function(){
  if(window.__xwNavLoaded) return; window.__xwNavLoaded=true;
+ /*xwerr*/try{if(!window.__xwErr){window.__xwErr=1;(function(){var K='xw_errlog';function add(m){try{var a=JSON.parse(localStorage.getItem(K)||'[]');a.push({t:Date.now(),p:location.pathname.replace(/^\/[^\/]*?$/,'')||'/',m:String(m).slice(0,300)});if(a.length>20)a=a.slice(-20);localStorage.setItem(K,JSON.stringify(a));}catch(e){}}window.__xwErrAdd=add;window.addEventListener('error',function(e){var t=e.target;if(t&&t!==window&&t.tagName){if(/^(SCRIPT|LINK)$/.test(t.tagName))add('\u8f09\u5165\u5931\u6557 '+t.tagName+' '+String(t.src||t.href).split('?')[0].split('/').slice(-2).join('/'));return;}add((e.message||'\u932f\u8aa4')+' @'+String(e.filename||'').split('?')[0].split('/').pop()+':'+(e.lineno||0)+':'+(e.colno||0));},true);window.addEventListener('unhandledrejection',function(e){var r=e.reason;add('promise '+(r&&(r.message||r.name)||r));});})();}}catch(e){}
  /*xwperf*/(function(){try{var st=document.createElement('style');st.id='xwperf';st.textContent='@media (hover:none),(pointer:coarse){*,*::before,*::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}'+'#xwveil:not(.on){visibility:hidden!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}#xwveil:not(.on) *{animation:none!important}';(document.head||document.documentElement).appendChild(st);}catch(e){}})();
  /*xwtheme*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtheme.js?v=2394f625';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=b15291b1';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
@@ -62,7 +63,9 @@
   ]},
   {g:'網站資訊', items:[
    {k:'log', t:'更新日誌', s:'每次修改了什麼・最新在最上面', ico:'log',
-    u:'https://xsos32-design.github.io/dutyliquorwiki/changelog.html'}
+    u:'https://xsos32-design.github.io/dutyliquorwiki/changelog.html'},
+   {k:'chk', t:'網站檢查', s:'手機打不開・一直轉圈・白畫面時用', ico:'log',
+    u:'https://xsos32-design.github.io/dutyliquorwiki/check.html'}
   ]}
  ];
  var OWNER='小韋';
@@ -70,6 +73,7 @@
  function here(){
   var p=location.pathname.toLowerCase();
   if(/changelog\.html$/.test(p)) return 'log';
+  if(/check\.html$/.test(p)) return 'chk';
   if(/rewards\.html$/.test(p)) return 'rwall';
   if(/buzz\.html$/.test(p)) return 'buzz';
   if(/owner\.html$/.test(p)) return 'owner';
@@ -232,7 +236,7 @@
   bar.setAttribute('aria-label','工具組導覽');
   /*r49dd*//*r59bar*/var NAMES={wiki:'酒類速讀檔案',choc:'巧克力速讀檔案',cal:'活動月曆',promo:'酒類活動比較卡',card:'酒類折扣小卡',cpromo:'巧克力活動比較卡',ccard:'巧克力折扣小卡',
    shelf:'酒・我的架上',cshelf:'巧克力・我的架上',kbw:'酒類商訓知識庫',kbc:'巧克力商訓知識庫',wines:'葡萄酒產區分類',rwall:'銷售獎勵圖牆',buzz:'近期話題商品',memo:'看圖記憶練習',log:'更新日誌',owner:'負責人折扣圖'};
-  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',wines:'book',rwall:'shelf',buzz:'buzz',memo:'memo',log:'log',owner:'layers'};
+  var ICO={wiki:'wiki',choc:'choc',cal:'cal',promo:'promo',card:'card',cpromo:'promo',ccard:'card',shelf:'shelf',cshelf:'shelf',kbw:'book',kbc:'book',wines:'book',rwall:'shelf',buzz:'buzz',memo:'memo',log:'log',chk:'log',owner:'layers'};
   /* 同一站的子頁（品牌、產區、選酒…）：上方名稱用頁名，選單仍標示所屬的站 */
   var SUBN=(function(p){ p=p.toLowerCase();
    if(/brands\.html$/.test(p)) return '品牌故事'; if(/regions\.html$/.test(p)) return '產區與桶型';

@@ -43,8 +43,12 @@
  function here(){var s=mine();return s?s.L:implied();}
  function keep(o){var s=history.state;var n={};if(s&&typeof s==='object')for(var k in s)n[k]=s[k];for(var k2 in o)n[k2]=o[k2];return n;}
  var applying=0,skip=0,loops=0;
+ /*r261leave*/var leaving=0;
+ D.addEventListener('click',function(e){if(e.defaultPrevented)return;var a=e.target&&e.target.closest?e.target.closest('a[href]'):null;if(!a||a.target==='_blank'||a.hasAttribute('download'))return;var u;try{u=new URL(a.href,location.href);}catch(x){return;}if(!/^https?:$/.test(u.protocol))return;if(u.origin===location.origin&&u.pathname===location.pathname&&u.search===location.search)return;leaving=Date.now();},false);
+ window.addEventListener('pageshow',function(){leaving=0;});
  function check(){
   if(applying||skip)return;
+  if(leaving&&Date.now()-leaving<8000)return;
   var n=now(),h=here();
   if(eq(n,h)){if(mine()&&n.join('|')!==h.join('|'))try{history.replaceState(keep({L:n}),'');}catch(e){}return;}
   if(pre(n,h)){ /* 用畫面上的按鈕關掉了：把多出來的歷史退掉 */

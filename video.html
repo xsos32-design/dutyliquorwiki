@@ -1,0 +1,73 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>影片教室｜小韋 免稅賣場工具組</title><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#0B0A09">
+<style>
+:root{--bg:#0B0A09;--card:#17140F;--line:rgba(201,164,92,.22);--line2:rgba(201,164,92,.45);--gold:#C9A45C;--gold2:#E8CD8A;--ink:#F2EBDD;--dim:#BDB6A9;--dim2:#8F887B}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 'Microsoft JhengHei','微軟正黑體',system-ui,-apple-system,'PingFang TC','Noto Sans TC',sans-serif}
+a{color:inherit}button{font:inherit;color:inherit}
+header{padding:24px 16px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14110D,#0B0A09)}
+header>*,main{max-width:1000px;margin-left:auto;margin-right:auto}
+.eye{display:block;font-size:12px;letter-spacing:.32em;color:var(--gold)}
+h1{margin:4px 0 0;font:600 25px/1.3 'Noto Serif TC',serif;letter-spacing:.05em}
+header p{margin:6px 0 0;color:#DAD3C6;font-size:14px}
+main{padding:10px 12px 90px}
+.prog{display:flex;align-items:center;gap:10px;margin:12px 0 4px;font-size:14px;color:var(--dim)}
+.prog .pb{flex:1;height:8px;border-radius:4px;background:#2A241B;overflow:hidden}.prog .pb i{display:block;height:100%;background:var(--gold);width:0}
+.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
+.tabs button{flex:0 0 auto;border:1px solid var(--line2);background:transparent;border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--gold);color:#16120C;border-color:var(--gold);font-weight:700}
+.sr{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line2);background:#120F0C;color:var(--ink);font-size:15px;margin:4px 0 10px}
+h2{font:600 19px/1.4 'Noto Serif TC',serif;color:var(--gold2);margin:22px 0 4px}
+.h2s{font-size:13.5px;color:var(--dim2);margin:0 0 10px}
+.grid{display:grid;gap:14px}
+@media(min-width:900px){.grid.ga{grid-template-columns:1fr 1fr}}
+.vc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
+.vc .xvv{border-bottom:0;margin:0;padding:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+.chips>span{width:100%;font-size:13px;color:var(--dim2)}
+.chip{display:flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line2);border-radius:10px;padding:4px 8px 4px 4px;max-width:100%;background:#120F0C}
+.chip img{width:34px;height:34px;object-fit:contain;flex:none}
+.chip b{font-size:13px;font-weight:500;line-height:1.3}
+.chip em{font-style:normal;font-size:11.5px;color:#17120B;background:var(--gold);border-radius:999px;padding:0 6px;flex:none}
+.chip em.s{background:transparent;color:var(--gold2);border:1px solid var(--line2)}
+.note{font-size:13px;color:var(--dim2);line-height:1.7;margin:24px 0 0;border-top:1px solid var(--line);padding-top:12px}
+.empty{color:var(--dim2);padding:20px 0}
+</style></head><body>
+<header><span class="eye">VIDEO CLASSROOM</span><h1>影片教室</h1>
+<p>動畫圖解 7 支、影片 18 支。動畫會一步一步動、可以暫停；影片點了才播放（不先載入，不吃流量），也可以直接跳到講某一支酒的那一段。</p></header>
+<main><div class="prog"><span id="pt">看過 0 / 0</span><span class="pb"><i id="pbi"></i></span></div>
+<div class="tabs" id="tabs"></div><input class="sr" id="sr" type="search" placeholder="搜尋：品牌、酒名、雪莉、香檳、調溫…">
+<div id="app"></div>
+<p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。動畫圖解的內容取自本站商訓知識庫。</p></main>
+<script src="xwvid.js?v=31af9e14"></script>
+<script>
+(function(){
+ var api=window.__xwVidPage(document.getElementById('app'));if(!api)return;var D=api.D,E=api.E;
+ var TABS=[['all','全部'],['anim','動畫圖解'],['w','酒類開箱'],['learn','製程教學'],['c','巧克力'],['new','還沒看過']];
+ var cur='all';try{cur=localStorage.getItem('xw_vdtab')||'all';}catch(e){}
+ if(/#anim/.test(location.hash))cur='anim';
+ var tb=document.getElementById('tabs');tb.innerHTML=TABS.map(function(t){return '<button type="button" data-k="'+t[0]+'">'+t[1]+'</button>';}).join('');
+ tb.onclick=function(e){var b=e.target.closest('button');if(!b)return;cur=b.getAttribute('data-k');try{localStorage.setItem('xw_vdtab',cur);}catch(_){}draw();};
+ var sr=document.getElementById('sr');var tm;sr.oninput=function(){clearTimeout(tm);tm=setTimeout(draw,150);};
+ function txtV(v){return [v.t,v.sum,v.ch,v.kind].concat((v.ps||[]).map(function(p){return (D.PR[p[0]]||{}).n;})).join(' ').toLowerCase();}
+ function txtA(a){return [a.title,a.en,a.say].concat(a.steps.map(function(s){return s.t+' '+(s.x||'');})).join(' ').toLowerCase();}
+ function chips(v){if(!v.ps||!v.ps.length)return '';return '<div class="chips"><span>本店相關商品（點了開商品卡）</span>'+v.ps.map(function(p){var r=D.PR[p[0]]||{};
+   return '<a class="chip" href="'+api.plink(p[0],r.s)+'">'+(r.g?'<img loading="lazy" alt="" src="'+E(r.g)+'">':'')+'<b>'+E(r.n)+'</b><em class="'+(p[1]==='本款'?'':'s')+'">'+E(p[1])+'</em></a>';}).join('')+'</div>';}
+ function prog(){var s=api.seen(),n=0,t=D.A.length+D.V.length;D.A.forEach(function(a){if(s['a:'+a.id])n++;});D.V.forEach(function(v){if(s['v:'+v.id])n++;});
+  document.getElementById('pt').textContent='看過 '+n+' / '+t;document.getElementById('pbi').style.width=(t?n*100/t:0)+'%';}
+ function draw(){[].forEach.call(tb.children,function(b){b.classList.toggle('on',b.getAttribute('data-k')===cur);});
+  var q=(sr.value||'').trim().toLowerCase(),s=api.seen(),h='';
+  var As=D.A.filter(function(a){return (cur==='all'||cur==='anim'||(cur==='c'&&a.site==='c')||(cur==='learn')||(cur==='new'&&!s['a:'+a.id]))&&(cur!=='w')&&(!q||txtA(a).indexOf(q)>=0);});
+  var Vs=D.V.filter(function(v){var ok=cur==='all'||(cur==='w'&&v.site==='w'&&v.kind==='開箱品飲')||(cur==='learn'&&v.kind==='製程教學')||(cur==='c'&&v.site==='c')||(cur==='new'&&!s['v:'+v.id]);return ok&&(!q||txtV(v).indexOf(q)>=0);});
+  if(cur==='learn')As=As.filter(function(){return true;});
+  if(As.length){h+='<h2>動畫圖解</h2><p class="h2s">捲到這裡會自動播放；看完會出現「跟客人這樣說」。</p><div class="grid ga">'+As.map(api.abox).join('')+'</div>';}
+  if(Vs.length){var groups=[['開箱品飲','開箱品飲（YouTuber）','講到本店的酒，點「跳到」直接看那一段'],['製程教學','製程教學','官方或教育機構的短片'],['品牌製程','品牌工廠','品牌自己的工廠怎麼做']];
+   groups.forEach(function(g){var L=Vs.filter(function(v){return v.kind===g[0];});if(!L.length)return;
+    h+='<h2>'+g[1]+'</h2><p class="h2s">'+g[2]+'</p><div class="grid">'+L.map(function(v){return '<div class="vc">'+api.vcard(v,{})+chips(v)+'</div>';}).join('')+'</div>';});}
+  if(!As.length&&!Vs.length)h='<p class="empty">沒有符合的影片。</p>';
+  var app=document.getElementById('app');app.innerHTML=h;[].forEach.call(app.querySelectorAll('.xva'),api.initA);prog();}
+ document.addEventListener('xwvidseen',prog);
+ draw();
+})();
+</script>
+<script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>
+</body></html>

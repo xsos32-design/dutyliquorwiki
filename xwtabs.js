@@ -20,7 +20,7 @@
  var SAFE=/過敏|堅果|花生|明膠|含酒|酒精|冷藏|保存|融化|麩質|乳製品|大豆/;
  function cls(e){var c=' '+(e.className||'')+' ',t=head(e);
   if(/ xwtabs | xwtnext /.test(c))return null;
-  if(/ talkbox | mmsec | wksec | bzsec /.test(c))return 'sell';
+  if(/ talkbox | mmsec | wksec | bzsec | vdsec /.test(c))return 'sell';
   if(/^一句話定位/.test(t)||/^銷售重點/.test(t))return 'sell';
   if(/ warn /.test(c)){return (!W&&SAFE.test((e.textContent||'').slice(0,60))&&!/^建檔備註/.test(t))?'sell':'check';}
   if(/ bsrc /.test(c)||/^官網資料/.test(t))return 'check';
@@ -35,6 +35,7 @@
   if(/^銷售重點/.test(t))return 20;
   if(/ wksec /.test(c))return 22;
   if(/ bzsec /.test(c))return 25;
+  if(/ vdsec /.test(c))return 24;
   if(/ warn /.test(c)&&cls(e)==='sell')return 28;
   if(/^品飲筆記・/.test(t))return 31;
   if(/^(品飲筆記|規格與備註)/.test(t))return 30;

@@ -28,6 +28,7 @@
   {k:'zoom',on:function(){return !!$('#kmp-zoom');},close:function(){var z=$('#kmp-zoom');if(z)z.remove();}},
   {k:'img',on:function(){return !!$('#xwlb.on');},close:function(){clk('#xwlb');}},
   {k:'why',on:function(){return !!$('#xwwhy.on');},close:function(){if(window.__xwWhyHide)window.__xwWhyHide();}},
+  {k:'cine',on:function(){return !!$('.xc.xcfsm');},close:function(){if(window.__xwCineClose)window.__xwCineClose();}},
   {k:'calpv',on:function(){return shown('#cal-pv');},close:function(){clk('#cal-pv');}},
   {k:'search',on:function(){return !!$('#xws.on');},close:function(){clk('#xws .xwx');}}
  ];

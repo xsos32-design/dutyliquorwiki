@@ -1,27 +1,70 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>影片教室｜小韋 免稅賣場工具組</title><link rel="icon" href="icon-192.png"><meta name="theme-color" content="#0B0A09">
 <style>
-:root{--bg:#0B0A09;--card:#17140F;--line:rgba(201,164,92,.22);--line2:rgba(201,164,92,.45);--gold:#C9A45C;--gold2:#E8CD8A;--ink:#F2EBDD;--dim:#BDB6A9;--dim2:#8F887B}
+:root{--bg:#090806;--card:#15120E;--line:rgba(201,164,92,.22);--line2:rgba(201,164,92,.45);--gold:#C9A45C;--gold2:#E8CD8A;--ink:#F2EBDD;--dim:#BDB6A9;--dim2:#8F887B}
 *{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 'Microsoft JhengHei','微軟正黑體',system-ui,-apple-system,'PingFang TC','Noto Sans TC',sans-serif}
 a{color:inherit}button{font:inherit;color:inherit}
-header{padding:24px 16px 14px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#14110D,#0B0A09)}
-header>*,main{max-width:1000px;margin-left:auto;margin-right:auto}
-.eye{display:block;font-size:12px;letter-spacing:.32em;color:var(--gold)}
-h1{margin:4px 0 0;font:600 25px/1.3 'Noto Serif TC',serif;letter-spacing:.05em}
-header p{margin:6px 0 0;color:#DAD3C6;font-size:14px}
-main{padding:10px 12px 90px}
-.prog{display:flex;align-items:center;gap:10px;margin:12px 0 4px;font-size:14px;color:var(--dim)}
-.prog .pb{flex:1;height:8px;border-radius:4px;background:#2A241B;overflow:hidden}.prog .pb i{display:block;height:100%;background:var(--gold);width:0}
-.tabs{display:flex;gap:6px;overflow-x:auto;padding:10px 0;scrollbar-width:none}
-.tabs button{flex:0 0 auto;border:1px solid var(--line2);background:transparent;border-radius:999px;padding:7px 14px;font-size:14px;cursor:pointer}
-.tabs button.on{background:var(--gold);color:#16120C;border-color:var(--gold);font-weight:700}
-.sr{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line2);background:#120F0C;color:var(--ink);font-size:15px;margin:4px 0 10px}
-h2{font:600 19px/1.4 'Noto Serif TC',serif;color:var(--gold2);margin:22px 0 4px}
-.h2s{font-size:13.5px;color:var(--dim2);margin:0 0 10px}
-.grid{display:grid;gap:14px}
-@media(min-width:900px){.grid.ga{grid-template-columns:1fr 1fr}}
-.vc{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px}
-.vc .xvv{border-bottom:0;margin:0;padding:0}
+.wrap{max-width:1180px;margin:0 auto;padding:0 14px}
+header.top{position:relative;padding:20px 0 6px;background:radial-gradient(120% 140% at 85% -20%,rgba(201,164,92,.18),rgba(201,164,92,0) 55%),linear-gradient(180deg,#120F0B,#090806)}
+.eye{display:block;font-size:11.5px;letter-spacing:.34em;color:var(--gold)}
+h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;letter-spacing:.04em}
+.lead{margin:4px 0 0;color:#D8D0C1;font-size:14px}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 4px}
+@media(min-width:760px){.stats{display:flex;flex-wrap:wrap}}
+.st{display:flex;align-items:center;gap:10px;border:1px solid var(--line);background:rgba(255,255,255,.02);border-radius:14px;padding:8px 12px;cursor:pointer;min-width:0}
+.st.on{border-color:var(--gold);background:rgba(201,164,92,.12)}
+.st img{width:42px;height:42px;border-radius:10px;object-fit:cover;flex:none}
+.st b{display:block;font-size:14.5px;line-height:1.2}.st small{display:block;font-size:12px;color:var(--dim2)}
+.ring{--p:0;width:36px;height:36px;border-radius:50%;flex:none;background:conic-gradient(var(--gold) calc(var(--p)*1%),#2A241B 0);display:grid;place-items:center}
+.ring::after{content:attr(data-t);display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#0F0C09;font-size:10.5px;color:var(--gold2)}
+/* 主舞台 */
+#hero{display:grid;gap:16px;margin:14px 0 6px}
+@media(min-width:980px){#hero{grid-template-columns:minmax(0,1fr) 330px;align-items:start}}
+#stage .xc{margin:0;max-width:none}
+#stage .xvv.big{margin:0;padding:0;border:0;display:block}
+#stage .xvv.big .xvy{border-radius:14px}
+#stage .xvv.big .xvm{padding:12px 2px 0}
+#side{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px}
+#side h2{margin:0 0 2px;font:700 19px/1.35 'Noto Serif TC','Noto Serif CJK TC',serif;color:var(--gold2)}
+#side .en{font-size:11.5px;letter-spacing:.2em;color:var(--dim2);text-transform:uppercase}
+.steps{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:4px;counter-reset:s}
+.steps li{display:flex;gap:10px;align-items:center;padding:6px 8px;border-radius:10px;cursor:pointer}
+.steps li:hover{background:rgba(201,164,92,.08)}
+.steps li.on{background:rgba(201,164,92,.16)}
+.steps img{width:54px;height:34px;object-fit:cover;border-radius:6px;flex:none}
+.steps b{font-size:14px;font-weight:600;line-height:1.3}.steps small{display:block;font-size:11.5px;color:var(--dim2)}
+.steps i{font-style:normal;font:700 15px 'Noto Serif TC',serif;color:var(--gold);width:20px;text-align:center;flex:none}
+.say{margin:12px 0 0;padding:10px 12px;border-left:3px solid var(--gold);background:rgba(201,164,92,.07);border-radius:0 10px 10px 0;font-size:14px;line-height:1.7}
+.say small{display:block;font-size:11.5px;letter-spacing:.18em;color:var(--gold);margin-bottom:2px}
+.kbl{display:inline-block;margin-top:10px;font-size:13.5px;color:var(--gold2);text-decoration:none;border-bottom:1px dashed rgba(232,205,138,.6)}
+/* 列 */
+.bar{display:flex;gap:8px;align-items:center;margin:18px 0 0;flex-wrap:wrap}
+.sr{flex:1;min-width:200px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:#120F0C;color:var(--ink);font-size:15px}
+.tg{border:1px solid var(--line2);background:transparent;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.tg.on{background:var(--gold);color:#16120C;border-color:var(--gold);font-weight:700}
+.row{margin:22px 0 0}
+.rh{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+.rh h3{margin:0;font:700 18px/1.3 'Noto Serif TC','Noto Serif CJK TC',serif;color:#F4E6C6}
+.rh span{font-size:12.5px;color:var(--dim2)}
+@media(max-width:560px){.rh span{display:none}.st{padding:8px;gap:8px}.st img{width:34px;height:34px}.st b{font-size:14px;white-space:nowrap}.st small{font-size:11px;white-space:nowrap}.st>span:nth-child(2){flex:1;min-width:0}.ring{width:30px;height:30px}.ring::after{width:24px;height:24px;font-size:9.5px}}
+.rh em{font-style:normal;font-size:11px;letter-spacing:.2em;color:var(--gold)}
+.sc{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,250px);gap:12px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x proximity;scrollbar-width:thin}
+@media(min-width:980px){.sc{grid-auto-columns:minmax(250px,270px)}}
+.po{all:unset;cursor:pointer;scroll-snap-align:start;display:block;border-radius:14px;overflow:hidden;background:var(--card);border:1px solid var(--line);position:relative;transition:transform .2s,border-color .2s}
+.po:hover,.po:focus-visible{transform:translateY(-3px);border-color:var(--gold)}
+.po.on{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,164,92,.5)}
+.pi{position:relative;aspect-ratio:16/9;background:#000;overflow:hidden}
+.pi img{width:100%;height:100%;object-fit:cover;display:block;transition:transform 4s ease}
+.po:hover .pi img{transform:scale(1.08)}
+.pi::after{content:'';position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.8),rgba(0,0,0,0) 55%)}
+.pk{position:absolute;left:8px;top:8px;z-index:1;font-size:11px;padding:2px 8px;border-radius:999px;background:rgba(10,8,6,.8);border:1px solid rgba(232,205,138,.5);color:#F2DDA6}
+.pl{position:absolute;right:8px;bottom:8px;z-index:1;font-size:12px;color:#fff;background:rgba(0,0,0,.7);padding:1px 6px;border-radius:4px}
+.pp{position:absolute;left:10px;bottom:8px;z-index:1;width:34px;height:34px;border-radius:50%;background:rgba(226,191,116,.95);color:#17120B;display:grid;place-items:center;padding-left:2px;box-sizing:border-box}
+.pseen{position:absolute;right:8px;top:8px;z-index:1;font-size:11px;padding:2px 7px;border-radius:999px;background:rgba(10,30,22,.85);color:#9FE0C6;border:1px solid #4E9C82}
+.pt{padding:9px 11px 11px}
+.pt b{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:14.5px;line-height:1.4;color:#F4ECDB;min-height:2.8em}
+.pt small{display:block;font-size:12px;color:var(--dim2);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pbar{height:3px;background:#2A241B}.pbar i{display:block;height:100%;background:var(--gold)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
 .chips>span{width:100%;font-size:13px;color:var(--dim2)}
 .chip{display:flex;align-items:center;gap:6px;text-decoration:none;border:1px solid var(--line2);border-radius:10px;padding:4px 8px 4px 4px;max-width:100%;background:#120F0C}
@@ -29,44 +72,84 @@ h2{font:600 19px/1.4 'Noto Serif TC',serif;color:var(--gold2);margin:22px 0 4px}
 .chip b{font-size:13px;font-weight:500;line-height:1.3}
 .chip em{font-style:normal;font-size:11.5px;color:#17120B;background:var(--gold);border-radius:999px;padding:0 6px;flex:none}
 .chip em.s{background:transparent;color:var(--gold2);border:1px solid var(--line2)}
-.note{font-size:13px;color:var(--dim2);line-height:1.7;margin:24px 0 0;border-top:1px solid var(--line);padding-top:12px}
+.note{font-size:13px;color:var(--dim2);line-height:1.7;margin:28px 0 0;border-top:1px solid var(--line);padding:12px 0 90px}
 .empty{color:var(--dim2);padding:20px 0}
 </style></head><body>
-<header><span class="eye">VIDEO CLASSROOM</span><h1>影片教室</h1>
-<p>動畫圖解 7 支、影片 18 支。動畫會一步一步動、可以暫停；影片點了才播放（不先載入，不吃流量），也可以直接跳到講某一支酒的那一段。</p></header>
-<main><div class="prog"><span id="pt">看過 0 / 0</span><span class="pb"><i id="pbi"></i></span></div>
-<div class="tabs" id="tabs"></div><input class="sr" id="sr" type="search" placeholder="搜尋：品牌、酒名、雪莉、香檳、調溫…">
-<div id="app"></div>
-<p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。動畫圖解的內容取自本站商訓知識庫。</p></main>
-<script src="xwvid.js?v=31af9e14"></script>
+<header class="top"><div class="wrap"><span class="eye">VIDEO CLASSROOM</span><h1>影片教室</h1>
+<p class="lead">動畫圖解 13 支＋影片 33 支。動畫像短片一樣一步一步播，有旁白、隨堂小考；影片點了才播放，可以直接跳到講某一支酒的那一段。</p>
+<div class="stats" id="tracks" data-xwns></div></div></header>
+<main class="wrap">
+<section id="hero"><div id="stage"></div><aside id="side"></aside></section>
+<div class="bar"><input class="sr" id="sr" type="search" placeholder="搜尋：品牌、酒名、雪莉、香檳、調溫…"><button type="button" class="tg" id="tnew">只看還沒看過的</button></div>
+<div id="rows" data-xwns></div>
+<p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。動畫圖解的內容取自本站商訓知識庫，畫面為 AI 示意插圖（非實景）。旁白使用手機內建語音，聲音依手機而定。</p></main>
+<script src="xwvid.js?v=33c61018"></script>
 <script>
 (function(){
- var api=window.__xwVidPage(document.getElementById('app'));if(!api)return;var D=api.D,E=api.E;
- var TABS=[['all','全部'],['anim','動畫圖解'],['w','酒類開箱'],['learn','製程教學'],['c','巧克力'],['new','還沒看過']];
- var cur='all';try{cur=localStorage.getItem('xw_vdtab')||'all';}catch(e){}
- if(/#anim/.test(location.hash))cur='anim';
- var tb=document.getElementById('tabs');tb.innerHTML=TABS.map(function(t){return '<button type="button" data-k="'+t[0]+'">'+t[1]+'</button>';}).join('');
- tb.onclick=function(e){var b=e.target.closest('button');if(!b)return;cur=b.getAttribute('data-k');try{localStorage.setItem('xw_vdtab',cur);}catch(_){}draw();};
- var sr=document.getElementById('sr');var tm;sr.oninput=function(){clearTimeout(tm);tm=setTimeout(draw,150);};
+ window.__xwVidNoAuto=1;
+ var api=window.__xwVidPage();if(!api)return;var D=api.D,E=api.E,mmss=api.mmss;
+ var TR=D.T||[];var TRK={};TR.forEach(function(t){TRK[t[0]]=t;});
+ var WINE={wspk:1,wbase:1,wgrape:1,wlaw:1,wtaste:1,weu:1,wam:1,wau:1,wworld:1};
+ function vtrack(v){if(v.site==='c')return 'choc';if((v.kb||[]).some(function(k){return WINE[k[1]];}))return 'wine';return 'whisky';}
+ D.V.forEach(function(v){v.tr=vtrack(v);});
+ var st={tr:'all',q:'',nw:false,cur:null};
+ try{var o=JSON.parse(localStorage.getItem('xw_vdui')||'{}');if(o.tr)st.tr=o.tr;if(o.nw)st.nw=true;}catch(e){}
+ function save(){try{localStorage.setItem('xw_vdui',JSON.stringify({tr:st.tr,nw:st.nw}));}catch(e){}}
+ var KBU={w:'https://xsos32-design.github.io/dutyliquorwiki/#kb:',c:'https://xsos32-design.github.io/chocolatewiki/#kb:'};
+ function seen(){return api.seen();}
  function txtV(v){return [v.t,v.sum,v.ch,v.kind].concat((v.ps||[]).map(function(p){return (D.PR[p[0]]||{}).n;})).join(' ').toLowerCase();}
- function txtA(a){return [a.title,a.en,a.say].concat(a.steps.map(function(s){return s.t+' '+(s.x||'');})).join(' ').toLowerCase();}
+ function txtA(a){return [a.title,a.en,a.say,a.lead].concat(a.steps.map(function(s){return s.t+' '+s.en+' '+(s.x||'');})).join(' ').toLowerCase();}
+ function okA(a){var s=seen();return (st.tr==='all'||a.track===st.tr)&&(!st.nw||!s['a:'+a.id])&&(!st.q||txtA(a).indexOf(st.q)>=0);}
+ function okV(v){var s=seen();return (st.tr==='all'||v.tr===st.tr)&&(!st.nw||!s['v:'+v.id])&&(!st.q||txtV(v).indexOf(st.q)>=0);}
  function chips(v){if(!v.ps||!v.ps.length)return '';return '<div class="chips"><span>本店相關商品（點了開商品卡）</span>'+v.ps.map(function(p){var r=D.PR[p[0]]||{};
    return '<a class="chip" href="'+api.plink(p[0],r.s)+'">'+(r.g?'<img loading="lazy" alt="" src="'+E(r.g)+'">':'')+'<b>'+E(r.n)+'</b><em class="'+(p[1]==='本款'?'':'s')+'">'+E(p[1])+'</em></a>';}).join('')+'</div>';}
- function prog(){var s=api.seen(),n=0,t=D.A.length+D.V.length;D.A.forEach(function(a){if(s['a:'+a.id])n++;});D.V.forEach(function(v){if(s['v:'+v.id])n++;});
-  document.getElementById('pt').textContent='看過 '+n+' / '+t;document.getElementById('pbi').style.width=(t?n*100/t:0)+'%';}
- function draw(){[].forEach.call(tb.children,function(b){b.classList.toggle('on',b.getAttribute('data-k')===cur);});
-  var q=(sr.value||'').trim().toLowerCase(),s=api.seen(),h='';
-  var As=D.A.filter(function(a){return (cur==='all'||cur==='anim'||(cur==='c'&&a.site==='c')||(cur==='learn')||(cur==='new'&&!s['a:'+a.id]))&&(cur!=='w')&&(!q||txtA(a).indexOf(q)>=0);});
-  var Vs=D.V.filter(function(v){var ok=cur==='all'||(cur==='w'&&v.site==='w'&&v.kind==='開箱品飲')||(cur==='learn'&&v.kind==='製程教學')||(cur==='c'&&v.site==='c')||(cur==='new'&&!s['v:'+v.id]);return ok&&(!q||txtV(v).indexOf(q)>=0);});
-  if(cur==='learn')As=As.filter(function(){return true;});
-  if(As.length){h+='<h2>動畫圖解</h2><p class="h2s">捲到這裡會自動播放；看完會出現「跟客人這樣說」。</p><div class="grid ga">'+As.map(api.abox).join('')+'</div>';}
-  if(Vs.length){var groups=[['開箱品飲','開箱品飲（YouTuber）','講到本店的酒，點「跳到」直接看那一段'],['製程教學','製程教學','官方或教育機構的短片'],['品牌製程','品牌工廠','品牌自己的工廠怎麼做']];
-   groups.forEach(function(g){var L=Vs.filter(function(v){return v.kind===g[0];});if(!L.length)return;
-    h+='<h2>'+g[1]+'</h2><p class="h2s">'+g[2]+'</p><div class="grid">'+L.map(function(v){return '<div class="vc">'+api.vcard(v,{})+chips(v)+'</div>';}).join('')+'</div>';});}
-  if(!As.length&&!Vs.length)h='<p class="empty">沒有符合的影片。</p>';
-  var app=document.getElementById('app');app.innerHTML=h;[].forEach.call(app.querySelectorAll('.xva'),api.initA);prog();}
- document.addEventListener('xwvidseen',prog);
- draw();
+ /* ---- 軌道統計 ---- */
+ function tracks(){var s=seen(),h='';var all=[['all','全部','All',D.A[0].steps[0].img]].concat(TR);
+  all.forEach(function(t){var As=D.A.filter(function(a){return t[0]==='all'||a.track===t[0];}),Vs=D.V.filter(function(v){return t[0]==='all'||v.tr===t[0];});
+   var n=As.length+Vs.length,k=As.filter(function(a){return s['a:'+a.id];}).length+Vs.filter(function(v){return s['v:'+v.id];}).length,p=n?Math.round(k*100/n):0;
+   h+='<button type="button" class="st'+(st.tr===t[0]?' on':'')+'" data-tr="'+t[0]+'"><img alt="" src="'+E(t[3])+'"><span><b>'+E(t[1])+'</b><small>動畫 '+As.length+'・影片 '+Vs.length+'</small></span><span class="ring" style="--p:'+p+'" data-t="'+p+'%"></span></button>';});
+  var el=document.getElementById('tracks');el.innerHTML=h;}
+ document.getElementById('tracks').onclick=function(e){var b=e.target.closest('[data-tr]');if(!b)return;st.tr=b.getAttribute('data-tr');save();tracks();rows();};
+ /* ---- 主舞台 ---- */
+ function stopAll(){[].forEach.call(document.querySelectorAll('#stage .xc'),function(r){if(r.__stop)r.__stop();});try{speechSynthesis.cancel();}catch(e){}}
+ function showA(a,auto){stopAll();st.cur='a:'+a.id;var stg=document.getElementById('stage');stg.innerHTML=api.cineHTML(a);api.initC(stg.querySelector('.xc'));
+  var q=seen()['q:'+a.id];
+  document.getElementById('side').innerHTML='<span class="en">'+E(a.en)+'</span><h2>'+E(a.title)+'</h2><div style="font-size:12.5px;color:#8F887B">'+a.steps.length+' 步・約 '+a.mins+' 分鐘'+(q!=null?'・小考最佳 '+q+'/'+a.quiz.length:'')+'</div>'+
+   '<ol class="steps">'+a.steps.map(function(s,i){return '<li data-i="'+i+'"><i>'+(i+1)+'</i><img loading="lazy" alt="" src="'+E(s.img)+'"><span><b>'+E(s.t)+'</b><small>'+E(s.en||'')+'</small></span></li>';}).join('')+'</ol>'+
+   '<div class="say"><small>跟客人這樣說</small>'+E(a.say)+'</div>'+(a.kb?'<a class="kbl" href="'+KBU[a.kb[0]]+a.kb[1]+'">在商訓知識庫讀完整章節 ›</a>':'');
+  mark();if(auto){var g=stg.querySelector('.xcgo');if(g)g.click();}}
+ function showV(v){stopAll();st.cur='v:'+v.id;var stg=document.getElementById('stage');
+  stg.innerHTML=api.vcard(v,{big:1,nosum:1});
+  document.getElementById('side').innerHTML='<span class="en">'+E(v.kind)+'・'+E(v.ch)+'</span><h2>'+E(v.t)+'</h2><div style="font-size:12.5px;color:#8F887B">'+E(v.date)+'・'+mmss(v.len)+(v.en?'・英文':'')+'</div><p style="font-size:14px;line-height:1.7;margin:10px 0 0">'+E(v.sum||'')+'</p>'+chips(v);
+  mark();}
+ document.getElementById('side').addEventListener('click',function(e){var li=e.target.closest('.steps li');if(!li)return;var r=document.querySelector('#stage .xc');if(!r)return;
+  var i=+li.getAttribute('data-i');if(r.__go)r.__go(i);});
+ window.__xwVidNext=function(id){var L=D.A.filter(okA);if(!L.length)L=D.A;var k=L.findIndex(function(a){return a.id===id;});var a=L[(k+1)%L.length];showA(a,true);document.getElementById('hero').scrollIntoView({behavior:'smooth',block:'start'});};
+ /* 播放中同步右側步驟 */
+ setInterval(function(){var r=document.querySelector('#stage .xc');if(!r)return;var c=r.querySelector('.xccnt');if(!c)return;var i=(+c.textContent.split('/')[0]||1)-1;var started=r.querySelector('.xcintro.off');
+  [].forEach.call(document.querySelectorAll('#side .steps li'),function(li,j){li.classList.toggle('on',!!started&&j===i);});},400);
+ function mark(){[].forEach.call(document.querySelectorAll('.po'),function(p){p.classList.toggle('on',p.getAttribute('data-k')===st.cur);});}
+ /* ---- 海報列 ---- */
+ function poA(a){var s=seen(),q=s['q:'+a.id];return '<button type="button" class="po" data-k="a:'+E(a.id)+'"><div class="pi"><img loading="lazy" alt="" src="'+E(a.steps[0].img)+'"><span class="pk">動畫・'+a.steps.length+' 步</span>'+(s['a:'+a.id]?'<span class="pseen">✓ 看過'+(q!=null?' '+q+'/'+a.quiz.length:'')+'</span>':'')+'<span class="pp"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span><span class="pl">約 '+a.mins+' 分</span></div><div class="pt"><b>'+E(a.title)+'</b><small>'+E(a.en)+'</small></div></button>';}
+ function poV(v){var s=seen();return '<button type="button" class="po" data-k="v:'+E(v.id)+'"><div class="pi"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/'+E(v.id)+'/hqdefault.jpg"><span class="pk">'+E(v.kind)+'</span>'+(s['v:'+v.id]?'<span class="pseen">✓ 看過</span>':'')+'<span class="pp"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span><span class="pl">'+mmss(v.len)+'</span></div><div class="pt"><b>'+E(v.t)+'</b><small>'+E(v.ch)+'・'+E(v.date)+((v.ps||[]).length?'・本店 '+v.ps.length+' 支':'')+'</small></div></button>';}
+ function row(t,en,sub,items){if(!items.length)return '';return '<section class="row"><div class="rh"><h3>'+t+'</h3><em>'+en+'</em><span>'+sub+'</span></div><div class="sc">'+items.join('')+'</div></section>';}
+ function rows(){var As=D.A.filter(okA),Vs=D.V.filter(okV),h='';
+  TR.forEach(function(t){if(st.tr!=='all'&&st.tr!==t[0])return;var L=As.filter(function(a){return a.track===t[0];});h+=row('動畫圖解：'+t[1],'ANIMATED','一步一步播，看完有小考',L.map(poA));});
+  var G=[['開箱品飲','YouTuber 開箱品飲','REVIEWS','講到本店的酒，可直接跳到那一段'],['品牌故事','品牌故事・廣告','BRAND','客人看過的廣告與品牌影片'],['品牌訪談','品牌訪談','INTERVIEW','總監、調酒師談品牌'],['製程教學','製程教學','HOW IT\'S MADE','官方或教育機構的短片'],['品牌製程','品牌工廠','FACTORY','品牌自己的工廠怎麼做']];
+  G.forEach(function(g){var L=Vs.filter(function(v){return v.kind===g[0];}).sort(function(a,b){return a.date<b.date?1:-1;});h+=row(g[1],g[2],g[3],L.map(poV));});
+  if(!h)h='<p class="empty">沒有符合的動畫或影片。</p>';document.getElementById('rows').innerHTML=h;mark();}
+ document.getElementById('rows').onclick=function(e){var p=e.target.closest('.po');if(!p)return;var k=p.getAttribute('data-k'),id=k.slice(2);
+  if(k[0]==='a'){var a=D.A.filter(function(x){return x.id===id;})[0];showA(a,true);}else{var v=D.V.filter(function(x){return x.id===id;})[0];showV(v);var b=document.querySelector('#stage .xvyp');if(b)b.click();}
+  document.getElementById('hero').scrollIntoView({behavior:'smooth',block:'start'});};
+ var sr=document.getElementById('sr'),tm;sr.oninput=function(){clearTimeout(tm);tm=setTimeout(function(){st.q=(sr.value||'').trim().toLowerCase();rows();},150);};
+ var tn=document.getElementById('tnew');tn.classList.toggle('on',st.nw);tn.onclick=function(){st.nw=!st.nw;tn.classList.toggle('on',st.nw);save();rows();};
+ document.addEventListener('xwvidseen',function(){tracks();});
+ /* 開頁：網址 #a-xxx 或 #v=ID 指定；否則第一支還沒看過的動畫 */
+ tracks();rows();
+ var h=decodeURIComponent(location.hash.slice(1)),s0=seen(),first=null;
+ if(/^v=/.test(h)){var vv=D.V.filter(function(v){return v.id===h.slice(2);})[0];if(vv){showV(vv);first=1;}}
+ else if(h){var aa=D.A.filter(function(a){return a.id===h;})[0];if(aa){showA(aa);first=1;}}
+ if(!first){var L=D.A.filter(okA);var a0=L.filter(function(a){return !s0['a:'+a.id];})[0]||L[0]||D.A[0];showA(a0);}
 })();
 </script>
 <script src="https://xsos32-design.github.io/dutyliquorwiki/nav.js" defer></script>

@@ -14,12 +14,22 @@
  '.mmsec:not(.xwaltopen) .mmfab{display:none}'+
  '.xwaltlbl{display:inline-block;margin-left:8px;font-size:12px;font-weight:400;color:#BBA77E;border:1px solid rgba(201,164,92,.4);border-radius:999px;padding:0 8px;vertical-align:middle}'+
  '.xwtnext{display:block;width:100%;margin:14px 0 4px;padding:10px;font:inherit;font-size:14.5px;color:#E8CD8A;background:rgba(201,164,92,.08);border:1px solid rgba(201,164,92,.35);border-radius:12px;cursor:pointer}'+
+ '.chead .meta>.xtsum{order:2}.xtsum{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;margin:8px 0 4px;font-size:15px;line-height:1.5;color:#EDE3CC}'+
+ '.xtsum i{font-style:normal;color:#8F8571;margin:0 4px}'+
+ '.xtsum b{font-weight:700;color:#F5E3B5}'+
+ '.xtsumgo{margin-left:auto;font:inherit;font-size:13px;color:#C9A45C;background:none;border:0;border-bottom:1px dashed rgba(201,164,92,.6);padding:2px 0;cursor:pointer}'+
+ 'html[data-xwmode=light] .xtsum{color:#2B2418}html[data-xwmode=light] .xtsum b{color:#5C4210}'+
+ '.xtspec .xtmeta{display:block!important;padding:0!important;margin:0!important}'+
+ 'html:not(#_xa):not(#_xb) body section.card .xtmeta .specs>.spec{display:block!important}'+
+ 'html:not(#_xa):not(#_xb) body section.card .xtmeta .r21more{display:none!important}'+
+ '.xtspec .tastebar{margin-top:12px!important}'+
  'html[data-xwmode=light] .xwtabs{background:#FBF7EF;border-bottom-color:rgba(138,100,32,.35)}html[data-xwmode=light] .xwtabs button{color:#7A5718;border-color:rgba(138,100,32,.4)}html[data-xwmode=light] .xwtabs button.on{background:#8A6420;color:#FFF;border-color:#8A6420}';
  var st=document.createElement('style');st.id='xwtabs-css';st.textContent=css;(document.head||document.documentElement).appendChild(st);
  function head(e){var h=e.querySelector(':scope>summary h3,:scope>summary,:scope>h3,:scope>.h,:scope>b');return ((h||e).textContent||'').replace(/\s+/g,'').slice(0,24);}
  var SAFE=/過敏|堅果|花生|明膠|含酒|酒精|冷藏|保存|融化|麩質|乳製品|大豆/;
  function cls(e){var c=' '+(e.className||'')+' ',t=head(e);
   if(/ xwtabs | xwtnext /.test(c))return null;
+  if(/ xtspec /.test(c))return 'taste';
   if(/ talkbox | mmsec | wksec | bzsec | vdsec /.test(c))return 'sell';
   if(/^一句話定位/.test(t)||/^銷售重點/.test(t))return 'sell';
   if(/ warn /.test(c)){return (!W&&SAFE.test((e.textContent||'').slice(0,60))&&!/^建檔備註/.test(t))?'sell':'check';}
@@ -29,6 +39,7 @@
  function rank(e){var c=' '+(e.className||'')+' ',t=head(e);
   if(/ xwtabs /.test(c))return -10;
   if(/ xwtnext /.test(c))return 99;
+  if(/ xtspec /.test(c))return 29;
   if(/^一句話定位/.test(t))return 0;
   if(/ talkbox /.test(c))return 10;
   if(/ mmsec /.test(c))return 12;
@@ -81,6 +92,24 @@
    var x=a.left-b.left+sh.scrollLeft;if(Math.abs(sh.scrollLeft-x)>3)sh.scrollLeft=x;};
   [].forEach.call(k[1].querySelectorAll('img'),function(im){im.addEventListener('load',function(){sh.__xtgo();});});
   sh.__xtgo();setTimeout(sh.__xtgo,300);setTimeout(sh.__xtgo,1200);if(FIO)FIO.observe(sh);}
+
+ /* r266：規格表搬進「喝起來／口味規格」分頁；商品名下只留一行重點＋「全部規格 ›」 */
+ function esc(t){return String(t).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+ function shortv(v){v=(v||'').replace(/\s+/g,' ').trim();var m=v.split(/[（(，,；;]/)[0].trim()||v;return m.length>18?m.slice(0,18)+'…':m;}
+ function specMove(card,body){if(card.__xtsp)return;var meta=card.querySelector(':scope>.chead .meta');if(!meta)return;var sp=meta.querySelector(':scope>.specs');if(!sp)return;card.__xtsp=1;
+  var sum=document.createElement('div');sum.className='xtsum';sum.setAttribute('data-xwns','1');
+  function fill(){var kv={};[].forEach.call(sp.querySelectorAll('.spec'),function(x){var k=x.querySelector('.k'),v=x.querySelector('.v');if(!k||!v)return;var c=v.cloneNode(true);[].forEach.call(c.querySelectorAll('a,button'),function(a){a.remove();});kv[(k.textContent||'').replace(/\s+/g,'')]=shortv(c.textContent);});
+   var want=W?['容量','酒精度','產區']:['規格','產地','類別'],parts=[];want.forEach(function(k){if(kv[k])parts.push(k==='酒精度'||k==='容量'||k==='規格'?'<b>'+esc(kv[k])+'</b>':esc(kv[k]));});
+   var n=sp.querySelectorAll('.spec').length,h=parts.join('<i>・</i>')+'<button type="button" class="xtsumgo">全部規格 '+n+' 項 ›</button>';
+   if(sum.__h!==h){sum.__h=h;sum.innerHTML=h;sum.querySelector('button').addEventListener('click',function(){show(card,'taste',true);});}}
+  fill();var fp=0;new MutationObserver(function(){if(fp)return;fp=1;setTimeout(function(){fp=0;fill();},120);}).observe(sp,{childList:true,subtree:true,characterData:true});
+  meta.insertBefore(sum,sp);
+  var box=document.createElement('div');box.className='sec xtspec';
+  box.innerHTML='<h3>'+(W?'規格與風味輪':'規格')+'</h3>';var wrap=document.createElement('div');wrap.className='meta xtmeta';box.appendChild(wrap);
+  var more=meta.querySelector(':scope>.r21more'),tb=meta.querySelector(':scope>.tastebar');
+  sp.classList.remove('r21cut');wrap.appendChild(sp);if(more)wrap.appendChild(more);if(tb)wrap.appendChild(tb);
+  new MutationObserver(function(){if(sp.classList.contains('r21cut'))sp.classList.remove('r21cut');}).observe(sp,{attributes:true,attributeFilter:['class']});
+  body.appendChild(box);}
  function build(card){if(card.__xt)return;var body=card.querySelector(':scope>.body');if(!body||/\bbcard\b/.test(card.className))return;
   if(!card.querySelector(':scope>.chead.r79g'))return;
   if(body.children.length<3)return;card.__xt=1;card.__xtbody=body;
@@ -89,6 +118,7 @@
    b.addEventListener('click',function(){show(card,x[0],true);});nav.appendChild(b);});
   var nx=document.createElement('button');nx.type='button';nx.className='xwtnext';nx.addEventListener('click',function(){show(card,nx.getAttribute('data-t'),true);});
   card.__xtnav=nav;card.__xtnext=nx;body.insertBefore(nav,body.firstChild);body.appendChild(nx);
+  try{specMove(card,body);}catch(e){}
   body.setAttribute('data-xtab','sell');tag(card,body);show(card,'sell',false);first(card);
   var pend=0;new MutationObserver(function(){if(pend)return;pend=1;requestAnimationFrame(function(){pend=0;tag(card,body);});}).observe(body,{childList:true});}
  function scan(){var cs=document.querySelectorAll('#list section.card');for(var i=0;i<cs.length;i++){if(!cs[i].__xt){try{build(cs[i]);}catch(e){}}}}

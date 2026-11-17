@@ -23,6 +23,13 @@
  'html:not(#_xa):not(#_xb) body section.card .xtmeta .specs>.spec{display:block!important}'+
  'html:not(#_xa):not(#_xb) body section.card .xtmeta .r21more{display:none!important}'+
  '.xtspec .tastebar{margin-top:12px!important}'+
+ '/*r268*/.xtminib{display:flex;align-items:center;gap:8px;width:100%;box-sizing:border-box;font:inherit;font-size:14px;text-align:left;color:#D9CDB0;background:rgba(201,164,92,.06);border:1px dashed rgba(201,164,92,.45);border-radius:12px;padding:10px 12px;cursor:pointer;-webkit-tap-highlight-color:transparent}'+
+ '.xtminib b{color:#E8CD8A;font-weight:700;white-space:nowrap}.xtminib span{flex:1;min-width:0;color:#B3A98F;font-size:13px}.xtminib em{font-style:normal;color:#E8CD8A;white-space:nowrap}'+
+ '.sec.xtmini{padding:0!important;border:0!important;background:none!important;box-shadow:none!important;margin:8px 0!important}'+
+ '.sec.xtmini>*:not(.xtminib){display:none!important}'+
+ '.sec.xtopen>.xtminib{margin-bottom:10px}'+
+ 'html[data-xwmode=light] .xtminib{color:#3A2E1C;background:#FBF5E8;border-color:rgba(138,100,32,.5)}html[data-xwmode=light] .xtminib b,html[data-xwmode=light] .xtminib em{color:#7A5617}html[data-xwmode=light] .xtminib span{color:#5E5446}'+
+ '@media(max-width:700px){html:not(#_a):not(#_b):not(#_c):not(#_d) section.card .shots.r79c>.shot:not(.r61kv) img{max-height:min(30vh,260px)!important;width:auto!important;max-width:100%!important;margin-left:auto!important;margin-right:auto!important;object-fit:contain!important}section.card>.chead .shots>.shot:not(.r61kv) .lbl{white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}}'+
  'html[data-xwmode=light] .xwtabs{background:#FBF7EF;border-bottom-color:rgba(138,100,32,.35)}html[data-xwmode=light] .xwtabs button{color:#7A5718;border-color:rgba(138,100,32,.4)}html[data-xwmode=light] .xwtabs button.on{background:#8A6420;color:#FFF;border-color:#8A6420}';
  var st=document.createElement('style');st.id='xwtabs-css';st.textContent=css;(document.head||document.documentElement).appendChild(st);
  function head(e){var h=e.querySelector(':scope>summary h3,:scope>summary,:scope>h3,:scope>.h,:scope>b');return ((h||e).textContent||'').replace(/\s+/g,'').slice(0,24);}
@@ -77,7 +84,20 @@
   var nx=card.__xtnext,cur=body.getAttribute('data-xtab'),i=TABS.map(function(x){return x[0];}).indexOf(cur),nxt=null;
   for(var j=i+1;j<TABS.length;j++)if(n[TABS[j][0]]){nxt=TABS[j];break;}
   if(nxt){nx.style.display='';nx.textContent='下一頁：'+nxt[1]+' ›';nx.setAttribute('data-t',nxt[0]);}else nx.style.display='none';}
- function tag(card,body){[].forEach.call(body.children,function(e){var t=cls(e);if(t){if(e.getAttribute('data-xt')!==t)e.setAttribute('data-xt',t);}});alt(body);sort(body);count(card,body);}
+
+ /* r268 賣這支精簡：沒有點名本款的近期話題、影片收成一行，點了才展開 */
+ function mini(body){
+  [['bzsec','近期話題'],['vdsec','影片']].forEach(function(x){
+   var sec=body.querySelector(':scope>.'+x[0]);if(!sec||sec.__xtm)return;
+   var direct,n,what;
+   if(x[0]==='bzsec'){if(!sec.querySelector('.bzit'))return;direct=!!sec.querySelector('.bzwhy.on');n=sec.querySelectorAll('.bzit').length;what=n+' 則・同品牌話題，沒有點名這支';}
+   else{var vs=sec.querySelectorAll('[data-xvseen^="v:"]');if(!vs.length)return;direct=!!sec.querySelector('.xvtag.me');n=vs.length;var ser=!!sec.querySelector('.xvtag')&&[].some.call(sec.querySelectorAll('.xvtag'),function(t){return /同系列/.test(t.textContent);});what=n+' 支・'+(ser?'同系列／同品牌':'同品牌')+'影片';}
+   sec.__xtm=1;if(direct)return;
+   var b=document.createElement('button');b.type='button';b.className='xtminib';b.setAttribute('data-xwns','1');
+   b.innerHTML='<b>'+x[1]+'</b><span>'+what+'</span><em>看 ▾</em>';
+   b.addEventListener('click',function(){var o=sec.classList.toggle('xtmini');sec.classList.toggle('xtopen',!o);b.querySelector('em').textContent=o?'看 ▾':'收起 ▴';});
+   sec.insertBefore(b,sec.firstChild);sec.classList.add('xtmini');});}
+ function tag(card,body){[].forEach.call(body.children,function(e){var t=cls(e);if(t){if(e.getAttribute('data-xt')!==t)e.setAttribute('data-xt',t);}});alt(body);try{mini(body);}catch(e){}sort(body);count(card,body);}
  function show(card,t,scroll){var body=card.__xtbody;body.setAttribute('data-xtab',t);
   [].forEach.call(card.__xtnav.children,function(b){b.classList.toggle('on',b.getAttribute('data-t')===t);});
   if(t!=='sell'){var ds=body.querySelectorAll(':scope>details[data-xt='+t+']');var anyOpen=[].some.call(ds,function(d){return d.open;});if(!anyOpen&&ds[0]&&!/bacesec/.test(ds[0].className))ds[0].open=true;}

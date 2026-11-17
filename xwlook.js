@@ -14,6 +14,12 @@
  })();
  /* r259 子頁頁首的「‹ 回○○速讀檔案」和頂端列的返回鍵重複：有頂端列時藏起來（站名按鈕也能回速讀檔案） */
  (function(){var st=document.createElement('style');st.id='xwnoback-css';st.textContent='body:has(#xwbar) header>a.back{display:none!important}';(document.head||document.documentElement).appendChild(st);})();
+ /* r268 子頁小按鈕放大到手指好按（產區頁酒款清單、表格支數連結、葡萄酒產區「看講義」、促銷頁勾選框） */
+ (function(){var P=location.pathname,c='';
+  if(/regions\.html$/.test(P))c+='ul.pl>li>a{display:inline-block;padding:7px 0;line-height:1.45}ul.pl>li{margin:0!important}table td>a{display:inline-block;padding:6px 6px;margin:-6px -6px}';
+  if(/wines\.html$/.test(P))c+='.reg h4 a.kb{display:inline-block;padding:7px 12px;margin:-4px 0;border:1px solid rgba(201,164,92,.45);border-radius:999px}';
+  if(/\/(promotion|chocolatepromo)\//.test(P))c+='label.cmp{padding:6px 4px;cursor:pointer}label.cmp input[type=checkbox]{width:20px!important;height:20px!important;vertical-align:-4px;accent-color:#C9A45C}';
+  if(!c)return;var st=document.createElement('style');st.id='xlsmall-css';st.textContent=c;(document.head||document.documentElement).appendChild(st);})();
  var P=location.pathname, SITE=/chocolatewiki/.test(P)?'c':(/\/dutyliquorwiki\/(index\.html)?$/.test(P)?'w':'');
  if(!SITE) return;
  function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
@@ -74,8 +80,41 @@
  +'.kbsec.xl-hit{box-shadow:-2px 0 0 #E8CD8A;transition:box-shadow 1.2s}';
  var st=document.createElement('style');st.id='xwlook-css';st.textContent=css;(document.head||document.documentElement).appendChild(st);
 
+
+
+ /* r268 首頁快捷列：搜尋框下 4 顆常用（折扣小卡、我的架上、活動月曆、獎勵圖牆）；手機版大標題圖收起 */
+ var QI={
+  card:I+'<rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 10h4M7 14h7"/><circle cx="17" cy="11" r="1.6"/></svg>',
+  cal:I+'<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18M8 14h3"/></svg>',
+  rw:I+'<circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5 7 21l5-2.6 5 2.6-1.5-7.5"/></svg>'
+ };
+ function qk(){
+  if(document.getElementById('xlqk'))return;
+  var sb=document.querySelector('#r16home button.srch,#r20home button.srch');if(!sb)return;
+  var CH=!!document.getElementById('r20home'),U='https://xsos32-design.github.io/';
+  var L=[['card','折扣小卡','現場快查',U+(CH?'chocolatepromo/card.html':'promotion/card.html')],
+   ['shelf','我的架上','本月清單',''],
+   ['cal','活動月曆','活動日期',U+'promotion/calendar.html'],
+   ['rw','獎勵圖牆','獎金・贈品',U+'dutyliquorwiki/rewards.html']];
+  var d=document.createElement('div');d.id='xlqk';d.setAttribute('data-xwns','1');
+  d.innerHTML=L.map(function(x){var ic=QI[x[0]]||ICO[x[0]]||'';var inner='<i>'+ic+'</i><b>'+x[1]+'</b><small>'+x[2]+'</small>';
+   return x[3]?'<a class="xlqk" href="'+x[3]+'">'+inner+'</a>':'<button type="button" class="xlqk" data-qk="'+x[0]+'">'+inner+'</button>';}).join('');
+  d.addEventListener('click',function(e){var b=e.target.closest('button[data-qk]');if(!b)return;var t=document.querySelector('.r59t[data-r59="'+b.getAttribute('data-qk')+'"]');if(t)t.click();});
+  sb.parentNode.insertBefore(d,sb.nextSibling);
+ }
+ (function(){var st=document.createElement('style');st.id='xlqk-css';st.textContent=''
+  +'#xlqk{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:10px 0 14px}'
+  +'#xlqk .xlqk{display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 4px 9px;min-height:84px;box-sizing:border-box;border:1px solid rgba(201,164,92,.40);border-radius:14px;background:linear-gradient(180deg,rgba(201,164,92,.13),rgba(201,164,92,.03));color:#EDE3CC;text-decoration:none;font:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;text-align:center}'
+  +'#xlqk .xlqk:active{background:rgba(201,164,92,.28)}'
+  +'#xlqk i{display:flex;color:#E8CD8A;margin-bottom:2px}#xlqk i svg{width:24px;height:24px}'
+  +'#xlqk b{font-size:14px;font-weight:700;color:#F2D89A;line-height:1.25}'
+  +'#xlqk small{font-size:11.5px;line-height:1.3;color:#B9B0A0}'
+  +'html[data-xwmode=light] #xlqk .xlqk{background:#FBF5E8;border-color:#C9A45C;color:#3A2E1C}html[data-xwmode=light] #xlqk b{color:#7A5617}html[data-xwmode=light] #xlqk i{color:#8A6420}html[data-xwmode=light] #xlqk small{color:#5E5446}'
+  +'@media(max-width:700px){#r16home>.hero .r22art,#r20home>.hero .r22art{display:none!important}#r16home>.hero,#r20home>.hero{padding-bottom:14px!important;min-height:0!important}}';
+  (document.head||document.documentElement).appendChild(st);})();
  /* ---------- 首頁 ---------- */
  function home(){
+  qk();
   $$('.r59h:not(.xl)').forEach(function(h){var t=h.textContent.trim(),e=EN[t];h.classList.add('xl');if(e)h.innerHTML=esc(t)+'<i>'+e+'</i>';});
   $$('.r59kg:not(.xl)').forEach(function(g){g.classList.add('xl');});
   $$('.r59k:not(.xl)').forEach(function(b){var k=(b.getAttribute('data-r59')||'').replace('kbg:','');if(!k)return;b.classList.add('xl');

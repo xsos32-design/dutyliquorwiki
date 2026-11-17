@@ -11,7 +11,7 @@
  /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=fbdf30fd';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwvid*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwvid.js?v=0c1559e6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwtabs*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js?v=e3834b5a';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
-/*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=37c42dd0';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+/*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=c8ba6138';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwwine*/(function(){try{if(!/\/dutyliquorwiki\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwine.js?v=5f5b6ca6';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=e3e84090';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwbuzz*/(function(){try{window.__xwBuzzV='9cb95ca1';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=a74c9a13';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
@@ -26,6 +26,7 @@
    {k:'shelf', t:'我的架上', s:'本月目標・獎勵・抽考', ico:'shelf', two:[['酒','shelf','https://xsos32-design.github.io/dutyliquorwiki/#shelf'],['巧克力','cshelf','https://xsos32-design.github.io/chocolatewiki/#shelf']]}
   ]},
   {g:'查詢工具', items:[
+   {k:'types', t:'酒類圖鑑', s:'16 種酒的歷史・優點・怎麼辨認・同類品牌對照', ico:'book', u:'https://xsos32-design.github.io/dutyliquorwiki/types.html'},
    {k:'brands', t:'品牌故事', s:'157 個品牌・王牌卡・年表・同品牌比較', ico:'brand', u:'https://xsos32-design.github.io/dutyliquorwiki/brands.html'},
    {k:'regions', t:'產區與桶型', s:'產區地圖・87 種桶型・雪莉／葡萄酒桶', ico:'map', u:'https://xsos32-design.github.io/dutyliquorwiki/regions.html'},
    {k:'pick', t:'推薦挑選', s:'酒＝預算・口味・場合；巧克力＝送給誰', ico:'gift', two:[['酒','pick','https://xsos32-design.github.io/dutyliquorwiki/pick.html'],['巧克力','cpick','https://xsos32-design.github.io/chocolatewiki/pick.html']]}
@@ -64,6 +65,7 @@
   if(/video\.html$/.test(p)) return 'video';
   if(/why\.html$/.test(p)) return 'why';
   if(/winekit\.html$/.test(p)) return 'wkit';
+  if(/types\.html$/.test(p)) return 'types';
   if(/wines\.html$/.test(p)) return 'wines';
   if(/chocolatepromo/.test(p)) return /card(_\w+)?\.html$/.test(p)?'ccard':'cpromo';
   if(/chocolatewiki/.test(p))  return 'choc';

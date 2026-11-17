@@ -1,5 +1,5 @@
 /* r56→r229：頁面先抓網路最新版（3 秒沒回應才用手機存的版本）；圖片字型快取跨版本保留 */
-const V = 'v2026-10-13-450b458923-r263';
+const V = 'v2026-10-13-450b458923-r264';
 const P = self.registration.scope + '|';
 const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=088bec0057'];
 self.addEventListener('install', e => {
@@ -14,6 +14,7 @@ function notify(){ self.clients.matchAll({type:'window'}).then(cs => cs.forEach(
 self.addEventListener('fetch', e => {
   const r = e.request;
   if (r.method !== 'GET') return;
+  if (r.headers.has('range') || /\.(mp4|webm|m4a|mp3)$/i.test(new URL(r.url).pathname)) return; /*r264media*/
   const u = new URL(r.url);
   const scope = new URL(self.registration.scope);
   if (r.mode === 'navigate') {

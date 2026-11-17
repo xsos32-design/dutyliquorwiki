@@ -83,7 +83,7 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
 <div class="bar"><input class="sr" id="sr" type="search" placeholder="搜尋：品牌、酒名、雪莉、香檳、調溫…"><button type="button" class="tg" id="tnew">只看還沒看過的</button></div>
 <div id="rows" data-xwns></div>
 <p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。動畫圖解的內容取自本站商訓知識庫，畫面為 AI 示意插圖（非實景）。旁白使用手機內建語音，聲音依手機而定。</p></main>
-<script src="xwvid.js?v=33c61018"></script>
+<script src="xwvid.js?v=f802b731"></script>
 <script>
 (function(){
  window.__xwVidNoAuto=1;
@@ -130,7 +130,7 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
   [].forEach.call(document.querySelectorAll('#side .steps li'),function(li,j){li.classList.toggle('on',!!started&&j===i);});},400);
  function mark(){[].forEach.call(document.querySelectorAll('.po'),function(p){p.classList.toggle('on',p.getAttribute('data-k')===st.cur);});}
  /* ---- 海報列 ---- */
- function poA(a){var s=seen(),q=s['q:'+a.id];return '<button type="button" class="po" data-k="a:'+E(a.id)+'"><div class="pi"><img loading="lazy" alt="" src="'+E(a.steps[0].img)+'"><span class="pk">動畫・'+a.steps.length+' 步</span>'+(s['a:'+a.id]?'<span class="pseen">✓ 看過'+(q!=null?' '+q+'/'+a.quiz.length:'')+'</span>':'')+'<span class="pp"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span><span class="pl">約 '+a.mins+' 分</span></div><div class="pt"><b>'+E(a.title)+'</b><small>'+E(a.en)+'</small></div></button>';}
+ function poA(a){var s=seen(),q=s['q:'+a.id];return '<button type="button" class="po" data-k="a:'+E(a.id)+'"><div class="pi"><img loading="lazy" alt="" src="'+E(a.steps[0].img)+'"><span class="pk">'+(function(){var n=a.steps.filter(function(s){return s.v;}).length;return n?'動態影片 '+n+'/'+a.steps.length+' 步':'動畫・'+a.steps.length+' 步';})()+'</span>'+(s['a:'+a.id]?'<span class="pseen">✓ 看過'+(q!=null?' '+q+'/'+a.quiz.length:'')+'</span>':'')+'<span class="pp"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span><span class="pl">約 '+a.mins+' 分</span></div><div class="pt"><b>'+E(a.title)+'</b><small>'+E(a.en)+'</small></div></button>';}
  function poV(v){var s=seen();return '<button type="button" class="po" data-k="v:'+E(v.id)+'"><div class="pi"><img loading="lazy" alt="" src="https://i.ytimg.com/vi/'+E(v.id)+'/hqdefault.jpg"><span class="pk">'+E(v.kind)+'</span>'+(s['v:'+v.id]?'<span class="pseen">✓ 看過</span>':'')+'<span class="pp"><svg viewBox="0 0 24 24" width="14" height="14"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></svg></span><span class="pl">'+mmss(v.len)+'</span></div><div class="pt"><b>'+E(v.t)+'</b><small>'+E(v.ch)+'・'+E(v.date)+((v.ps||[]).length?'・本店 '+v.ps.length+' 支':'')+'</small></div></button>';}
  function row(t,en,sub,items){if(!items.length)return '';return '<section class="row"><div class="rh"><h3>'+t+'</h3><em>'+en+'</em><span>'+sub+'</span></div><div class="sc">'+items.join('')+'</div></section>';}
  function rows(){var As=D.A.filter(okA),Vs=D.V.filter(okV),h='';

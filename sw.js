@@ -1,7 +1,7 @@
 /* r56→r229：頁面先抓網路最新版（3 秒沒回應才用手機存的版本）；圖片字型快取跨版本保留 */
-const V = 'v2026-10-13-450b458923-r273';
+const V = 'v2026-10-13-450b458923-r274';
 const P = self.registration.scope + '|';
-const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=f9e4244036'];
+const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=e482f1ef78'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(P + 'core|' + V).then(c => c.addAll(CORE.map(x => new Request(x, {cache: 'reload'})))).catch(() => {}).then(() => self.skipWaiting()));
 });
@@ -30,6 +30,14 @@ self.addEventListener('fetch', e => {
       const late = new Promise(ok => setTimeout(() => ok(null), 3000));
       return Promise.race([net.catch(() => null), late]).then(res => (res && res.ok) ? res : m.clone());
     })));
+    return;
+  }
+  if (/\/(xwdata\.js|xwkb\.json)$/.test(u.pathname) && u.searchParams.get('v')) { /*r274data*/
+    /* r274：拆出去的商品資料與知識庫，網址帶版本 ?v=，有存就直接用（不在背景重抓 4MB）；存新版時刪掉同檔名的舊版 */
+    e.respondWith(caches.open(P + 'rt').then(c => c.match(r).then(m => m || fetch(r).then(res => {
+      if (res.ok) c.put(r, res.clone()).then(() => c.keys()).then(ks => ks.forEach(k => { const ku = new URL(k.url); if (ku.pathname === u.pathname && ku.search !== u.search) c.delete(k); })).catch(() => {});
+      return res;
+    }))));
     return;
   }
   const same = u.origin === scope.origin;

@@ -5,11 +5,13 @@
  if(window.__xwTabs)return;window.__xwTabs=1;
  var W=/\/dutyliquorwiki\//.test(location.pathname);
  var TABS=[['sell','賣這支'],['taste',W?'喝起來':'口味規格'],['story','背景故事'],['check','資料來源']];
+ if(W)TABS.pop(); /* r276 使用者：酒類商品卡「資料來源」有跟沒有一樣，直接刪除（分頁與內容都不顯示） */
  var css='.xwtabs{position:sticky;top:var(--xwbarh,50px);z-index:6;display:flex;gap:6px;margin:4px -4px 10px;padding:8px 4px;background:#16130F;border-bottom:1px solid rgba(201,164,92,.35);box-shadow:0 6px 10px -8px rgba(0,0,0,.8)}'+
  '.xwtabs button{flex:1 1 0;min-width:0;font:inherit;font-size:15px;font-weight:700;padding:9px 4px;border-radius:10px;border:1px solid rgba(201,164,92,.35);background:transparent;color:#E8CD8A;cursor:pointer;white-space:nowrap;letter-spacing:.02em}'+
  '.xwtabs button.on{background:#C9A45C;color:#17120B;border-color:#C9A45C}'+
  '.xwtabs button[hidden]{display:none}'+
  '.body[data-xtab=sell]>[data-xt]:not([data-xt=sell]),.body[data-xtab=taste]>[data-xt]:not([data-xt=taste]),.body[data-xtab=story]>[data-xt]:not([data-xt=story]),.body[data-xtab=check]>[data-xt]:not([data-xt=check]){display:none!important}'+
+ (W?'.body>[data-xt=check]{display:none!important}':'')+
  '.xwalt{margin:8px 0 2px;font:inherit;font-size:13.5px;color:#C9A45C;background:none;border:1px dashed rgba(201,164,92,.5);border-radius:999px;padding:5px 12px;cursor:pointer}'+
  '.mmsec:not(.xwaltopen) .mmfab{display:none}'+
  '.xwaltlbl{display:inline-block;margin-left:8px;font-size:12px;font-weight:400;color:#BBA77E;border:1px solid rgba(201,164,92,.4);border-radius:999px;padding:0 8px;vertical-align:middle}'+

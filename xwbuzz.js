@@ -1,4 +1,4 @@
-/* r248 每則加「為什麼提到這款」（hit＝直接點名或同系列對應、auto／預設＝同品牌）與「被稱讚的地方」praise，點名本款的排前面；修正與 xwmemo 互搶位置造成的閃爍。r242 可收合：預設只列標題（小圖＋標題），點一下展開全文，記住選擇 xw_bz_open。r237 商品卡「近期話題 BUZZ」（r239 加有名在哪、怎麼帶到本店推薦；r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過一年的話題這裡也會自動不顯示 */
+/* r248 每則加「為什麼提到這款」（hit＝直接點名或同系列對應、auto／預設＝同品牌）與「被稱讚的地方」praise，點名本款的排前面；修正與 xwmemo 互搶位置造成的閃爍。r242 可收合：預設只列標題（小圖＋標題），點一下展開全文，記住選擇 xw_bz_open。r237 商品卡「近期話題 BUZZ」（r239 加有名在哪、怎麼帶到本店推薦；r238 加國內／國外、人物、話題圖、連到 buzz.html）：資料 buzz.json（site_tools/buzz/buzz.py 產生），超過兩年（r281 起）的話題這裡也會自動不顯示 */
 (function(){
  if(window.__xwBuzz) return; window.__xwBuzz=1;
  function go(){
@@ -7,7 +7,7 @@
   base=base.replace(/xwbuzz\.js.*$/,'');
   fetch(base+'buzz.json?v='+(window.__xwBuzzV||'')).then(function(r){return r.json();}).then(function(B){
    var now=Date.now(), M={};
-   (B.items||[]).forEach(function(it){var t=Date.parse(it.d);if(!t||now-t>365*864e5)return;(it.ids||[]).forEach(function(id){(M[id]=M[id]||[]).push(it);});});
+   (B.items||[]).forEach(function(it){var t=Date.parse(it.d);if(!t||now-t>730*864e5)return;(it.ids||[]).forEach(function(id){(M[id]=M[id]||[]).push(it);});});
    function esc(s){return String(s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
    function ago(d){var m=Math.round((now-Date.parse(d))/(30.4*864e5));return m<1?'本月':m+' 個月前';}
    function card(c){
@@ -16,7 +16,7 @@
     c.__bz=1;
     function hit(it){return !!(it.hit&&it.hit[c.id]);}
     var its=M[c.id].slice().sort(function(a,b){var x=hit(b)-hit(a);return x||(a.d<b.d?1:-1);}),nh=its.filter(hit).length;
-    var h='<button type="button" class="bzhd" aria-expanded="false"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則'+(nh?'・'+nh+' 則點名本款':'・一年內')+'</span><span class="bztg"></span></button>';
+    var h='<button type="button" class="bzhd" aria-expanded="false"><span class="bzt">近期話題</span><span class="bze">BUZZ</span><span class="bzn">'+its.length+' 則'+(nh?'・'+nh+' 則點名本款':'・兩年內')+'</span><span class="bztg"></span></button>';
     its.forEach(function(it){
      h+='<div class="bzit">'+(it.img?'<a class="bzimg" href="'+base+'buzz.html#bz-'+esc(it.id)+'"><img src="'+base+esc(it.img)+'" alt="" loading="lazy" onerror="this.parentNode.remove()"></a>':'')+'<div class="bzm"><span class="bzk">'+esc(it.k)+'</span><span class="bzr'+(it.region==='國外'?' f':'')+'">'+esc(it.region||'國內')+'</span>'+(it.who?'<span class="bzw">'+esc(it.who)+'</span>':'')+'<span class="bzd">'+esc(it.d.replace(/-/g,'/'))+'・'+ago(it.d)+'</span></div>'+
       '<b class="bzti">'+esc(it.t)+'</b>'+WHY(it)+'<p>'+esc(it.body)+'</p>'+(it.praise?'<p class="bzpraise"><span>被稱讚的地方</span>'+esc(it.praise)+'</p>':'')+(it.fame?'<p class="bzfame"><span>有名在哪</span>'+esc(it.fame)+'</p>':'')+

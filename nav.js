@@ -11,11 +11,11 @@
  /*xwwhy*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwhy.js?v=fbdf30fd';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwvid*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwvid.js?v=f2e4fcbb';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwtabs*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js?v=a97140ae';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
-/*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=a96e37d1';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+/*xwbace*/(function(){try{if(!/\/(dutyliquorwiki|chocolatewiki)\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbace.js?v=56c9d655';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 /*xwwine*/(function(){try{if(!/\/dutyliquorwiki\/(index\.html)?$/.test(location.pathname))return;var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwwine.js?v=05218708';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=74ba4574';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwlook*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwlook.js?v=51e0e6ea';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=e3e84090';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
- /*xwbuzz*/(function(){try{window.__xwBuzzV='42c9673d';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=49427ea7';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
+ /*xwbuzz*/(function(){try{window.__xwBuzzV='df276dec';var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwbuzz.js?v=49427ea7';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=895ddcc2';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
  var N_W=798, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
@@ -226,7 +226,7 @@
   /* 同一站的子頁（品牌、產區、選酒…）：上方名稱用頁名，選單仍標示所屬的站 */
   var SUBN=(function(p){ p=p.toLowerCase();
    if(/brands\.html$/.test(p)) return '品牌故事'; if(/regions\.html$/.test(p)) return '產區與桶型';
-   if(/wines\.html$/.test(p)) return '葡萄酒產區'; if(/dutyliquorwiki\/pick\.html$/.test(p)) return '選酒推薦';
+   if(/wines\.html$/.test(p)) return '葡萄酒產區'; if(/video\.html$/.test(p)) return '影片教室'; if(/why\.html$/.test(p)) return '為什麼百科'; if(/winekit\.html$/.test(p)) return '葡萄酒速成'; if(/types\.html$/.test(p)) return '酒類圖鑑'; if(/dutyliquorwiki\/pick\.html$/.test(p)) return '選酒推薦';
    if(/chocolatewiki\/pick\.html$/.test(p)) return '送禮推薦';
    if(/promotion\/oct\.html$/.test(p)) return '酒類 10 月比較卡'; if(/promotion\/card_oct\.html$/.test(p)) return '酒類 10 月折扣卡'; if(/chocolatepromo\/card_oct\.html$/.test(p)) return '巧克力 10 月折扣卡'; if(/chocolatepromo\/oct\.html$/.test(p)) return '巧克力 10 月比較卡';
    return ''; })(location.pathname);

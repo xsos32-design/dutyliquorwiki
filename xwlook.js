@@ -20,6 +20,35 @@
   if(/wines\.html$/.test(P))c+='.reg h4 a.kb{display:inline-block;padding:7px 12px;margin:-4px 0;border:1px solid rgba(201,164,92,.45);border-radius:999px}';
   if(/\/(promotion|chocolatepromo)\//.test(P))c+='label.cmp{padding:6px 4px;cursor:pointer}label.cmp input[type=checkbox]{width:20px!important;height:20px!important;vertical-align:-4px;accent-color:#C9A45C}';
   if(!c)return;var st=document.createElement('style');st.id='xlsmall-css';st.textContent=c;(document.head||document.documentElement).appendChild(st);})();
+ /* r293 學習區導覽列：知識庫、影片教室、為什麼百科、酒類圖鑑、葡萄酒速成、產區桶型、葡萄酒產區、看圖記憶、巧克力知識庫 互相一鍵切換（子頁放在頂端列下方；兩站首頁放在知識庫最上面） */
+ (function(){
+  var B='https://xsos32-design.github.io/';
+  var L=[['kbw','酒類知識庫',B+'dutyliquorwiki/#kb'],['video','影片教室',B+'dutyliquorwiki/video.html'],['why','為什麼百科',B+'dutyliquorwiki/why.html'],['types','酒類圖鑑',B+'dutyliquorwiki/types.html'],
+   ['wkit','葡萄酒速成',B+'dutyliquorwiki/winekit.html'],['regions','產區・桶型',B+'dutyliquorwiki/regions.html'],['wines','葡萄酒產區',B+'dutyliquorwiki/wines.html'],['memo','看圖記憶',B+'dutyliquorwiki/memo.html'],['kbc','巧克力知識庫',B+'chocolatewiki/#kb']];
+  var p=location.pathname, cur=/\/video\.html$/.test(p)?'video':/\/why\.html$/.test(p)?'why':/\/types\.html$/.test(p)?'types':/\/winekit\.html$/.test(p)?'wkit':
+   /\/regions\.html$/.test(p)?'regions':/\/wines\.html$/.test(p)?'wines':/\/memo\.html$/.test(p)?'memo':/\/chocolatewiki\/(index\.html)?$/.test(p)?'kbc':/\/dutyliquorwiki\/(index\.html)?$/.test(p)?'kbw':'';
+  if(!cur) return;
+  var css='.xwlearn{display:flex;align-items:center;gap:7px;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:9px 14px;margin:0;background:#0E0C0A;border-bottom:1px solid rgba(201,164,92,.22);position:relative;z-index:5}'+
+   '.xwlearn::-webkit-scrollbar{display:none}.xwlearn .xlh{flex:none;font-size:11px;letter-spacing:.22em;color:#C9A45C;margin-right:2px;font-weight:700}'+
+   '.xwlearn a{flex:none;display:inline-block;padding:6px 12px;border:1px solid rgba(201,164,92,.35);border-radius:999px;font-size:13.5px;line-height:1.3;color:#E9DFCC!important;text-decoration:none!important;white-space:nowrap;background:rgba(255,255,255,.02)}'+
+   '.xwlearn a.on{background:#C9A45C;border-color:#C9A45C;color:#16120C!important;font-weight:700}'+
+   '#kbview .xwlearn{margin:10px 0 14px;border:1px solid rgba(201,164,92,.22);border-radius:14px;padding:9px 10px}'+
+   'html[data-xwmode=light] .xwlearn{background:#F4EEE2}html[data-xwmode=light] .xwlearn a{color:#3B2F1E!important;background:#fff}html[data-xwmode=light] .xwlearn a.on{color:#16120C!important;background:#C9A45C}';
+  var st=document.createElement('style');st.id='xwlearn-css';st.textContent=css;(document.head||document.documentElement).appendChild(st);
+  function bar(){var d=document.createElement('nav');d.className='xwlearn';d.setAttribute('data-xwns','');d.setAttribute('aria-label','學習區');
+   d.innerHTML='<span class="xlh">學習區</span>'+L.map(function(x){return '<a href="'+x[2]+'"'+(x[0]===cur?' class="on" aria-current="page"':'')+'>'+x[1]+'</a>';}).join('');
+   d.addEventListener('click',function(e){var a=e.target.closest('a');if(!a)return;
+    if((cur==='kbw'&&/dutyliquorwiki\/#kb$/.test(a.href))||(cur==='kbc'&&/chocolatewiki\/#kb$/.test(a.href))){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});}});
+   return d;}
+  function center(d){var o=d.querySelector('a.on');if(o)d.scrollLeft=Math.max(0,o.offsetLeft-d.clientWidth/2+o.offsetWidth/2);}
+  function put(){
+   if(cur==='kbw'||cur==='kbc'){var t=document.querySelector('#kbview .kbtop');if(!t)return false;if(document.querySelector('#kbview .xwlearn'))return true;var d=bar();t.parentNode.insertBefore(d,t.nextSibling);setTimeout(function(){center(d);},50);return true;}
+   if(document.querySelector('.xwlearn'))return true;
+   var x=document.getElementById('xwbar');if(!x&&document.readyState!=='complete')return false;
+   var d=bar();if(x&&x.parentNode)x.parentNode.insertBefore(d,x.nextSibling);else document.body.insertBefore(d,document.body.firstChild);center(d);return true;}
+  var n=0;(function tick(){if(put())return;if(++n<60)setTimeout(tick,250);})();
+  if(cur==='kbw'||cur==='kbc')(function ob(){if(!document.body){setTimeout(ob,200);return;}new MutationObserver(function(){if(document.body.classList.contains('kbon'))put();}).observe(document.body,{attributes:true,attributeFilter:['class']});})();
+ })();
  var P=location.pathname, SITE=/chocolatewiki/.test(P)?'c':(/\/dutyliquorwiki\/(index\.html)?$/.test(P)?'w':'');
  if(!SITE) return;
  function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}

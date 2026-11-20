@@ -38,7 +38,8 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
 .chs li{display:flex;gap:10px;align-items:center;padding:7px 8px;border-radius:10px;cursor:pointer;font-size:14.5px}
 .chs li:hover{background:rgba(201,164,92,.08)}.chs li.on{background:rgba(201,164,92,.18)}
 .chs li b{flex:0 0 auto;min-width:46px;font:700 12px/1 inherit;color:var(--gold2);letter-spacing:.05em}.chs li small{margin-left:auto;color:var(--dim2);font-size:12px}
-.srcs{margin:12px 0 0;font-size:12px;line-height:1.6;color:var(--dim2)}.srcs a{color:var(--dim2)}
+.srcs{margin:12px 0 0;font-size:12px;line-height:1.6;color:var(--dim2)}.srcs a{color:var(--dim2)}details.srcs summary{cursor:pointer;font-size:13px;color:var(--gold2);padding:6px 0;list-style:none}details.srcs summary::before{content:'▸ ';}details.srcs[open] summary::before{content:'▾ ';}details.srcs summary::-webkit-details-marker{display:none}
+.rh h3 .rn{font:500 12.5px/1 inherit;color:var(--dim2);margin-left:8px;letter-spacing:0}
 .po .pk.st{background:#9b2a1a;color:#fff}
 .steps img{width:54px;height:34px;object-fit:cover;border-radius:6px;flex:none}
 .steps b{font-size:14px;font-weight:600;line-height:1.3}.steps small{display:block;font-size:11.5px;color:var(--dim2)}
@@ -55,7 +56,7 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
 .rh{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
 .rh h3{margin:0;font:700 18px/1.3 'Noto Serif TC','Noto Serif CJK TC',serif;color:#F4E6C6}
 .rh span{font-size:12.5px;color:var(--dim2)}
-@media(max-width:560px){.rh span{display:none}.st{padding:8px;gap:8px}.st img{width:34px;height:34px}.st b{font-size:14px;white-space:nowrap}.st small{font-size:11px;white-space:nowrap}.st>span:nth-child(2){flex:1;min-width:0}.ring{width:30px;height:30px}.ring::after{width:24px;height:24px;font-size:9.5px}}
+@media(max-width:560px){.rh span{display:none}.st{padding:8px;gap:8px}.st img{width:34px;height:34px}.st b{font-size:14px;white-space:nowrap}.st small{font-size:11px;white-space:normal;line-height:1.3}.st>span:nth-child(2){flex:1;min-width:0}.ring{width:30px;height:30px}.ring::after{width:24px;height:24px;font-size:9.5px}}
 .rh em{font-style:normal;font-size:11px;letter-spacing:.2em;color:var(--gold)}
 .sc{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(220px,250px);gap:12px;overflow-x:auto;padding:2px 2px 12px;scroll-snap-type:x proximity;scrollbar-width:thin}
 @media(min-width:980px){.sc{grid-auto-columns:minmax(250px,270px)}}
@@ -85,13 +86,13 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
 .empty{color:var(--dim2);padding:20px 0}
 </style></head><body>
 <header class="top"><div class="wrap"><span class="eye">VIDEO CLASSROOM</span><h1>影片教室</h1>
-<p class="lead">長版故事 9 集（一集 6–8 分鐘講懂一種酒）＋旁白短片 13 支（2–3 分鐘講懂一件事）＋動畫圖解 0 支＋影片 33 支。動畫像短片一樣一步一步播，有旁白、隨堂小考；影片點了才播放，可以直接跳到講某一支酒的那一段。</p>
+<p class="lead"><b>看懂一種酒</b> 長版故事 9 集（6–8 分鐘）・<b>旁白短片</b> 13 支（2–3 分鐘講懂一件事）・<b>YouTube／品牌影片</b> 33 支（點了才播放，可直接跳到講本店那支酒的段落）。</p>
 <div class="stats" id="tracks" data-xwns></div></div></header>
 <main class="wrap">
 <section id="hero"><div id="stage"></div><aside id="side"></aside></section>
 <div class="bar"><input class="sr" id="sr" type="search" placeholder="搜尋：品牌、酒名、雪莉、香檳、調溫…"><button type="button" class="tg" id="tnew">只看還沒看過的</button></div>
 <div id="rows" data-xwns></div>
-<p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。動畫圖解的內容取自本站商訓知識庫，畫面為 AI 示意插圖（非實景）。旁白使用手機內建語音，聲音依手機而定。</p></main>
+<p class="note">影片由 YouTuber、品牌或教育機構製作，本站只整理影片標題、說明欄與影片中講到的內容（標「影片說法」），不是原廠資料；和商品卡不一樣時以酒標與原廠資料為準。英文影片可在 YouTube 開「中文自動翻譯字幕」。長版故事與旁白短片的內容取自本站查證資料與商訓知識庫（每集附資料來源），畫面標「AI 生成示意圖」者為 AI 生成、非實景，旁白為合成語音。</p></main>
 <script src="xwvid.js?v=f2e4fcbb"></script>
 <script>
 (function(){
@@ -116,7 +117,7 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
  function tracks(){var s=seen(),h='';var all=[['all','全部','All',D.A[0]?D.A[0].steps[0].img:(((D.S||[]).filter(function(x){return x.one;})[0]||{}).poster||'')]].concat(TR);
   all.forEach(function(t){var As=D.A.filter(function(a){return t[0]==='all'||a.track===t[0];}),Vs=D.V.filter(function(v){return t[0]==='all'||v.tr===t[0];}),Ss=(D.S||[]).filter(function(x){return x.one&&(t[0]==='all'||x.track===t[0]);});
    var n=As.length+Vs.length+Ss.length,k=As.filter(function(a){return s['a:'+a.id];}).length+Vs.filter(function(v){return s['v:'+v.id];}).length+Ss.filter(function(x){return s['s:'+x.id];}).length,p=n?Math.round(k*100/n):0;
-   h+='<button type="button" class="st'+(st.tr===t[0]?' on':'')+'" data-tr="'+t[0]+'"><img alt="" src="'+E(t[3])+'"><span><b>'+E(t[1])+'</b><small>'+(Ss.length?'短片 '+Ss.length+'・':'')+'動畫 '+As.length+'・影片 '+Vs.length+'</small></span><span class="ring" style="--p:'+p+'" data-t="'+p+'%"></span></button>';});
+   h+='<button type="button" class="st'+(st.tr===t[0]?' on':'')+'" data-tr="'+t[0]+'"><img alt="" src="'+E(t[3])+'"><span><b>'+E(t[1])+'</b><small>'+(t[0]==='all'?'長版 '+SS.filter(function(x){return !x.one;}).length+'・':'')+'短片 '+Ss.length+'・影片 '+Vs.length+(As.length?'・動畫 '+As.length:'')+'</small></span><span class="ring" style="--p:'+p+'" data-t="'+p+'%"></span></button>';});
   var el=document.getElementById('tracks');el.innerHTML=h;}
  document.getElementById('tracks').onclick=function(e){var b=e.target.closest('[data-tr]');if(!b)return;st.tr=b.getAttribute('data-tr');save();tracks();rows();};
  /* ---- 主舞台 ---- */
@@ -161,14 +162,14 @@ h1{margin:2px 0 0;font:700 27px/1.25 'Noto Serif TC','Noto Serif CJK TC',serif;l
   v.addEventListener('ended',function(){if(s.one){api.seenSet('s:'+s.id);tracks();return;}if(ci===s.ch.length-1){api.seenSet('s:'+s.id);tracks();return;}load(ci+1,true);});
   v.addEventListener('timeupdate',function(){if(ci>=s.ch.length-2&&!seen()['s:'+s.id]&&v.duration&&v.currentTime>v.duration*.6)api.seenSet('s:'+s.id);});
   nx.onclick=function(){if(ci<s.ch.length-1)load(ci+1,true);};
-  document.getElementById('side').innerHTML='<span class="en">'+(s.one?'旁白短片 SHORT・'+mmss(s.len):'長版故事 STORY・約 '+s.mins+' 分')+'</span><h2>'+E(s.t)+'</h2><div style="font-size:14px;color:#cfc3a8;margin-top:2px">'+E(s.sub)+'</div><ol class="chs">'+s.ch.map(function(c,j){return '<li data-i="'+j+'"><b>'+(j===0?(s.one?'開頭':'序'):(s.one?CN[j]:'第'+CN[j]+'章'))+'</b><span>'+E(c[1])+'</span><small>'+mmss(c[2])+'</small></li>';}).join('')+'</ol>'+chips(s)+'<div class="srcs">資料來源：'+s.src.map(function(x){return '<a href="'+E(x[1])+'" target="_blank" rel="noopener">'+E(x[0])+'</a>';}).join('；')+'<br>畫面標「AI 生成示意圖」者為 AI 生成、非實景；旁白為合成語音。</div>';
+  document.getElementById('side').innerHTML='<span class="en">'+(s.one?'旁白短片 SHORT・'+mmss(s.len):'長版故事 STORY・約 '+s.mins+' 分')+'</span><h2>'+E(s.t)+'</h2><div style="font-size:14px;color:#cfc3a8;margin-top:2px">'+E(s.sub)+'</div><ol class="chs">'+s.ch.map(function(c,j){return '<li data-i="'+j+'"><b>'+(j===0?(s.one?'開頭':'序'):(s.one?CN[j]:'第'+CN[j]+'章'))+'</b><span>'+E(c[1])+'</span><small>'+mmss(c[2])+'</small></li>';}).join('')+'</ol>'+chips(s)+'<details class="srcs"><summary>資料來源 '+s.src.length+' 筆・畫面與旁白說明</summary>'+s.src.map(function(x){return '<a href="'+E(x[1])+'" target="_blank" rel="noopener">'+E(x[0])+'</a>';}).join('；')+'<br>畫面標「AI 生成示意圖」者為 AI 生成、非實景；旁白為合成語音。</details>';
   load(ci,!!auto);mark();}
  document.getElementById('side').addEventListener('click',function(e){var li=e.target.closest('.chs li');if(!li)return;var s=SS.filter(function(x){return 's:'+x.id===st.cur;})[0];if(!s)return;
   var v=document.querySelector('#stage .xs video');if(!v)return;if(s.one&&v.__seekTo){v.__seekTo(+li.getAttribute('data-i'));return;}showS(s,+li.getAttribute('data-i'),true);});
- function rows(){var As=D.A.filter(okA),Vs=D.V.filter(okV),h='';h+=row('看懂一種酒','STORY','知識型長片：一集講懂一種酒的歷史與門市話術',SS.filter(function(x){return !x.one&&okS(x);}).map(poS));
-  TR.forEach(function(t){if(st.tr!=='all'&&st.tr!==t[0])return;var L=As.filter(function(a){return a.track===t[0];}),L2=SS.filter(function(x){return x.one&&x.track===t[0]&&okS(x);});h+=row('短片與動畫：'+t[1],'SHORTS','旁白短片 2–3 分鐘講懂一件事，看完就能跟客人講',L2.map(poS).concat(L.map(poA)));});
+ function rows(){var As=D.A.filter(okA),Vs=D.V.filter(okV),h='';var LS=SS.filter(function(x){return !x.one&&okS(x);});h+=row('看懂一種酒<small class="rn">'+LS.length+' 集</small>','STORY','知識型長片：一集講懂一種酒的歷史與門市話術',LS.map(poS));
+  TR.forEach(function(t){if(st.tr!=='all'&&st.tr!==t[0])return;var L=As.filter(function(a){return a.track===t[0];}),L2=SS.filter(function(x){return x.one&&x.track===t[0]&&okS(x);});h+=row('旁白短片：'+t[1]+'<small class="rn">'+(L2.length+L.length)+' 支</small>','SHORTS','2–3 分鐘講懂一件事，看完就能跟客人講',L2.map(poS).concat(L.map(poA)));});
   var G=[['開箱品飲','YouTuber 開箱品飲','REVIEWS','講到本店的酒，可直接跳到那一段'],['品牌故事','品牌故事・廣告','BRAND','客人看過的廣告與品牌影片'],['品牌訪談','品牌訪談','INTERVIEW','總監、調酒師談品牌'],['製程教學','製程教學','HOW IT\'S MADE','官方或教育機構的短片'],['品牌製程','品牌工廠','FACTORY','品牌自己的工廠怎麼做']];
-  G.forEach(function(g){var L=Vs.filter(function(v){return v.kind===g[0];}).sort(function(a,b){return a.date<b.date?1:-1;});h+=row(g[1],g[2],g[3],L.map(poV));});
+  G.forEach(function(g){var L=Vs.filter(function(v){return v.kind===g[0];}).sort(function(a,b){return a.date<b.date?1:-1;});h+=row(g[1]+'<small class="rn">'+L.length+' 支</small>',g[2],g[3],L.map(poV));});
   if(!h)h='<p class="empty">沒有符合的動畫或影片。</p>';document.getElementById('rows').innerHTML=h;mark();}
  document.getElementById('rows').onclick=function(e){var p=e.target.closest('.po');if(!p)return;var k=p.getAttribute('data-k'),id=k.slice(2);
   if(k[0]==='s'){var ss=SS.filter(function(x){return x.id===id;})[0];showS(ss,0,true);}else if(k[0]==='a'){var a=D.A.filter(function(x){return x.id===id;})[0];showA(a,true);}else{var v=D.V.filter(function(x){return x.id===id;})[0];showV(v);var b=document.querySelector('#stage .xvyp');if(b)b.click();}

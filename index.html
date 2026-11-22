@@ -5712,6 +5712,7 @@ var A=null,AT=0,SY=0,busy=0,L=null,CI='',CT=0;
 function top0(){var b=document.getElementById('xwbar');var t=b?b.getBoundingClientRect().bottom:0;return Math.max(0,t)+12;}
 function pick(){A=null;L=L||document.getElementById('list');SY=scrollY;if(!L||!L.offsetParent)return;var b=document.body;if(b.classList.contains('shon')||b.classList.contains('kbon'))return;
  var y=top0(),x=Math.round(innerWidth/2),e=document.elementFromPoint(x,y);
+ var nv=e&&e.closest&&e.closest('.xwtabs');if(nv){y=nv.getBoundingClientRect().bottom+12;e=document.elementFromPoint(x,y);}/*r308：商品卡快速跳轉列是 sticky，不能當錨點*/
  if(!e||!L.contains(e)){e=null;var k=L.children;for(var i=0;i<k.length;i++){var r=k[i].getBoundingClientRect();if(r.height&&r.bottom>y){e=k[i];break;}}}
  if(!e||!L.contains(e))return;
  while(e&&e!==L&&e.offsetHeight<4)e=e.parentElement;if(!e||e===L)return;

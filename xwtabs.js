@@ -22,8 +22,8 @@
  '.xtsum b{font-weight:700;color:#F5E3B5}'+
  '.xtsumgo{margin-left:auto;font:inherit;font-size:13px;color:#C9A45C;background:none;border:0;border-bottom:1px dashed rgba(201,164,92,.6);padding:2px 0;cursor:pointer}'+
  'html[data-xwmode=light] .xtsum{color:#2B2418}html[data-xwmode=light] .xtsum b{color:#5C4210}'+
- '.chead .meta>.xtwp{order:2}.xtwp{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;margin:0 0 6px;font-size:14px;line-height:1.5;color:#D9CFBC}.xtwp i{font-style:normal;color:#8F8571;margin:0 4px}.xtwp b{color:#F5E3B5}.xtwpk{font-size:12px;color:#17120B;background:#C9A45C;border-radius:5px;padding:1px 6px;margin-right:6px;font-weight:700}.xtwpc{margin-left:8px;font-size:13px;font-weight:700}.xtwpc.lo{color:#8FD19E}.xtwpc.hi{color:#F0B47A}'+
- 'html[data-xwmode=light] .xtwp{color:#3A3022}html[data-xwmode=light] .xtwp b{color:#5C4210}html[data-xwmode=light] .xtwpc.lo{color:#1F7A35}html[data-xwmode=light] .xtwpc.hi{color:#A4520F}'+
+ '.chead .meta>.xtwp{order:2}.xtwp{display:flex;flex-wrap:wrap;align-items:center;gap:4px 2px;margin:0 0 6px;font-size:14px;line-height:1.5;color:#D9CFBC}.xtwp i{font-style:normal;color:#8F8571;margin:0 4px}.xtwp b{color:#F5E3B5}.xtwpk{font-size:12px;color:#17120B;background:#C9A45C;border-radius:5px;padding:1px 6px;margin-right:6px;font-weight:700}.xtwpc{margin-left:8px;font-size:13px;font-weight:700}.xtwpc.lo{color:#8FD19E}.xtwpc.hi{color:#F0B47A}.xtwpno{color:#A89D86;font-size:13px}.xtwpno .xtwpk{background:#5A4E38;color:#E9DBB4}'+
+ 'html[data-xwmode=light] .xtwp{color:#3A3022}html[data-xwmode=light] .xtwp b{color:#5C4210}html[data-xwmode=light] .xtwpc.lo{color:#1F7A35}html[data-xwmode=light] .xtwpc.hi{color:#A4520F}html[data-xwmode=light] .xtwpno{color:#6B5E45}html[data-xwmode=light] .xtwpno .xtwpk{background:#E6D8B8;color:#4A3A1E}'+
  '.xtspec .xtmeta{display:block!important;padding:0!important;margin:0!important}'+
  'html:not(#_xa):not(#_xb) body section.card .xtmeta .specs>.spec{display:block!important}'+
  'html:not(#_xa):not(#_xb) body section.card .xtmeta .r21more{display:none!important}'+
@@ -128,9 +128,10 @@
  function shortv(v){v=(v||'').replace(/\s+/g,' ').trim();var m=v.split(/[（(，,；;]/)[0].trim()||v;return m.length>18?m.slice(0,18)+'…':m;}
 
  /* r313 網路參考價（台灣 FindPrice、日本樂天）：商品名下一行，明細在「喝起來」的規格與備註 */
- var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=f631073c').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
+ var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=5a8104bb').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
  function ntd(x){return 'NT$'+Math.round(x).toLocaleString('en-US');}
  function wpLine(card,meta,sum){wpGet().then(function(J){if(!J||!J.m)return;var d=J.m[card.id];if(!d)return;var el=document.createElement('div');el.className='xtwp';el.setAttribute('data-xwns','1');var a=[];
+  if(d.no){el.className='xtwp xtwpno';el.innerHTML='<span class="xtwpk">網路參考價</span>網路查無同款<i>・</i>'+d.no+(d.ov?'<i>・</i>其他年份 '+d.ov[0]+' 日本樂天 約 <b>'+ntd(d.ov[1])+'</b><button type="button" class="xtsumgo">明細 ›</button>':'');var bb=el.querySelector('button');if(bb)bb.addEventListener('click',function(){show(card,'taste',true);});meta.insertBefore(el,sum.nextSibling);return;}
   if(d.tw)a.push('台灣網路 <b>'+(d.tw[0]===d.tw[1]?ntd(d.tw[0]):ntd(d.tw[0])+'～'+ntd(d.tw[1]))+'</b>'+(d.tw[3]?'（其他容量換算）':''));
   if(d.jp)a.push('日本樂天 約 <b>'+ntd(d.jp)+'</b>');
   var h='<span class="xtwpk">網路參考價</span>'+a.join('<i>・</i>');

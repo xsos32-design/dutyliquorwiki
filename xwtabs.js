@@ -128,14 +128,15 @@
  function shortv(v){v=(v||'').replace(/\s+/g,' ').trim();var m=v.split(/[（(，,；;]/)[0].trim()||v;return m.length>18?m.slice(0,18)+'…':m;}
 
  /* r313 網路參考價（台灣 FindPrice、日本樂天）：商品名下一行，明細在「喝起來」的規格與備註 */
- var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=e991106a').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
+ var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=8af55f81').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
  function ntd(x){return 'NT$'+Math.round(x).toLocaleString('en-US');}
  function wpLine(card,meta,sum){wpGet().then(function(J){if(!J||!J.m)return;var d=J.m[card.id];if(!d)return;var el=document.createElement('div');el.className='xtwp';el.setAttribute('data-xwns','1');var a=[];
   if(d.no){el.className='xtwp xtwpno';el.innerHTML='<span class="xtwpk">網路參考價</span>網路查無同款<i>・</i>'+d.no+(d.ov?'<i>・</i>其他年份 '+d.ov[0]+' 日本樂天 約 <b>'+ntd(d.ov[1])+'</b><button type="button" class="xtsumgo">明細 ›</button>':'');var bb=el.querySelector('button');if(bb)bb.addEventListener('click',function(){show(card,'taste',true);});meta.insertBefore(el,sum.nextSibling);return;}
   if(d.tw)a.push('台灣網路 <b>'+(d.tw[0]===d.tw[1]?ntd(d.tw[0]):ntd(d.tw[0])+'～'+ntd(d.tw[1]))+'</b>'+(d.tw[3]?'（其他容量換算）':''));
   if(d.jp)a.push('日本樂天 約 <b>'+ntd(d.jp)+'</b>');
+  if(d.fo&&!d.tw&&!d.jp)a.push('國外網路 約 <b>'+ntd(d.fo[0])+'</b>');
   var h='<span class="xtwpk">網路參考價</span>'+a.join('<i>・</i>');
-  if(d.pv){var ref=d.tw?d.tw[0]:d.jp;var df=d.pv-ref,pc=Math.round(Math.abs(df)/ref*100);var wh=d.tw?'台灣':'日本';h+='<span class="xtwpc '+(df<=0?'lo':'hi')+'">本店'+(Math.abs(df)<1?'和'+wh+'網路最低價一樣':'比'+wh+'網路最低'+(df<0?'便宜 ':'貴 ')+ntd(Math.abs(df))+'（'+pc+'%）')+'</span>';}
+  if(d.pv&&(d.tw||d.jp||d.fo)){var ref=d.tw?d.tw[0]:(d.jp||(d.fo&&d.fo[0]));if(!ref)ref=0;var df=d.pv-ref,pc=Math.round(Math.abs(df)/ref*100);var wh=d.tw?'台灣':(d.jp?'日本':'國外');h+='<span class="xtwpc '+(df<=0?'lo':'hi')+'">本店'+(Math.abs(df)<1?'和'+wh+'網路最低價一樣':'比'+wh+'網路最低'+(df<0?'便宜 ':'貴 ')+ntd(Math.abs(df))+'（'+pc+'%）')+'</span>';}
   h+='<button type="button" class="xtsumgo">明細 ›</button>';el.innerHTML=h;
   el.querySelector('button').addEventListener('click',function(){show(card,'taste',true);});
   meta.insertBefore(el,sum.nextSibling);});}

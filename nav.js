@@ -18,7 +18,7 @@
  /*xwmemo*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwmemo.js?v=e3e84090';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
  /*xwback*/(function(){try{var s=document.createElement('script');s.src='https://xsos32-design.github.io/dutyliquorwiki/xwback.js?v=895ddcc2';(document.head||document.documentElement).appendChild(s);}catch(e){}})();
 
- var N_W=799, N_C=218;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
+ var N_W=800, N_C=224;   /* 商品數：build_search.py 每次重建搜尋資料時自動改寫 */
  var GROUPS=[
   {g:'查商品', items:[
    {k:'wiki',  t:'酒類速讀檔案', s:N_W+' 支・話術／規格／圖片', ico:'wiki', u:'https://xsos32-design.github.io/dutyliquorwiki/'},

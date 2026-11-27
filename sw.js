@@ -1,7 +1,7 @@
 /* r56→r229：頁面先抓網路最新版（3 秒沒回應才用手機存的版本）；圖片字型快取跨版本保留 */
-const V = 'v2026-10-13-450b458923-r336';
+const V = 'v2026-10-13-450b458923-r337';
 const P = self.registration.scope + '|';
-const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=8f1430f0b2'];
+const CORE = ['./', './index.html', './img/brand/hero.webp', './icon-192.png', './kb-lazy.json?v=a7b85dab8c'];
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(P + 'core|' + V).then(c => c.addAll(CORE.map(x => new Request(x, {cache: 'reload'})))).catch(() => {}).then(() => self.skipWaiting()));
 });

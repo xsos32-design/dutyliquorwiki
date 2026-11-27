@@ -128,7 +128,7 @@
  function shortv(v){v=(v||'').replace(/\s+/g,' ').trim();var m=v.split(/[（(，,；;]/)[0].trim()||v;return m.length>18?m.slice(0,18)+'…':m;}
 
  /* r313 網路參考價（台灣 FindPrice、日本樂天）：商品名下一行，明細在「喝起來」的規格與備註 */
- var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=3892cb4b').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
+ var WPP=null;function wpGet(){if(!WPP){var b=(document.querySelector('script[src*="xwtabs.js"]')||{}).src||'https://xsos32-design.github.io/dutyliquorwiki/xwtabs.js';b=b.replace(/xwtabs\.js.*$/,'');WPP=fetch(b+'webprice.json?v=fcd1c766').then(function(r){return r.json();}).catch(function(){return null;});}return WPP;}
  function ntd(x){return 'NT$'+Math.round(x).toLocaleString('en-US');}
  function wpLine(card,meta,sum){wpGet().then(function(J){if(!J||!J.m)return;var d=J.m[card.id];if(!d)return;var el=document.createElement('div');el.className='xtwp';el.setAttribute('data-xwns','1');var a=[];
   if(d.no){el.className='xtwp xtwpno';el.innerHTML='<span class="xtwpk">網路參考價</span>網路查無同款<i>・</i>'+d.no+(d.ov?'<i>・</i>其他年份 '+d.ov[0]+' 日本樂天 約 <b>'+ntd(d.ov[1])+'</b><button type="button" class="xtsumgo">明細 ›</button>':'');var bb=el.querySelector('button');if(bb)bb.addEventListener('click',function(){show(card,'taste',true);});meta.insertBefore(el,sum.nextSibling);return;}

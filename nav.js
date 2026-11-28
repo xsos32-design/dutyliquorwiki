@@ -466,7 +466,7 @@
    remember(q.value);
    var id=a.getAttribute('data-id'), site=a.getAttribute('data-s');
    var here=(site==='w'&&CUR==='wiki')||(site==='c'&&CUR==='choc')||(site==='b'&&/^c:/.test(id)&&CUR==='choc');
-   if(here && window.__goCard){ e.preventDefault(); sclose(); window.__goCard(id.replace(/^c:/,'')); return; }
+   if(here && window.__goCard){ e.preventDefault(); sclose(); /*r341go*/var cid=id.replace(/^c:/,''),dn=0;var go=function(){if(dn)return;dn=1;window.removeEventListener('popstate',onp);window.__goCard(cid);setTimeout(function(){var c=document.getElementById(cid);if(c&&c.offsetParent!==null&&window.__xwPin)window.__xwPin(c);},150);};var onp=function(){setTimeout(go,80);};window.addEventListener('popstate',onp);setTimeout(go,450); return; }
    try{ var U=new URL(a.href); if(U.pathname===location.pathname && U.hash){ sclose(); } }catch(err){}
   });
   return o;
